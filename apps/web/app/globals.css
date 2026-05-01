@@ -178,9 +178,25 @@ html {
 
 /* Lesson Content Typography */
 .lesson-content {
-  @apply prose prose-lg max-w-none;
-  @apply prose-headings:text-text-primary prose-p:text-text-secondary;
-  @apply prose-strong:text-text-primary prose-a:text-primary-600;
+  @apply text-lg leading-relaxed text-text-secondary;
+}
+
+.lesson-content h1,
+.lesson-content h2,
+.lesson-content h3 {
+  @apply text-text-primary font-bold mb-4;
+}
+
+.lesson-content p {
+  @apply mb-4;
+}
+
+.lesson-content strong {
+  @apply text-text-primary;
+}
+
+.lesson-content a {
+  @apply text-primary-600 hover:underline;
 }
 
 /* Streak Fire Animation */
