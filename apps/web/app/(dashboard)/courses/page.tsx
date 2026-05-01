@@ -1,6 +1,6 @@
-import { createClient } from '@/lib/supabase/server';
+import { createClient } from '../../../lib/supabase/server';
 import { redirect } from 'next/navigation';
-import { CourseCard } from '@/components/shared/CourseCard';
+import { CourseCard } from '../../../components/shared/CourseCard';
 import { BookOpen } from 'lucide-react';
 
 export default async function CoursesPage() {

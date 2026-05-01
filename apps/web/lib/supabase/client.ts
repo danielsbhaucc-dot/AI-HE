@@ -1,5 +1,5 @@
 import { createBrowserClient } from '@supabase/ssr';
-import { Database } from '@/lib/types/database';
+import { Database } from '../types/database';
 
 /**
  * Create a Supabase client for browser usage

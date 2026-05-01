@@ -1,7 +1,7 @@
-import { createClient } from '@/lib/supabase/server';
+import { createClient } from '../../lib/supabase/server';
 import { redirect } from 'next/navigation';
-import { MobileHeader } from '@/components/shared/MobileHeader';
-import { BottomNav } from '@/components/shared/BottomNav';
+import { MobileHeader } from '../../components/shared/MobileHeader';
+import { BottomNav } from '../../components/shared/BottomNav';
 
 export default async function DashboardLayout({
   children,

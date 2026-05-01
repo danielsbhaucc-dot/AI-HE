@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { Database } from '@/lib/types/database';
+import { Database } from '../types/database';
 
 /**
  * Create a Supabase admin client with service role

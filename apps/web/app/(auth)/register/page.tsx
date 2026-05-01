@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Mail, Lock, User, Eye, EyeOff, ArrowLeft, Sparkles, CheckCircle } from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
+import { createClient } from '../../../lib/supabase/client';
 
 export default function RegisterPage() {
   const [fullName, setFullName] = useState('');
