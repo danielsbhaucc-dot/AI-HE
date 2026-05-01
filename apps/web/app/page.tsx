@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Play, Sparkles, Target, Flame, Award, ArrowLeft } from 'lucide-react';
+import { Play, Sparkles, Flame, ArrowLeft } from 'lucide-react';
 
 // Animation variants
 const containerVariants = {
@@ -47,73 +47,78 @@ export default function LandingPage() {
           animate="visible"
         >
           {/* Badge */}
-          <motion.div variants={itemVariants} className="mb-6">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm shadow-sm border border-primary-200">
-              <Sparkles className="w-4 h-4 text-primary-500" />
-              <span className="text-sm font-medium text-text-secondary">
-                מופעל ב-AI ✨
-              </span>
+          <motion.div variants={itemVariants} className="mb-8">
+            <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm"
+              style={{background: 'rgba(20,184,166,0.2)', border: '1px solid rgba(20,184,166,0.4)', color: '#5eead4'}}>
+              <Sparkles className="w-4 h-4" />
+              מופעל ב-AI ✨
             </span>
           </motion.div>
 
           {/* Main Heading */}
           <motion.h1
             variants={itemVariants}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
+            className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight"
           >
-            <span className="text-gradient">הדרך החכמה</span>
+            <span style={{background: 'linear-gradient(135deg, #5eead4, #34d399)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
+              הדרך החכמה
+            </span>
             <br />
-            <span className="text-text-primary">לירידה במשקל 🎯</span>
+            <span className="text-white">לירידה במשקל</span>
           </motion.h1>
 
-          {/* Subtitle */}
-          <motion.p
+          {/* Subtitle in Glass Card */}
+          <motion.div
             variants={itemVariants}
-            className="text-lg md:text-xl text-text-secondary mb-8 max-w-lg mx-auto leading-relaxed"
+            className="mb-10 max-w-md mx-auto"
           >
-            קורסים אינטראקטיביים עם מעקב התקדמות חכם,
-            <br />
-            משימות יומיות והרגלים בריאים
-          </motion.p>
+            <div className="rounded-2xl px-6 py-4" style={{background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', backdropFilter: 'blur(12px)'}}>
+              <p className="text-white text-base md:text-lg leading-relaxed font-medium">
+                קורסים אינטראקטיביים עם מעקב התקדמות חכם, משימות יומיות והרגלים בריאים 🌿
+              </p>
+            </div>
+          </motion.div>
 
           {/* CTA Buttons */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+            className="flex flex-col sm:flex-row gap-3 justify-center items-stretch sm:items-center mb-12 max-w-sm mx-auto sm:max-w-none"
           >
             <Link
               href="/register"
-              className="btn-primary text-lg px-8 py-4 w-full sm:w-auto"
+              className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-black text-lg text-white transition-all hover:scale-105 active:scale-95"
+              style={{background: 'linear-gradient(135deg, #14b8a6, #10b981)', boxShadow: '0 8px 25px rgba(20,184,166,0.4)'}}
             >
-              <Play className="w-5 h-5" />
-              התחל עכשיו - חינם!
+              <Play className="w-5 h-5 flex-shrink-0" />
+              <span>התחל עכשיו - חינם!</span>
             </Link>
             <Link
               href="/login"
-              className="btn-secondary text-lg px-8 py-4 w-full sm:w-auto"
+              className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold text-lg text-white transition-all hover:scale-105 active:scale-95"
+              style={{background: 'rgba(255,255,255,0.1)', border: '1.5px solid rgba(255,255,255,0.25)', backdropFilter: 'blur(10px)'}}
             >
-              יש לך חשבון? התחבר
-              <ArrowLeft className="w-5 h-5" />
+              <span>כבר יש לי חשבון</span>
+              <ArrowLeft className="w-5 h-5 flex-shrink-0" />
             </Link>
           </motion.div>
 
-          {/* Stats */}
+          {/* Stats - Glass Cards */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-wrap justify-center gap-6 md:gap-12"
+            className="flex justify-center gap-4"
           >
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary-600">500+</div>
-              <div className="text-sm text-text-secondary">סטודנטים 🎓</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-secondary-500">15kg</div>
-              <div className="text-sm text-text-secondary">ממוצע ירידה 🔥</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-success-DEFAULT">95%</div>
-              <div className="text-sm text-text-secondary">שביעות רצון ⭐</div>
-            </div>
+            {[
+              { value: '95%', label: 'שביעות רצון', emoji: '⭐' },
+              { value: '15kg', label: 'ממוצע ירידה', emoji: '🔥' },
+              { value: '+500', label: 'סטודנטים', emoji: '🎓' },
+            ].map((stat) => (
+              <div key={stat.value}
+                className="flex-1 max-w-[100px] text-center py-3 px-2 rounded-2xl"
+                style={{background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(10px)'}}>
+                <div className="text-xl font-black text-white mb-0.5">{stat.value}</div>
+                <div className="text-xs text-slate-400">{stat.emoji} {stat.label}</div>
+              </div>
+            ))}
           </motion.div>
         </motion.div>
 
