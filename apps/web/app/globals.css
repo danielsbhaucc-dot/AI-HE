@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* RTL Support */
+html {
+  direction: rtl;
+}
+
+/* Hebrew Font Import */
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&family=Rubik:wght@300;400;500;600;700&display=swap');
+
+/* Base Layer */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-text-primary font-sans antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Smooth Scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Selection Color */
+  ::selection {
+    @apply bg-primary-200 text-primary-800;
+  }
+}
+
+/* Component Layer */
+@layer components {
+  /* Card Styles */
+  .card-premium {
+    @apply bg-white rounded-2xl shadow-lg p-4 transition-all duration-300 hover:shadow-xl;
+  }
+
+  .card-gradient {
+    @apply bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl shadow-lg p-6 text-white;
+  }
+
+  /* Button Styles */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-200;
+    @apply bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-md;
+    @apply hover:from-primary-600 hover:to-primary-700 hover:shadow-lg hover:-translate-y-0.5;
+    @apply active:translate-y-0;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-200;
+    @apply bg-white text-text-primary border-2 border-gray-200;
+    @apply hover:border-primary-300 hover:text-primary-600;
+  }
+
+  /* Input Styles */
+  .input-premium {
+    @apply w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-white;
+    @apply focus:border-primary-400 focus:ring-2 focus:ring-primary-100 focus:outline-none;
+    @apply transition-all duration-200;
+  }
+
+  /* Mobile Container */
+  .container-mobile {
+    @apply w-full max-w-md mx-auto px-4;
+  }
+
+  /* Safe Area for Mobile */
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+/* Utility Layer */
+@layer utilities {
+  /* Text Gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-500 to-secondary-500;
+  }
+
+  /* Hide Scrollbar */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Glassmorphism */
+  .glass {
+    @apply bg-white/80 backdrop-blur-lg border border-white/20;
+  }
+
+  /* Touch Action for Mobile */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  /* Prevent Text Selection on Interactive Elements */
+  .no-select {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+/* Animation Utilities */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out forwards;
+  }
+
+  .animate-bounce-soft {
+    animation: bounceSoft 2s infinite;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceSoft {
+  0%, 100% {
+    transform: translateY(-5%);
+  }
+  50% {
+    transform: translateY(0);
+  }
+}
+
+/* Video Player Container */
+.video-container {
+  @apply relative w-full aspect-video rounded-2xl overflow-hidden bg-gray-900;
+}
+
+/* Audio Player Styling */
+.audio-player {
+  @apply w-full rounded-xl bg-gradient-to-r from-primary-50 to-secondary-50 p-4;
+}
+
+/* Progress Bar Animation */
+.progress-bar {
+  @apply relative h-2 bg-gray-200 rounded-full overflow-hidden;
+}
+
+.progress-bar-fill {
+  @apply absolute inset-y-0 right-0 bg-gradient-to-l from-primary-500 to-secondary-500 transition-all duration-500;
+}
+
+/* Lesson Content Typography */
+.lesson-content {
+  @apply prose prose-lg max-w-none;
+  @apply prose-headings:text-text-primary prose-p:text-text-secondary;
+  @apply prose-strong:text-text-primary prose-a:text-primary-600;
+}
+
+/* Streak Fire Animation */
+.streak-fire {
+  @apply text-orange-500 animate-pulse;
+}
