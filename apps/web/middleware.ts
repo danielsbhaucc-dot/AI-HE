@@ -8,6 +8,22 @@ const PUBLIC_ROUTES = ['/', '/login', '/register', '/about', '/contact'];
 const ADMIN_ROUTES = ['/admin'];
 
 export async function middleware(request: NextRequest) {
+  // Debug: Check env vars
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  console.log('Middleware check:', { 
+    hasUrl: !!supabaseUrl, 
+    hasKey: !!supabaseKey,
+    url: supabaseUrl?.substring(0, 20) + '...'
+  });
+  
+  if (!supabaseUrl || !supabaseKey) {
+    console.error('Missing Supabase env vars!');
+    // Continue without auth check for debugging
+    return NextResponse.next();
+  }
+
   let response = NextResponse.next({
     request: {
       headers: request.headers,
@@ -15,8 +31,8 @@ export async function middleware(request: NextRequest) {
   });
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseKey,
     {
       cookies: {
         get(name: string) {
