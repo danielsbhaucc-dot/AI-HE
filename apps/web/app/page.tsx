@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Play, Sparkles, Target, Flame, Award, ArrowLeft } from 'lucide-react';
