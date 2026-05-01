@@ -30,7 +30,7 @@ const itemVariants = {
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 overflow-x-hidden">
+    <main className="min-h-screen bg-mesh overflow-x-hidden">
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col justify-center items-center px-4 pt-20 pb-32">
         {/* Background Decorations - Teal/Green */}
@@ -135,7 +135,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 bg-white">
+      <section className="py-20 px-4 bg-slate-900/50">
         <div className="container-mobile max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -176,7 +176,7 @@ export default function LandingPage() {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 px-4 bg-gradient-to-br from-primary-50 to-secondary-50">
+      <section className="py-20 px-4 bg-slate-800/30">
         <div className="container-mobile max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -215,7 +215,7 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-white">
+      <section className="py-20 px-4 bg-gradient-to-br from-primary-900/20 to-secondary-900/20">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -242,7 +242,7 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-4 bg-gray-50 border-t border-gray-200">
+      <footer className="py-8 px-4 bg-slate-900 border-t border-slate-800">
         <div className="container-mobile text-center">
           <p className="text-text-muted text-sm">
             © 2024 מערכת קורסים לירידה במשקל. כל הזכויות שמורות.

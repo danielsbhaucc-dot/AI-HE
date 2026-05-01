@@ -42,14 +42,14 @@ const config: Config = {
           DEFAULT: '#22c55e',
           dark: '#15803d',
         },
-        // Backgrounds
-        background: '#fafafa',
-        'background-soft': '#f3f4f6',
+        // Backgrounds - Richer, darker for contrast
+        background: '#0f172a',
+        'background-soft': '#1e293b',
         'background-card': '#ffffff',
-        // Text
-        'text-primary': '#111827',
-        'text-secondary': '#6b7280',
-        'text-muted': '#9ca3af',
+        // Text - Better contrast on dark bg
+        'text-primary': '#ffffff',
+        'text-secondary': '#94a3b8',
+        'text-muted': '#64748b',
         // Border
         border: '#e5e7eb',
         input: '#e5e7eb',
