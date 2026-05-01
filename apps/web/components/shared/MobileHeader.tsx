@@ -14,30 +14,30 @@ export function MobileHeader({ user }: MobileHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-lg border-b border-gray-100 safe-area-top">
+    <header className="fixed top-0 left-0 right-0 z-50 safe-area-top" style={{background: 'rgba(15,23,42,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.08)'}}>
       <div className="container-mobile h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/courses" className="flex items-center gap-2">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center">
             <Sparkles className="w-5 h-5 text-white" />
           </div>
-          <span className="font-bold text-lg text-gradient hidden sm:block">
-            WeightLossAI
-          </span>
+          <span className="font-black text-lg text-white hidden sm:block">WeightLoss<span className="text-primary-400">AI</span></span>
         </Link>
 
         {/* Right Actions */}
         <div className="flex items-center gap-3">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center text-text-secondary hover:bg-gray-200 transition-colors"
+            className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-white transition-colors"
+            style={{background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)'}}
           >
             <Menu className="w-5 h-5" />
           </button>
           
           <Link
             href="/profile"
-            className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-100 to-secondary-100 flex items-center justify-center text-primary-600"
+            className="w-10 h-10 rounded-xl flex items-center justify-center text-primary-400"
+            style={{background: 'rgba(20,184,166,0.15)', border: '1px solid rgba(20,184,166,0.3)'}}
           >
             <UserCircle className="w-5 h-5" />
           </Link>
@@ -51,7 +51,8 @@ export function MobileHeader({ user }: MobileHeaderProps) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="border-t border-gray-100 bg-white"
+            className=""
+            style={{background: 'rgba(15,23,42,0.98)', borderTop: '1px solid rgba(255,255,255,0.08)'}}
           >
             <nav className="container-mobile py-4 space-y-1">
               {menuItems.map((item) => (
@@ -59,9 +60,9 @@ export function MobileHeader({ user }: MobileHeaderProps) {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl text-text-primary hover:bg-gray-50 transition-colors"
+                  className="flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-300 hover:text-white hover:bg-white/5 transition-all"
                 >
-                  <item.icon className="w-5 h-5 text-primary-500" />
+                  <item.icon className="w-5 h-5 text-primary-400" />
                   {item.label}
                 </Link>
               ))}

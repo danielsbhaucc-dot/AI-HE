@@ -63,7 +63,7 @@ const config: Config = {
         '2xl': '1.5rem',
       },
       fontFamily: {
-        sans: ['Varela Round', 'Rubik', 'system-ui', 'sans-serif'],
+        sans: ['Heebo', 'system-ui', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out',

@@ -48,108 +48,90 @@ function LoginFormContent() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 flex flex-col justify-center px-4 py-12">
+    <main className="min-h-screen flex flex-col justify-center px-4 py-12" style={{background: 'linear-gradient(135deg, #0f172a 0%, #0d1f2d 50%, #0a1628 100%)'}}>
+      <div className="fixed inset-0 pointer-events-none" style={{background: 'radial-gradient(ellipse at 50% 0%, rgba(20,184,166,0.15) 0%, transparent 60%)'}} />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="container-mobile max-w-md mx-auto"
+        className="max-w-md mx-auto w-full relative z-10"
       >
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center mx-auto mb-4 shadow-lg">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-primary-500/30">
             <Sparkles className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-text-primary">
-            ברוכים הבאים! 👋
-          </h1>
-          <p className="text-text-secondary mt-2">
-            התחברו כדי להמשיך את המסע שלכם
-          </p>
+          <h1 className="text-3xl font-black text-white">ברוכים הבאים! 👋</h1>
+          <p className="text-slate-400 mt-2">התחברו כדי להמשיך את המסע שלכם</p>
         </div>
 
-        {/* Form */}
-        <div className="card-premium">
+        {/* Form Card */}
+        <div className="rounded-3xl p-8" style={{background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(20px)', boxShadow: '0 25px 50px rgba(0,0,0,0.5)'}}>
           {error && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
-              className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-red-600 text-sm text-center"
+              className="mb-4 p-3 rounded-2xl bg-red-500/20 border border-red-500/30 text-red-400 text-sm text-center"
             >
               {error}
             </motion.div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-text-primary mb-2">
-                אימייל 📧
-              </label>
+              <label className="block text-sm font-semibold text-slate-300 mb-2">אימייל 📧</label>
               <div className="relative">
-                <Mail className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
+                <Mail className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="input-premium pr-12"
+                  className="w-full px-5 py-4 pr-12 rounded-2xl text-white placeholder-slate-500 outline-none transition-all"
+                  style={{background: 'rgba(255,255,255,0.08)', border: '1.5px solid rgba(255,255,255,0.12)'}}
                   placeholder="your@email.com"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-text-primary mb-2">
-                סיסמה 🔒
-              </label>
+              <label className="block text-sm font-semibold text-slate-300 mb-2">סיסמה 🔒</label>
               <div className="relative">
-                <Lock className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
+                <Lock className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  minLength={6}
-                  className="input-premium pr-12 pl-12"
+                  className="w-full px-5 py-4 pr-12 pl-12 rounded-2xl text-white placeholder-slate-500 outline-none transition-all"
+                  style={{background: 'rgba(255,255,255,0.08)', border: '1.5px solid rgba(255,255,255,0.12)'}}
                   placeholder="******"
                 />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-secondary transition-colors"
-                >
-                  {showPassword ? (
-                    <EyeOff className="w-5 h-5" />
-                  ) : (
-                    <Eye className="w-5 h-5" />
-                  )}
+                <button type="button" onClick={() => setShowPassword(!showPassword)}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors">
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
             </div>
 
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="btn-primary w-full text-lg py-4"
-            >
+            <button type="submit" disabled={isLoading}
+              className="w-full py-4 rounded-2xl font-black text-lg text-white transition-all hover:scale-[1.02] active:scale-95"
+              style={{background: 'linear-gradient(135deg, #14b8a6, #10b981)', boxShadow: '0 10px 30px rgba(20,184,166,0.4)'}}>
               {isLoading ? (
-                <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto" />
               ) : (
-                <>
+                <span className="flex items-center justify-center gap-2">
                   <ArrowLeft className="w-5 h-5" />
                   התחברות
-                </>
+                </span>
               )}
             </button>
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-text-secondary text-sm">
+            <p className="text-slate-400 text-sm">
               אין לכם חשבון?{' '}
-              <Link
-                href="/register"
-                className="text-primary-600 font-medium hover:underline"
-              >
+              <Link href="/register" className="text-primary-400 font-bold hover:text-primary-300 transition-colors">
                 הירשמו עכשיו 🚀
               </Link>
             </p>
@@ -157,10 +139,10 @@ function LoginFormContent() {
         </div>
 
         {/* Back Link */}
-        <div className="mt-8 text-center">
+        <div className="mt-6 text-center">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors"
+            className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-300 transition-colors text-sm"
           >
             <ArrowLeft className="w-4 h-4" />
             חזרה לדף הבית
