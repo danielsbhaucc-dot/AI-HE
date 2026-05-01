@@ -1,22 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, ArrowLeft, Sparkles } from 'lucide-react';
 import { createClient } from '../../../lib/supabase/client';
 
-export default function LoginPage() {
+// Prevent static generation issues
+export const dynamic = 'force-dynamic';
+
+function LoginFormContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams?.get('redirect') || '/courses';
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const redirect = searchParams.get('redirect') || '/courses';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -165,5 +168,18 @@ export default function LoginPage() {
         </div>
       </motion.div>
     </main>
+  );
+}
+
+// Wrapper with Suspense for useSearchParams
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-primary-500/30 border-t-primary-500 rounded-full animate-spin" />
+      </main>
+    }>
+      <LoginFormContent />
+    </Suspense>
   );
 }
