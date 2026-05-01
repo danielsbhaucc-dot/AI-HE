@@ -135,8 +135,8 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 bg-slate-900/50">
-        <div className="container-mobile max-w-4xl mx-auto">
+      <section className="py-20 px-4" style={{background: 'linear-gradient(180deg, #0f172a 0%, #0d1f2d 100%)'}}>
+        <div className="max-w-4xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -144,15 +144,16 @@ export default function LandingPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-primary-500/20 border border-primary-500/30 text-primary-400 text-sm font-medium mb-4">הפיצ'רים שלנו</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
               מה מחכה לך? 🌟
             </h2>
-            <p className="text-text-secondary">
+            <p className="text-slate-400 text-lg">
               מערכת שלמה שתלווה אותך בכל שלב
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
@@ -160,15 +161,21 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card-premium hover:scale-[1.02] transition-transform"
+                className="group relative rounded-3xl p-6 transition-all duration-300 hover:scale-[1.02] cursor-default"
+                style={{background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 8px 32px rgba(0,0,0,0.3)'}}
               >
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center mb-4">
-                  <feature.icon className="w-6 h-6 text-primary-600" />
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 text-2xl"
+                    style={{background: `linear-gradient(135deg, ${feature.color1}, ${feature.color2})`}}>
+                    {feature.emoji}
+                  </div>
+                  <div className="flex-1 text-right">
+                    <h3 className="text-xl font-bold text-white mb-2">{feature.title}</h3>
+                    <p className="text-slate-300 leading-relaxed">{feature.description}</p>
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold text-text-primary mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-text-secondary">{feature.description}</p>
+                <div className="absolute bottom-0 left-0 right-0 h-px rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                  style={{background: `linear-gradient(90deg, transparent, ${feature.color1}, transparent)`}} />
               </motion.div>
             ))}
           </div>
@@ -176,38 +183,40 @@ export default function LandingPage() {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 px-4 bg-slate-800/30">
-        <div className="container-mobile max-w-4xl mx-auto">
+      <section className="py-20 px-4" style={{background: 'linear-gradient(180deg, #0d1f2d 0%, #0a1628 100%)'}}>
+        <div className="max-w-2xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-secondary-500/20 border border-secondary-500/30 text-secondary-400 text-sm font-medium mb-4">כיצד להתחיל</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
               איך זה עובד? 🚀
             </h2>
           </motion.div>
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             {steps.map((step, index) => (
               <motion.div
                 key={step.number}
-                initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+                initial={{ opacity: 0, x: 40 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                className="flex items-center gap-4 card-premium"
+                transition={{ duration: 0.5, delay: index * 0.12 }}
+                className="flex items-center gap-5 p-5 rounded-3xl transition-all duration-300 hover:scale-[1.01]"
+                style={{background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(10px)'}}
               >
-                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white font-bold text-xl flex-shrink-0">
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white font-black text-xl flex-shrink-0 shadow-lg"
+                  style={{background: 'linear-gradient(135deg, #14b8a6, #10b981)'}}>
                   {step.number}
                 </div>
-                <div>
-                  <h3 className="text-lg font-bold text-text-primary">
-                    {step.title}
-                  </h3>
-                  <p className="text-text-secondary">{step.description}</p>
+                <div className="text-right flex-1">
+                  <h3 className="text-lg font-bold text-white mb-1">{step.title}</h3>
+                  <p className="text-slate-400 text-sm">{step.description}</p>
                 </div>
+                <div className="text-2xl">{step.emoji}</div>
               </motion.div>
             ))}
           </div>
@@ -215,26 +224,30 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-primary-900/20 to-secondary-900/20">
+      <section className="py-24 px-4 relative overflow-hidden" style={{background: 'linear-gradient(180deg, #0a1628 0%, #0f172a 100%)'}}>
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full opacity-20" style={{background: 'radial-gradient(circle, #14b8a6, transparent 70%)'}} />
+        </div>
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="container-mobile max-w-2xl mx-auto text-center"
+          className="max-w-lg mx-auto text-center relative z-10"
         >
-          <div className="card-gradient">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              מוכנים להתחיל? 🎉
+          <div className="rounded-3xl p-10 shadow-2xl" style={{background: 'linear-gradient(135deg, rgba(20,184,166,0.9), rgba(16,185,129,0.9))', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.2)'}}>
+            <div className="text-5xl mb-4">🎉</div>
+            <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
+              מוכנים להתחיל?
             </h2>
             <p className="text-white/90 mb-8 text-lg">
               הצטרפו עכשיו וקבלו גישה מלאה לכל הקורסים
             </p>
             <Link
               href="/register"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-primary-600 rounded-full font-bold text-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200"
+              className="inline-flex items-center justify-center gap-2 px-10 py-4 bg-white text-primary-600 rounded-2xl font-black text-xl shadow-2xl hover:shadow-white/20 hover:scale-105 transition-all duration-200"
             >
-              <Flame className="w-5 h-5" />
+              <Flame className="w-6 h-6" />
               בואו נתחיל!
             </Link>
           </div>
@@ -256,46 +269,58 @@ export default function LandingPage() {
 // Data
 const features = [
   {
-    icon: Target,
-    title: 'קורסים מובנים 📚',
+    emoji: '📚',
+    title: 'קורסים מובנים',
     description: 'שיעורים בווידאו, אודיו, טקסט ומצגות - כל מה שצריך להצלחה',
+    color1: '#14b8a6',
+    color2: '#0d9488',
   },
   {
-    icon: Award,
-    title: 'מעקב התקדמות 📊',
-    description: 'עקבו אחרי ההתקדמות שלכם עם גרפים וסטטיסטיקות',
+    emoji: '📊',
+    title: 'מעקב התקדמות',
+    description: 'עקבו אחרי ההתקדמות שלכם עם גרפים וסטטיסטיקות מפורטות',
+    color1: '#6366f1',
+    color2: '#4f46e5',
   },
   {
-    icon: Flame,
-    title: 'הרגלים יומיים 🔥',
-    description: 'בנו הרגלים בריאים עם מערכת מטלות יומיות',
+    emoji: '🔥',
+    title: 'הרגלים יומיים',
+    description: 'בנו הרגלים בריאים עם מערכת מטלות יומיות חכמה',
+    color1: '#f97316',
+    color2: '#ea580c',
   },
   {
-    icon: Sparkles,
-    title: 'AI ליווי 🤖',
+    emoji: '🤖',
+    title: 'AI ליווי אישי',
     description: 'קבלו המלצות חכמות מותאמות אישית לפרוגרס שלכם',
+    color1: '#10b981',
+    color2: '#059669',
   },
 ];
 
 const steps = [
   {
     number: '1',
-    title: 'הרשמה מהירה 📝',
+    emoji: '📝',
+    title: 'הרשמה מהירה',
     description: 'צרו חשבון ב-30 שניות והתחילו מיד',
   },
   {
     number: '2',
-    title: 'בחירת קורס 🎯',
+    emoji: '🎯',
+    title: 'בחירת קורס',
     description: 'בחרו מהקורסים הזמינים או קבלו המלצה מ-AI',
   },
   {
     number: '3',
-    title: 'למידה ותרגול 📖',
+    emoji: '📖',
+    title: 'למידה ותרגול',
     description: 'צפו בשיעורים, השלימו משימות ובנו הרגלים',
   },
   {
     number: '4',
-    title: 'תוצאות 🔥',
+    emoji: '🏆',
+    title: 'תוצאות מדהימות',
     description: 'עקבו אחרי ההתקדמות וחגגו הישגים!',
   },
 ];
