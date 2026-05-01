@@ -33,9 +33,9 @@
 
 ### עיצוב פרימיום צבעוני
 ```
-ראשי: ורוד-סגול #d946ef (primary-500)
-משני: כתום חמים #f97316 (secondary-500)
-הצלחה: ירוק #22c55e (success)
+ראשי: טורקיז/Teal #14b8a6 (primary-500) - בריאות, מים, רוגע
+משני: ירוק Emerald #10b981 (secondary-500) - צמיחה, אנרגיה, הצלחה
+הצלחה: ירוק בהיר #22c55e (success)
 רקע: אפור בהיר #fafafa
 טקסט: אפור כהה #111827
 ```
@@ -345,25 +345,28 @@ export const metadata: Metadata = {
 ```typescript
 // tailwind.config.ts
 primary: {
-  50: '#fdf4ff',   // רקע בהיר
-  100: '#fae8ff',  // hover states
-  200: '#f5d0fe',  // borders
-  300: '#f0abfc',  // accents
-  400: '#e879f9',  // light buttons
-  500: '#d946ef',  // MAIN COLOR
-  600: '#c026d3',  // hover
-  700: '#a21caf',  // dark
-  800: '#86198f',
-  900: '#701a75',
+  50: '#f0fdfa',   // רקע בהיר מאוד
+  100: '#ccfbf1',  // hover states
+  200: '#99f6e4',  // borders
+  300: '#5eead4',  // accents
+  400: '#2dd4bf',  // light buttons
+  500: '#14b8a6',  // MAIN - Teal
+  600: '#0d9488',  // hover
+  700: '#0f766e',  // dark
+  800: '#115e59',
+  900: '#134e4a',
 },
 secondary: {
-  50: '#fff7ed',
-  100: '#ffedd5',
-  200: '#fed7aa',
-  300: '#fdba74',
-  400: '#fb923c',
-  500: '#f97316',  // MAIN SECONDARY
-  600: '#ea580c',
+  50: '#ecfdf5',
+  100: '#d1fae5',
+  200: '#a7f3d0',
+  300: '#6ee7b7',
+  400: '#34d399',
+  500: '#10b981',  // MAIN - Emerald
+  600: '#059669',
+  700: '#047857',
+  800: '#065f46',
+  900: '#064e3b',
 },
 success: {
   light: '#86efac',
