@@ -257,7 +257,7 @@ html {
 
   /* ---- LESSON CONTENT TYPOGRAPHY ---- */
   .lesson-content {
-    @apply text-base md:text-lg leading-relaxed text-slate-200;
+    @apply text-[15px] md:text-base leading-relaxed text-slate-200;
   }
 
   .lesson-content h1 { @apply text-2xl font-black text-white mb-5 mt-8; }
@@ -411,32 +411,32 @@ html {
 
   /* ---- SECTION TITLES ---- */
   .section-title {
-    @apply flex items-center gap-2.5 mb-1;
+    @apply flex items-center gap-3 mb-1;
   }
 
   .section-title-bar {
-    @apply w-1 h-5 rounded-full flex-shrink-0;
+    @apply w-1.5 h-7 rounded-full flex-shrink-0;
     background: linear-gradient(to bottom, #14FFEC, #10b981);
   }
 
   .section-title-text {
-    @apply text-white font-bold text-base;
+    @apply text-white font-black text-xl;
     font-family: 'Rubik', 'Heebo', sans-serif;
   }
 
   .section-divider {
-    @apply w-full h-px my-4;
-    background: linear-gradient(to right, rgba(20,184,166,0.25), rgba(16,185,129,0.15), transparent);
+    @apply w-full h-px my-5;
+    background: linear-gradient(to right, rgba(20,184,166,0.3), rgba(16,185,129,0.2), transparent);
   }
 
   .section-divider-center {
-    @apply w-full h-px my-4;
-    background: linear-gradient(to right, transparent, rgba(20,184,166,0.3), rgba(16,185,129,0.2), transparent);
+    @apply w-full h-px my-5;
+    background: linear-gradient(to right, transparent, rgba(20,184,166,0.35), rgba(16,185,129,0.25), transparent);
   }
 
   /* ---- PAGE TRANSITION ---- */
   .page-enter {
-    animation: fadeInUp 0.25s ease-out both;
+    animation: fadeInUp 0.18s ease-out both;
   }
 
   /* Line clamp helpers */

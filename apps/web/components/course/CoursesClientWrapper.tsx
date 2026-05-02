@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { BookOpen, Zap, TrendingUp, Award } from 'lucide-react';
+import { BookOpen, Zap, TrendingUp, Award, GraduationCap, Sparkles } from 'lucide-react';
 import { CourseCard } from '../shared/CourseCard';
 import type { CourseWithProgress, UserStats } from '../../lib/types/course';
 
@@ -16,69 +16,109 @@ const container = {
   show: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
 };
 const item = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.38, ease: 'easeOut' } },
 };
+
+const statCards = (stats: UserStats) => [
+  {
+    label: 'קורסים פעילים',
+    value: stats.activeCoursesCount,
+    icon: GraduationCap,
+    color: '#14b8a6',
+    glow: 'rgba(20,184,166,0.25)',
+    bg: 'linear-gradient(135deg, rgba(20,184,166,0.18), rgba(20,184,166,0.06))',
+    border: 'rgba(20,184,166,0.3)',
+  },
+  {
+    label: 'שיעורים הושלמו',
+    value: stats.totalLessonsCompleted,
+    icon: Award,
+    color: '#10b981',
+    glow: 'rgba(16,185,129,0.25)',
+    bg: 'linear-gradient(135deg, rgba(16,185,129,0.18), rgba(16,185,129,0.06))',
+    border: 'rgba(16,185,129,0.3)',
+  },
+  {
+    label: 'ממוצע התקדמות',
+    value: `${stats.avgProgress}%`,
+    icon: TrendingUp,
+    color: '#d946ef',
+    glow: 'rgba(217,70,239,0.25)',
+    bg: 'linear-gradient(135deg, rgba(217,70,239,0.18), rgba(217,70,239,0.06))',
+    border: 'rgba(217,70,239,0.3)',
+  },
+];
 
 export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats }: CoursesClientWrapperProps) {
   const isEmpty = enrolledCourses.length === 0 && availableCourses.length === 0;
 
   return (
     <div className="min-h-screen bg-mesh-subtle">
-      <div className="container-mobile py-6 pb-8">
+      <div className="container-mobile py-6 pb-10">
 
-        {/* Header */}
+        {/* ── Page Header ── */}
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
+          initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="mb-6"
+          transition={{ duration: 0.38 }}
+          className="mb-7"
         >
-          <h1 className="text-2xl font-black text-white mb-1">
-            הקורסים שלי 📚
-          </h1>
-          <p className="text-slate-400 text-sm">המשיכו ללמוד והתקדמו ליעדים שלכם</p>
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0"
+              style={{ background: 'linear-gradient(135deg, rgba(20,184,166,0.3), rgba(16,185,129,0.15))', border: '1px solid rgba(20,184,166,0.4)', boxShadow: '0 4px 16px rgba(20,184,166,0.2)' }}>
+              <BookOpen className="w-5 h-5 text-primary-300" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-black text-white leading-tight">הקורסים שלי</h1>
+              <p className="text-slate-400 text-sm mt-0.5">המשיכו ללמוד והתקדמו ליעדים שלכם</p>
+            </div>
+          </div>
+          <div className="h-px mt-4" style={{ background: 'linear-gradient(to left, transparent, rgba(20,184,166,0.4), rgba(16,185,129,0.2), transparent)' }} />
         </motion.div>
 
-        {/* Stats Row */}
+        {/* ── Stats Row ── */}
         {enrolledCourses.length > 0 && (
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.4 }}
-            className="grid grid-cols-3 gap-3 mb-6"
+            transition={{ delay: 0.12, duration: 0.38 }}
+            className="grid grid-cols-3 gap-2.5 mb-8"
           >
-            {[
-              { label: 'קורסים פעילים', value: stats.activeCoursesCount, icon: BookOpen, color: '#14b8a6' },
-              { label: 'שיעורים הושלמו', value: stats.totalLessonsCompleted, icon: Award, color: '#10b981' },
-              { label: 'ממוצע התקדמות', value: `${stats.avgProgress}%`, icon: TrendingUp, color: '#d946ef' },
-            ].map((s) => (
+            {statCards(stats).map((s) => (
               <div
                 key={s.label}
-                className="glass-card p-3 text-center"
+                className="relative overflow-hidden rounded-2xl p-3 text-center"
+                style={{ background: s.bg, border: `1px solid ${s.border}`, boxShadow: `0 4px 20px ${s.glow}` }}
               >
-                <div className="w-8 h-8 rounded-xl mx-auto mb-1.5 flex items-center justify-center"
-                  style={{ background: `${s.color}22`, border: `1px solid ${s.color}44` }}>
+                <div className="absolute inset-x-0 top-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${s.color}, transparent)` }} />
+                <div className="w-8 h-8 rounded-xl mx-auto mb-2 flex items-center justify-center"
+                  style={{ background: `${s.color}22`, boxShadow: `0 0 12px ${s.glow}` }}>
                   <s.icon className="w-4 h-4" style={{ color: s.color }} />
                 </div>
-                <p className="text-lg font-black text-white leading-none">{s.value}</p>
-                <p className="text-xs text-slate-500 mt-0.5 leading-tight">{s.label}</p>
+                <p className="text-xl font-black leading-none" style={{ color: s.color }}>{s.value}</p>
+                <p className="text-[10px] text-slate-400 mt-1 leading-tight font-medium">{s.label}</p>
               </div>
             ))}
           </motion.div>
         )}
 
-        {/* Enrolled Courses */}
+        {/* ── Enrolled Courses ── */}
         {enrolledCourses.length > 0 && (
-          <section className="mb-8">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-7 h-7 rounded-xl flex items-center justify-center"
-                style={{ background: 'rgba(20,184,166,0.2)', border: '1px solid rgba(20,184,166,0.3)' }}>
-                <Zap className="w-4 h-4 text-primary-400" />
+          <section className="mb-9">
+            <motion.div
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.18, duration: 0.3 }}
+              className="flex items-center gap-3 mb-5"
+            >
+              <div className="w-1.5 h-7 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #14FFEC, #10b981)' }} />
+              <div className="flex items-center gap-2.5 flex-1">
+                <Zap className="w-4.5 h-4.5 text-primary-400" />
+                <h2 className="text-lg font-black text-white">בלמידה</h2>
+                <span className="badge-primary text-xs font-bold px-2.5">{enrolledCourses.length} קורסים</span>
               </div>
-              <h2 className="text-base font-bold text-white">בלמידה</h2>
-              <span className="badge-primary text-xs">{enrolledCourses.length}</span>
-            </div>
+            </motion.div>
             <motion.div variants={container} initial="hidden" animate="show" className="space-y-4">
               {enrolledCourses.map((course) => (
                 <motion.div key={course.id} variants={item}>
@@ -89,22 +129,31 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
           </section>
         )}
 
-        {/* Available Courses */}
+        {/* ── Divider between sections ── */}
+        {enrolledCourses.length > 0 && availableCourses.length > 0 && (
+          <div className="h-px mb-9" style={{ background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent)' }} />
+        )}
+
+        {/* ── Available Courses ── */}
         {availableCourses.length > 0 && (
           <section>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-7 h-7 rounded-xl flex items-center justify-center"
-                style={{ background: 'rgba(16,185,129,0.2)', border: '1px solid rgba(16,185,129,0.3)' }}>
-                <BookOpen className="w-4 h-4 text-secondary-400" />
-              </div>
-              <h2 className="text-base font-bold text-white">קורסים זמינים 🎯</h2>
-            </div>
             <motion.div
-              variants={container}
-              initial="hidden"
-              animate="show"
-              className="space-y-4"
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: enrolledCourses.length > 0 ? 0.28 : 0.18, duration: 0.3 }}
+              className="flex items-center gap-3 mb-5"
             >
+              <div className="w-1.5 h-7 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #a855f7, #6366f1)' }} />
+              <div className="flex items-center gap-2.5 flex-1">
+                <Sparkles className="w-4.5 h-4.5 text-purple-400" />
+                <h2 className="text-lg font-black text-white">קורסים זמינים</h2>
+                <span className="text-xs font-bold px-2.5 py-1 rounded-full"
+                  style={{ background: 'rgba(168,85,247,0.18)', border: '1px solid rgba(168,85,247,0.3)', color: '#c084fc' }}>
+                  {availableCourses.length} זמינים
+                </span>
+              </div>
+            </motion.div>
+            <motion.div variants={container} initial="hidden" animate="show" className="space-y-4">
               {availableCourses.map((course) => (
                 <motion.div key={course.id} variants={item}>
                   <CourseCard course={course} progress={0} isEnrolled={false} />
@@ -114,21 +163,24 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
           </section>
         )}
 
-        {/* Empty State */}
+        {/* ── Empty State ── */}
         {isEmpty && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-center py-16"
+            className="text-center py-20"
           >
-            <div className="w-20 h-20 rounded-3xl mx-auto mb-5 flex items-center justify-center text-4xl"
-              style={{ background: 'rgba(20,184,166,0.1)', border: '1px solid rgba(20,184,166,0.2)' }}>
-              📚
+            <div className="relative w-24 h-24 mx-auto mb-6">
+              <div className="absolute inset-0 rounded-3xl"
+                style={{ background: 'linear-gradient(135deg, rgba(20,184,166,0.15), rgba(16,185,129,0.08))', border: '1px solid rgba(20,184,166,0.25)', boxShadow: '0 8px 32px rgba(20,184,166,0.15)' }} />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <GraduationCap className="w-10 h-10 text-primary-400" />
+              </div>
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">אין קורסים עדיין</h3>
-            <p className="text-slate-400 text-sm">
-              המנהל יפתח עבורך גישה לקורסים בקרוב ✨
+            <h3 className="text-2xl font-black text-white mb-2">אין קורסים עדיין</h3>
+            <p className="text-slate-400 text-sm max-w-[220px] mx-auto leading-relaxed">
+              המנהל יפתח עבורך גישה לקורסים בקרוב
             </p>
           </motion.div>
         )}

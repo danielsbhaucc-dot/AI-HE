@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle, XCircle, Info, AlertTriangle, X } from 'lucide-react';
+import { CheckCircle2, XCircle, Info, AlertTriangle, X } from 'lucide-react';
 
 export type ToastType = 'success' | 'error' | 'info' | 'warning';
 
@@ -20,52 +20,60 @@ interface ToastProps {
 
 const config = {
   success: {
-    icon: CheckCircle,
-    iconBg: 'rgba(16,185,129,0.2)',
+    icon: CheckCircle2,
+    iconBg: 'linear-gradient(135deg, rgba(16,185,129,0.35), rgba(5,150,105,0.25))',
     iconColor: '#34d399',
-    titleColor: '#a7f3d0',
-    msgColor: '#6ee7b7',
-    border: 'rgba(16,185,129,0.3)',
-    glow: 'rgba(16,185,129,0.12)',
-    bar: 'linear-gradient(90deg, #10b981, #34d399)',
-    cardBg: 'rgba(16,185,129,0.07)',
-    sideBar: '#10b981',
+    titleColor: '#ecfdf5',
+    msgColor: '#a7f3d0',
+    border: 'rgba(16,185,129,0.45)',
+    glow: 'rgba(16,185,129,0.22)',
+    bar: 'linear-gradient(90deg, #059669, #10b981, #34d399)',
+    cardBg: 'linear-gradient(135deg, rgba(16,185,129,0.18) 0%, rgba(5,150,105,0.10) 50%, rgba(11,18,32,0.85) 100%)',
+    sideBar: 'linear-gradient(to bottom, #10b981, #34d399)',
+    outerGlow: '0 0 40px rgba(16,185,129,0.18)',
+    label: 'הצלחה',
   },
   error: {
     icon: XCircle,
-    iconBg: 'rgba(239,68,68,0.2)',
-    iconColor: '#f87171',
-    titleColor: '#fecaca',
-    msgColor: '#fca5a5',
-    border: 'rgba(239,68,68,0.35)',
-    glow: 'rgba(239,68,68,0.15)',
-    bar: 'linear-gradient(90deg, #ef4444, #f87171)',
-    cardBg: 'rgba(239,68,68,0.08)',
-    sideBar: '#ef4444',
+    iconBg: 'linear-gradient(135deg, rgba(239,68,68,0.35), rgba(185,28,28,0.25))',
+    iconColor: '#fca5a5',
+    titleColor: '#fff1f2',
+    msgColor: '#fecaca',
+    border: 'rgba(239,68,68,0.5)',
+    glow: 'rgba(239,68,68,0.25)',
+    bar: 'linear-gradient(90deg, #b91c1c, #ef4444, #f87171)',
+    cardBg: 'linear-gradient(135deg, rgba(239,68,68,0.22) 0%, rgba(185,28,28,0.12) 50%, rgba(11,18,32,0.85) 100%)',
+    sideBar: 'linear-gradient(to bottom, #ef4444, #f87171)',
+    outerGlow: '0 0 40px rgba(239,68,68,0.22)',
+    label: 'שגיאה',
   },
   info: {
     icon: Info,
-    iconBg: 'rgba(59,130,246,0.2)',
-    iconColor: '#60a5fa',
-    titleColor: '#bfdbfe',
-    msgColor: '#93c5fd',
-    border: 'rgba(59,130,246,0.3)',
-    glow: 'rgba(59,130,246,0.12)',
-    bar: 'linear-gradient(90deg, #3b82f6, #60a5fa)',
-    cardBg: 'rgba(59,130,246,0.07)',
-    sideBar: '#3b82f6',
+    iconBg: 'linear-gradient(135deg, rgba(59,130,246,0.35), rgba(29,78,216,0.25))',
+    iconColor: '#93c5fd',
+    titleColor: '#eff6ff',
+    msgColor: '#bfdbfe',
+    border: 'rgba(59,130,246,0.45)',
+    glow: 'rgba(59,130,246,0.22)',
+    bar: 'linear-gradient(90deg, #1d4ed8, #3b82f6, #60a5fa)',
+    cardBg: 'linear-gradient(135deg, rgba(59,130,246,0.18) 0%, rgba(29,78,216,0.10) 50%, rgba(11,18,32,0.85) 100%)',
+    sideBar: 'linear-gradient(to bottom, #3b82f6, #60a5fa)',
+    outerGlow: '0 0 40px rgba(59,130,246,0.18)',
+    label: 'מידע',
   },
   warning: {
     icon: AlertTriangle,
-    iconBg: 'rgba(234,179,8,0.2)',
-    iconColor: '#fbbf24',
-    titleColor: '#fef08a',
-    msgColor: '#fde047',
-    border: 'rgba(234,179,8,0.3)',
-    glow: 'rgba(234,179,8,0.12)',
-    bar: 'linear-gradient(90deg, #eab308, #fbbf24)',
-    cardBg: 'rgba(234,179,8,0.07)',
-    sideBar: '#eab308',
+    iconBg: 'linear-gradient(135deg, rgba(234,179,8,0.35), rgba(161,98,7,0.25))',
+    iconColor: '#fde047',
+    titleColor: '#fefce8',
+    msgColor: '#fef08a',
+    border: 'rgba(234,179,8,0.45)',
+    glow: 'rgba(234,179,8,0.22)',
+    bar: 'linear-gradient(90deg, #a16207, #eab308, #fbbf24)',
+    cardBg: 'linear-gradient(135deg, rgba(234,179,8,0.18) 0%, rgba(161,98,7,0.10) 50%, rgba(11,18,32,0.85) 100%)',
+    sideBar: 'linear-gradient(to bottom, #eab308, #fbbf24)',
+    outerGlow: '0 0 40px rgba(234,179,8,0.18)',
+    label: 'אזהרה',
   },
 };
 
@@ -74,61 +82,62 @@ function Toast({ toast, onDismiss }: ToastProps) {
   const Icon = c.icon;
 
   useEffect(() => {
-    const t = setTimeout(() => onDismiss(toast.id), 4500);
+    const t = setTimeout(() => onDismiss(toast.id), 5000);
     return () => clearTimeout(t);
   }, [toast.id, onDismiss]);
 
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, y: -28, scale: 0.93 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: -20, scale: 0.95, transition: { duration: 0.18 } }}
-      transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+      initial={{ opacity: 0, y: -32, scale: 0.9, x: 20 }}
+      animate={{ opacity: 1, y: 0, scale: 1, x: 0 }}
+      exit={{ opacity: 0, y: -16, scale: 0.95, x: 20, transition: { duration: 0.2 } }}
+      transition={{ type: 'spring', stiffness: 380, damping: 28 }}
       className="relative overflow-hidden w-full"
       style={{
-        borderRadius: '18px',
-        background: `linear-gradient(135deg, ${c.cardBg}, rgba(11,18,32,0.88))`,
-        backdropFilter: 'blur(32px)',
-        WebkitBackdropFilter: 'blur(32px)',
-        border: `1px solid ${c.border}`,
-        boxShadow: `0 12px 40px rgba(0,0,0,0.45), 0 0 0 1px ${c.border}, inset 0 1px 0 rgba(255,255,255,0.06)`,
+        borderRadius: '20px',
+        background: c.cardBg,
+        backdropFilter: 'blur(40px)',
+        WebkitBackdropFilter: 'blur(40px)',
+        border: `1.5px solid ${c.border}`,
+        boxShadow: `0 16px 48px rgba(0,0,0,0.5), ${c.outerGlow}, inset 0 1px 0 rgba(255,255,255,0.08)`,
       }}
     >
-      {/* Top color glow strip */}
-      <div className="absolute inset-x-0 top-0 h-px" style={{ background: c.bar }} />
+      {/* Top gradient strip */}
+      <div className="absolute inset-x-0 top-0 h-[2px] rounded-t-[20px]" style={{ background: c.bar }} />
 
-      {/* Left color bar (RTL = right side visually) */}
-      <div className="absolute top-3 bottom-3 right-0 w-0.5 rounded-full" style={{ background: c.sideBar, opacity: 0.8 }} />
+      {/* Right accent bar (RTL layout) */}
+      <div className="absolute top-4 bottom-4 right-0 w-[3px] rounded-full" style={{ background: c.sideBar }} />
 
-      {/* Progress bar bottom */}
+      {/* Progress bar */}
       <motion.div
-        className="absolute bottom-0 right-0 h-0.5 rounded-full"
-        style={{ background: c.bar }}
+        className="absolute bottom-0 right-0 h-[2px] rounded-b-[20px]"
+        style={{ background: c.bar, opacity: 0.6 }}
         initial={{ width: '100%' }}
         animate={{ width: '0%' }}
-        transition={{ duration: 4.5, ease: 'linear' }}
+        transition={{ duration: 5.0, ease: 'linear' }}
       />
 
-      <div className="flex items-start gap-3 px-4 py-3.5 pr-5">
-        {/* Icon badge */}
+      <div className="flex items-start gap-3.5 px-4 py-4 pr-5">
+        {/* Icon */}
         <div
-          className="flex-shrink-0 mt-0.5 w-10 h-10 rounded-2xl flex items-center justify-center"
+          className="flex-shrink-0 w-11 h-11 rounded-2xl flex items-center justify-center"
           style={{
             background: c.iconBg,
-            boxShadow: `0 0 12px ${c.glow}`,
+            boxShadow: `0 4px 16px ${c.glow}, inset 0 1px 0 rgba(255,255,255,0.12)`,
+            border: `1px solid ${c.border}`,
           }}
         >
-          <Icon className="w-5 h-5" style={{ color: c.iconColor }} />
+          <Icon className="w-[22px] h-[22px]" style={{ color: c.iconColor }} strokeWidth={2.2} />
         </div>
 
         {/* Text */}
-        <div className="flex-1 min-w-0 text-right">
-          <p className="font-bold text-base leading-tight" style={{ color: c.titleColor, fontFamily: 'Rubik, Heebo, sans-serif' }}>
+        <div className="flex-1 min-w-0 text-right pt-0.5">
+          <p className="font-black text-[15px] leading-tight tracking-tight" style={{ color: c.titleColor, fontFamily: 'Rubik, Heebo, sans-serif' }}>
             {toast.title}
           </p>
           {toast.message && (
-            <p className="text-sm mt-0.5 leading-relaxed" style={{ color: c.msgColor, opacity: 0.85 }}>
+            <p className="text-sm mt-1 leading-relaxed font-medium" style={{ color: c.msgColor, opacity: 0.9 }}>
               {toast.message}
             </p>
           )}
@@ -137,12 +146,12 @@ function Toast({ toast, onDismiss }: ToastProps) {
         {/* Close */}
         <button
           onClick={() => onDismiss(toast.id)}
-          className="flex-shrink-0 w-7 h-7 rounded-xl flex items-center justify-center transition-colors"
-          style={{ color: 'rgba(255,255,255,0.35)' }}
-          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')}
-          onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+          className="flex-shrink-0 w-7 h-7 rounded-xl flex items-center justify-center transition-all mt-0.5"
+          style={{ color: 'rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.05)' }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.12)'; e.currentTarget.style.color = 'rgba(255,255,255,0.8)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = 'rgba(255,255,255,0.4)'; }}
         >
-          <X className="w-4 h-4" />
+          <X className="w-3.5 h-3.5" />
         </button>
       </div>
     </motion.div>
@@ -157,7 +166,7 @@ interface ToastContainerProps {
 
 export function ToastContainer({ toasts, onDismiss }: ToastContainerProps) {
   return (
-    <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] flex flex-col gap-2 w-full px-4 max-w-sm pointer-events-none">
+    <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[9999] flex flex-col gap-2.5 w-full px-4 max-w-[380px] pointer-events-none">
       <AnimatePresence mode="sync">
         {toasts.map((t) => (
           <div key={t.id} className="pointer-events-auto">

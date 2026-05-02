@@ -13,9 +13,9 @@ interface MobileHeaderProps {
 }
 
 const menuItems = [
-  { href: '/courses',  label: 'הקורסים שלי',  emoji: '📚', icon: BookOpen  },
-  { href: '/progress', label: 'התקדמות שלי', emoji: '📊', icon: TrendingUp },
-  { href: '/profile',  label: 'הפרופיל שלי',  emoji: '👤', icon: UserCircle },
+  { href: '/courses',  label: 'הקורסים שלי',  icon: BookOpen,    color: '#14b8a6' },
+  { href: '/progress', label: 'התקדמות שלי', icon: TrendingUp,  color: '#10b981' },
+  { href: '/profile',  label: 'הפרופיל שלי',  icon: UserCircle, color: '#d946ef' },
 ];
 
 export function MobileHeader({ user, title }: MobileHeaderProps) {
@@ -85,16 +85,20 @@ export function MobileHeader({ user, title }: MobileHeaderProps) {
                     key={item.href}
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`flex items-center gap-3 px-5 py-4 transition-all hover:bg-white/5 active:bg-white/10 no-tap-highlight ${idx < menuItems.length - 1 ? 'border-b border-white/5' : ''}`}
+                    className={`flex items-center gap-3.5 px-5 py-4 transition-all hover:bg-white/5 active:bg-white/10 no-tap-highlight ${idx < menuItems.length - 1 ? 'border-b border-white/5' : ''}`}
                   >
-                    <span className="text-xl">{item.emoji}</span>
-                    <span className="font-semibold text-slate-200">{item.label}</span>
-                    <item.icon className="w-4 h-4 text-primary-400 mr-auto" />
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{ background: `${item.color}18`, border: `1px solid ${item.color}33` }}>
+                      <item.icon className="w-4.5 h-4.5" style={{ color: item.color }} />
+                    </div>
+                    <span className="font-bold text-slate-100 flex-1">{item.label}</span>
+                    <item.icon className="w-3.5 h-3.5 text-slate-600" />
                   </Link>
                 ))}
-                <div className="px-5 py-3 border-t border-white/5">
-                  <p className="text-xs text-slate-500 text-center">
-                    👋 שלום, {user.email?.split('@')[0]}
+                <div className="px-5 py-3.5 border-t border-white/5 flex items-center gap-2.5">
+                  <UserCircle className="w-4 h-4 text-slate-500" />
+                  <p className="text-xs text-slate-500 font-medium">
+                    שלום, {user.email?.split('@')[0]}
                   </p>
                 </div>
               </div>

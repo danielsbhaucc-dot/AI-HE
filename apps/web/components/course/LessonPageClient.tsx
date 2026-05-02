@@ -4,7 +4,7 @@ import { useState, useTransition, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import {
   Clock, BookOpen, CheckCircle2, ExternalLink as ExternalLinkIcon,
-  Video, Headphones, FileText, Presentation, AlignLeft, Layers
+  Video, Headphones, FileText, Presentation, AlignLeft, Layers, Images
 } from 'lucide-react';
 import { VideoPlayer } from './VideoPlayer';
 import { AudioPlayer } from './AudioPlayer';
@@ -107,10 +107,13 @@ export function LessonPageClient({
                   </div>
                 )}
                 {progress.is_completed && (
-                  <span className="badge-success text-xs">✅ הושלם</span>
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold"
+                    style={{ background: 'rgba(16,185,129,0.2)', border: '1px solid rgba(16,185,129,0.4)', color: '#a7f3d0' }}>
+                    <CheckCircle2 className="w-3 h-3" /> הושלם
+                  </span>
                 )}
               </div>
-              <h1 className="text-lg font-black text-white leading-snug">{lesson.title}</h1>
+              <h1 className="text-xl font-black text-white leading-snug">{lesson.title}</h1>
               {lesson.description && (
                 <p className="text-sm text-slate-400 mt-1 leading-relaxed">{lesson.description}</p>
               )}
@@ -171,12 +174,10 @@ export function LessonPageClient({
             transition={{ delay: 0.18 }}
             className="glass-card p-5"
           >
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-7 h-7 rounded-xl flex items-center justify-center"
-                style={{ background: 'rgba(20,184,166,0.2)', border: '1px solid rgba(20,184,166,0.3)' }}>
-                <AlignLeft className="w-4 h-4 text-primary-400" />
-              </div>
-              <h2 className="font-bold text-white text-sm">תוכן השיעור</h2>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-1.5 h-6 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #14b8a6, #10b981)' }} />
+              <AlignLeft className="w-4 h-4 text-primary-400" />
+              <h2 className="font-black text-white text-base">תוכן השיעור</h2>
             </div>
             <div
               className="lesson-content"
@@ -210,8 +211,10 @@ export function LessonPageClient({
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.22 }}
           >
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-sm font-bold text-white">🖼️ תמונות</span>
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-1.5 h-6 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #f97316, #fb923c)' }} />
+              <Images className="w-4 h-4 text-orange-400" />
+              <span className="text-base font-black text-white">תמונות</span>
             </div>
             <ImageGallery
               images={imageFiles.map(f => ({ url: f.uploadthing_url!, name: f.uploadthing_name ?? undefined }))}
@@ -227,9 +230,10 @@ export function LessonPageClient({
             transition={{ delay: 0.25 }}
             className="glass-card p-4"
           >
-            <div className="flex items-center gap-2 mb-3">
-              <ExternalLinkIcon className="w-4 h-4 text-primary-400" />
-              <h3 className="font-bold text-white text-sm">קישורים נוספים</h3>
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-1.5 h-6 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #3b82f6, #60a5fa)' }} />
+              <ExternalLinkIcon className="w-4 h-4 text-blue-400" />
+              <h3 className="font-black text-white text-base">קישורים נוספים</h3>
             </div>
             <div className="space-y-2">
               {lesson.external_links.map((link) => (
@@ -241,9 +245,12 @@ export function LessonPageClient({
                   className="flex items-center gap-2 p-3 rounded-xl transition-all hover:bg-white/8"
                   style={{ border: '1px solid rgba(255,255,255,0.08)' }}
                 >
-                  <span className="text-lg">{link.icon ?? '🔗'}</span>
-                  <span className="text-sm text-primary-300 hover:text-primary-200 font-medium">{link.label}</span>
-                  <ExternalLinkIcon className="w-3.5 h-3.5 text-slate-500 mr-auto" />
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
+                    style={{ background: 'rgba(59,130,246,0.15)', border: '1px solid rgba(59,130,246,0.25)' }}>
+                    <ExternalLinkIcon className="w-3.5 h-3.5 text-blue-400" />
+                  </div>
+                  <span className="text-sm text-slate-200 hover:text-white font-semibold flex-1">{link.label}</span>
+                  <ExternalLinkIcon className="w-3 h-3 text-slate-600" />
                 </a>
               ))}
             </div>

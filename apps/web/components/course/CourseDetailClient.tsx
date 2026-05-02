@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import {
   Play, BookOpen, Clock, CheckCircle2, Lock,
-  ChevronLeft, Award, Zap, Video, Headphones, FileText, Presentation, AlignLeft, Layers
+  ChevronLeft, Award, Zap, Video, Headphones, FileText, Presentation, AlignLeft, Layers, Crown
 } from 'lucide-react';
 import { cn } from '../../lib/cn';
 
@@ -85,18 +85,27 @@ export function CourseDetailClient({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <div className="flex items-center gap-2 mb-2 flex-wrap">
+            <div className="flex items-center gap-2 mb-3 flex-wrap">
               {course.is_premium && (
-                <span className="badge-accent">⭐ פרימיום</span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold"
+                  style={{ background: 'rgba(168,85,247,0.25)', border: '1px solid rgba(168,85,247,0.4)', color: '#e9d5ff' }}>
+                  <Crown className="w-3 h-3" /> פרימיום
+                </span>
               )}
               {isEnrolled && progress === 100 && (
-                <span className="badge-success">✅ הושלם</span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold"
+                  style={{ background: 'rgba(16,185,129,0.25)', border: '1px solid rgba(16,185,129,0.4)', color: '#a7f3d0' }}>
+                  <CheckCircle2 className="w-3 h-3" /> הושלם
+                </span>
               )}
               {isEnrolled && progress > 0 && progress < 100 && (
-                <span className="badge-primary">📖 בלמידה</span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold"
+                  style={{ background: 'rgba(20,184,166,0.2)', border: '1px solid rgba(20,184,166,0.35)', color: '#5eead4' }}>
+                  <BookOpen className="w-3 h-3" /> בלמידה
+                </span>
               )}
             </div>
-            <h1 className="text-2xl font-black text-white mb-2 leading-tight">{course.title}</h1>
+            <h1 className="text-3xl font-black text-white mb-2 leading-tight">{course.title}</h1>
             {course.description && (
               <p className="text-slate-400 text-sm leading-relaxed mb-4">{course.description}</p>
             )}
@@ -143,21 +152,22 @@ export function CourseDetailClient({
               firstIncompleteLessonId ? (
                 <Link
                   href={`/lessons/${firstIncompleteLessonId}`}
-                  className="btn-primary w-full justify-center mb-6"
+                  className="btn-primary w-full justify-center mb-6 text-base py-4"
                 >
                   <Play className="w-5 h-5" fill="white" />
-                  {progress === 0 ? 'התחל ללמוד 🚀' : 'המשך ללמוד ▶️'}
+                  {progress === 0 ? 'התחל ללמוד' : 'המשך ללמוד'}
                 </Link>
               ) : (
-                <div className="w-full text-center py-3.5 rounded-2xl font-bold text-secondary-400 mb-6"
-                  style={{ background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.25)' }}>
-                  🎉 כל הכבוד! סיימת את הקורס!
+                <div className="w-full text-center py-4 rounded-2xl font-bold text-secondary-300 mb-6 flex items-center justify-center gap-2"
+                  style={{ background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.3)', boxShadow: '0 0 20px rgba(16,185,129,0.1)' }}>
+                  <Award className="w-5 h-5" />
+                  כל הכבוד! סיימת את הקורס!
                 </div>
               )
             ) : (
-              <div className="w-full text-center py-3.5 rounded-2xl font-bold text-slate-400 mb-6"
+              <div className="w-full text-center py-4 rounded-2xl font-bold text-slate-400 mb-6 flex items-center justify-center gap-2"
                 style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
-                <Lock className="w-4 h-4 inline-block ml-2" />
+                <Lock className="w-4 h-4" />
                 גישה תיפתח על ידי המנהל
               </div>
             )}
@@ -167,12 +177,14 @@ export function CourseDetailClient({
 
       {/* Lessons List */}
       <div className="container-mobile px-4 pb-8">
-        <div className="flex items-center gap-2 mb-4">
-          <div className="w-7 h-7 rounded-xl flex items-center justify-center"
-            style={{ background: 'rgba(20,184,166,0.2)', border: '1px solid rgba(20,184,166,0.3)' }}>
-            <Zap className="w-4 h-4 text-primary-400" />
-          </div>
-          <h2 className="text-base font-bold text-white">תוכן הקורס</h2>
+        <div className="flex items-center gap-3 mb-5">
+          <div className="w-1.5 h-7 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #14FFEC, #10b981)' }} />
+          <Zap className="w-4.5 h-4.5 text-primary-400" />
+          <h2 className="text-lg font-black text-white">תוכן הקורס</h2>
+          <span className="text-xs font-bold px-2.5 py-1 rounded-full mr-auto"
+            style={{ background: 'rgba(20,184,166,0.15)', border: '1px solid rgba(20,184,166,0.25)', color: '#5eead4' }}>
+            {course.lessons.length} שיעורים
+          </span>
         </div>
 
         <motion.div variants={container} initial="hidden" animate="show" className="space-y-2">

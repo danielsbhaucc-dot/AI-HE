@@ -99,7 +99,7 @@ function LoginFormContent() {
               <h2 className="text-white font-bold text-xl" style={{ fontFamily: 'Rubik, Heebo, sans-serif' }}>כניסה לחשבון</h2>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4" noValidate>
               {/* Email */}
               <div>
                 <label className="flex items-center gap-1.5 text-sm font-bold text-slate-200 mb-2">

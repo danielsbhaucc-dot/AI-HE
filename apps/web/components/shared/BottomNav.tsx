@@ -7,9 +7,9 @@ import { cn } from '../../lib/cn';
 import { motion } from 'framer-motion';
 
 const navItems = [
-  { href: '/courses',  label: 'קורסים',    icon: BookOpen,    emoji: '📚' },
-  { href: '/progress', label: 'התקדמות',   icon: TrendingUp,  emoji: '📊' },
-  { href: '/profile',  label: 'פרופיל',    icon: UserCircle,  emoji: '👤' },
+  { href: '/courses',  label: 'קורסים',  icon: BookOpen   },
+  { href: '/progress', label: 'התקדמות', icon: TrendingUp },
+  { href: '/profile',  label: 'פרופיל',  icon: UserCircle },
 ];
 
 export function BottomNav() {
