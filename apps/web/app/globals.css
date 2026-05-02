@@ -372,20 +372,20 @@ html {
 
   /* Background Meshes */
   .bg-mesh {
-    background-color: #0c1523;
+    background-color: #0b1220;
     background-image:
-      radial-gradient(at 20% 15%, hsla(168, 70%, 30%, 0.10) 0px, transparent 55%),
-      radial-gradient(at 85% 5%,  hsla(152, 70%, 30%, 0.10) 0px, transparent 55%),
-      radial-gradient(at 5% 60%,  hsla(280, 60%, 40%, 0.06) 0px, transparent 50%),
-      radial-gradient(at 90% 60%, hsla(168, 60%, 30%, 0.08) 0px, transparent 50%),
-      radial-gradient(at 50% 90%, hsla(152, 60%, 30%, 0.07) 0px, transparent 50%);
+      radial-gradient(at 20% 15%, hsla(168, 60%, 28%, 0.06) 0px, transparent 55%),
+      radial-gradient(at 85% 5%,  hsla(152, 60%, 28%, 0.06) 0px, transparent 55%),
+      radial-gradient(at 5% 60%,  hsla(280, 50%, 35%, 0.03) 0px, transparent 50%),
+      radial-gradient(at 90% 60%, hsla(168, 50%, 28%, 0.05) 0px, transparent 50%),
+      radial-gradient(at 50% 90%, hsla(152, 50%, 28%, 0.04) 0px, transparent 50%);
   }
 
   .bg-mesh-subtle {
-    background-color: #0c1523;
+    background-color: #0b1220;
     background-image:
-      radial-gradient(at 30% 20%, hsla(168, 50%, 30%, 0.07) 0px, transparent 50%),
-      radial-gradient(at 80% 80%, hsla(152, 50%, 30%, 0.07) 0px, transparent 50%);
+      radial-gradient(at 30% 20%, hsla(168, 45%, 28%, 0.05) 0px, transparent 50%),
+      radial-gradient(at 80% 80%, hsla(152, 45%, 28%, 0.05) 0px, transparent 50%);
   }
 
   /* Glass Utility */

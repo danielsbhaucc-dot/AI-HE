@@ -20,6 +20,10 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email.includes('@')) {
+      toast.error('אימייל לא תקין', 'יש להזין כתובת אימייל עם @');
+      return;
+    }
     setIsLoading(true);
 
     try {
@@ -84,10 +88,10 @@ export default function RegisterPage() {
             </div>
             <div className="flex items-center justify-center gap-3 mt-4">
               <div className="h-px flex-1 max-w-[60px]" style={{ background: 'linear-gradient(to left, rgba(20,184,166,0.5), transparent)' }} />
-              <span className="text-slate-400 text-sm font-medium">הרשמה חינמית</span>
+              <span className="text-slate-300 text-base font-semibold">הרשמה חינמית</span>
               <div className="h-px flex-1 max-w-[60px]" style={{ background: 'linear-gradient(to right, rgba(20,184,166,0.5), transparent)' }} />
             </div>
-            <p className="text-slate-500 text-sm mt-2">התחילו את המסע לחיים בריאים יותר</p>
+            <p className="text-slate-400 text-sm mt-2">התחילו את המסע לחיים בריאים יותר</p>
           </div>
 
           {/* ── Form Card ── */}
@@ -98,14 +102,14 @@ export default function RegisterPage() {
             boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
           }}>
             <div className="flex items-center gap-2 mb-6">
-              <div className="w-1 h-5 rounded-full" style={{ background: 'linear-gradient(to bottom, #14FFEC, #10b981)' }} />
-              <h2 className="text-white font-bold text-lg" style={{ fontFamily: 'Rubik, Heebo, sans-serif' }}>יצירת חשבון</h2>
+              <div className="w-1 h-6 rounded-full" style={{ background: 'linear-gradient(to bottom, #14FFEC, #10b981)' }} />
+              <h2 className="text-white font-bold text-xl" style={{ fontFamily: 'Rubik, Heebo, sans-serif' }}>יצירת חשבון</h2>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="flex items-center gap-1.5 text-sm font-semibold text-slate-300 mb-2">
-                  <User className="w-3.5 h-3.5 text-primary-400" />
+                <label className="flex items-center gap-1.5 text-sm font-bold text-slate-200 mb-2">
+                  <User className="w-4 h-4 text-primary-400" />
                   שם מלא
                 </label>
                 <input
@@ -120,8 +124,8 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="flex items-center gap-1.5 text-sm font-semibold text-slate-300 mb-2">
-                  <Mail className="w-3.5 h-3.5 text-primary-400" />
+                <label className="flex items-center gap-1.5 text-sm font-bold text-slate-200 mb-2">
+                  <Mail className="w-4 h-4 text-primary-400" />
                   כתובת אימייל
                 </label>
                 <input
@@ -137,8 +141,8 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="flex items-center gap-1.5 text-sm font-semibold text-slate-300 mb-2">
-                  <Lock className="w-3.5 h-3.5 text-primary-400" />
+                <label className="flex items-center gap-1.5 text-sm font-bold text-slate-200 mb-2">
+                  <Lock className="w-4 h-4 text-primary-400" />
                   סיסמה
                 </label>
                 <div className="relative">
@@ -163,13 +167,13 @@ export default function RegisterPage() {
               <div className="pt-1">
                 <div className="h-px w-full mb-4" style={{ background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent)' }} />
                 <button type="submit" disabled={isLoading}
-                  className="w-full py-4 rounded-2xl font-bold text-base text-white transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2"
+                  className="w-full py-4 rounded-2xl font-bold text-lg text-white transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2"
                   style={{ background: 'linear-gradient(135deg, #14b8a6, #10b981)', boxShadow: '0 8px 24px rgba(20,184,166,0.3)' }}>
                   {isLoading ? (
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   ) : (
                     <>
-                      <UserPlus className="w-4 h-4" />
+                      <UserPlus className="w-5 h-5" />
                       יצירת חשבון חינמי
                     </>
                   )}
