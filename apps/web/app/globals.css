@@ -459,6 +459,19 @@ html {
 }
 
 /* =============================================
+   NURAWELL LOGO ANIMATIONS
+   ============================================= */
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes beat {
+  0%, 100% { opacity: 0.75; }
+  45% { opacity: 1; }
+}
+
+/* =============================================
    SCROLLBAR CUSTOM (desktop)
    ============================================= */
 @media (min-width: 768px) {

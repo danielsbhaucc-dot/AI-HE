@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { User } from '@supabase/supabase-js';
-import { BookOpen, TrendingUp, UserCircle, X, Menu, Leaf, Bell } from 'lucide-react';
+import { BookOpen, TrendingUp, UserCircle, X, Menu, Bell } from 'lucide-react';
+import { NuraWellLogo } from './NuraWellLogo';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -27,16 +28,10 @@ export function MobileHeader({ user, title }: MobileHeaderProps) {
           {/* Logo */}
           <Link
             href="/courses"
-            className="flex items-center gap-2 no-tap-highlight"
+            className="no-tap-highlight"
             onClick={() => setIsMenuOpen(false)}
           >
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ background: 'linear-gradient(135deg, #14b8a6, #10b981)', boxShadow: '0 4px 12px rgba(20,184,166,0.4)' }}>
-              <Leaf className="w-5 h-5 text-white" />
-            </div>
-            <span className="font-black text-lg text-white leading-none">
-              Nura<span className="text-gradient">Well</span>
-            </span>
+            <NuraWellLogo size="sm" />
           </Link>
 
           {/* Center Title */}
