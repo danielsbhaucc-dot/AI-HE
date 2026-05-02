@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Mail, Lock, User, Eye, EyeOff, ArrowLeft, Sparkles, CheckCircle } from 'lucide-react';
+import { Mail, Lock, User, Eye, EyeOff, ArrowLeft, Leaf } from 'lucide-react';
 import { createClient } from '../../../lib/supabase/client';
 
 export default function RegisterPage() {
@@ -46,7 +46,8 @@ export default function RegisterPage() {
 
       if (authData.user) {
         // Create profile
-        const { error: profileError } = await supabase.from('profiles').insert({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { error: profileError } = await (supabase.from('profiles') as any).insert({
           id: authData.user.id,
           full_name: fullName,
           role: 'user',
@@ -102,11 +103,15 @@ export default function RegisterPage() {
       >
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-primary-500/30">
-            <Sparkles className="w-8 h-8 text-white" />
+          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4"
+            style={{ background: 'linear-gradient(135deg, #14b8a6, #10b981)', boxShadow: '0 12px 30px rgba(20,184,166,0.45)' }}>
+            <Leaf className="w-8 h-8 text-white" fill="white" />
           </div>
-          <h1 className="text-3xl font-black text-white">צרו חשבון חדש 🚀</h1>
-          <p className="text-slate-400 mt-2">התחילו את המסע לחיים בריאים יותר</p>
+          <h1 className="text-3xl font-black">
+            <span style={{ background: 'linear-gradient(135deg, #14b8a6, #10b981, #2dd4bf)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>NuraWell</span>
+          </h1>
+          <p className="text-slate-300 font-semibold mt-1">צרו חשבון חדש 🚀</p>
+          <p className="text-slate-500 text-sm mt-1">התחילו את המסע לחיים בריאים יותר</p>
         </div>
 
         {/* Form Card */}

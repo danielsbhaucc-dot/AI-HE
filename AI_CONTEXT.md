@@ -1,4 +1,5 @@
-# 🤖 AI Context - Weight Loss Course System
+# 🤖 AI Context - NuraWell 🌿
+> **עדכון אחרון:** מערכת הקורסים הושלמה (Section 4) - ראה פרטים למטה
 
 ## System Overview
 Mobile-first, AI-ready course system for weight loss with RTL support, built with Next.js 15 + Supabase + Tailwind CSS.
@@ -195,13 +196,65 @@ When extending this codebase:
 | Purpose | File |
 |---------|------|
 | Database Types | `apps/web/lib/types/database.ts` |
+| Course Types | `apps/web/lib/types/course.ts` |
 | Supabase Client | `apps/web/lib/supabase/client.ts` |
 | Supabase Server | `apps/web/lib/supabase/server.ts` |
 | Tailwind Config | `apps/web/tailwind.config.ts` |
 | Global Styles | `apps/web/app/globals.css` |
 | Auth Middleware | `apps/web/middleware.ts` |
-| DB Schema | `supabase/migrations/000001_initial_schema.sql` |
+| DB Schema v1 | `supabase/migrations/000001_initial_schema.sql` |
+| DB Schema v2 AI | `supabase/migrations/000002_ai_ready_tables.sql` |
 
 ---
 
-**Built with ❤️ for AI-powered weight loss journey**
+## 📚 Course System (Section 4) - Completed
+
+### Pages
+| Route | File | Description |
+|-------|------|-------------|
+| `/courses` | `app/(dashboard)/courses/page.tsx` | Courses list with stats |
+| `/courses/[id]` | `app/(dashboard)/courses/[id]/page.tsx` | Course detail + lessons list |
+| `/lessons/[id]` | `app/(dashboard)/lessons/[id]/page.tsx` | Full lesson with all content types |
+| `/progress` | `app/(dashboard)/progress/page.tsx` | User progress & analytics |
+
+### Components (`components/course/`)
+| Component | Purpose |
+|-----------|---------|
+| `CoursesClientWrapper` | Animated courses list with stats cards |
+| `CourseDetailClient` | Course hero, progress bar, lessons list |
+| `LessonPageClient` | Lesson orchestrator (all content types) |
+| `VideoPlayer` | Multi-provider: Bunny, HeyGen, YouTube, Vimeo, custom |
+| `AudioPlayer` | Full audio player with seek, mute, restart |
+| `PDFViewer` | PDF/presentation embed with download |
+| `ImageGallery` | Image grid with lightbox |
+| `TaskChecklist` | Interactive task list with progress bar |
+| `HabitTracker` | 7-day habit grid with streak counter |
+| `LessonNav` | Prev/next navigation + mark complete |
+| `ProgressPageClient` | Stats, course progress, activity feed |
+
+### API Routes (`app/api/v1/`)
+| Route | Method | Purpose |
+|-------|--------|---------|
+| `/api/v1/progress` | `POST` | Save lesson progress (upsert) |
+| `/api/v1/progress` | `GET` | Fetch progress by lesson_id or course_id |
+
+### AI-Ready DB Tables (migration 000002)
+- `ai_interactions` - All AI chat history with context
+- `user_plans` - AI-generated personalized plans (weekly/nutrition/exercise)
+- `notifications` - Push-ready notifications (AI-triggered + system)
+- `user_measurements` - Body measurements over time
+- `achievements` - Gamification badges
+- `profiles` extended with: `goal_weight_kg`, `activity_level`, `dietary_preferences`, `ai_context`, `streak_days`
+
+### Design System
+- **Colors:** primary teal `#14b8a6`, secondary emerald `#10b981`, accent purple `#d946ef`, energy orange `#f97316`
+- **Glass classes:** `.glass-card`, `.glass-card-strong`, `.glass-card-dark`, `.card-premium`
+- **Buttons:** `.btn-primary`, `.btn-secondary`, `.btn-success`, `.btn-ghost`, `.btn-icon`
+- **Badges:** `.badge-primary`, `.badge-success`, `.badge-warning`, `.badge-energy`, `.badge-accent`
+- **Progress:** `.progress-bar` + `.progress-bar-fill` (animated, RTL-aware)
+- **Background:** `.bg-mesh`, `.bg-mesh-subtle` (multi-radial gradient)
+- **Typography:** Rubik (headings) + Heebo (body), full RTL
+
+---
+
+**NuraWell - Built with ❤️ for AI-powered health journeys** 🌿

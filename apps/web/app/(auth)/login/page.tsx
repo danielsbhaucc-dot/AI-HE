@@ -4,7 +4,7 @@ import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Mail, Lock, Eye, EyeOff, ArrowLeft, Sparkles } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ArrowLeft, Leaf } from 'lucide-react';
 import { createClient } from '../../../lib/supabase/client';
 
 // Prevent static generation issues
@@ -58,11 +58,15 @@ function LoginFormContent() {
       >
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-primary-500/30">
-            <Sparkles className="w-8 h-8 text-white" />
+          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4"
+            style={{ background: 'linear-gradient(135deg, #14b8a6, #10b981)', boxShadow: '0 12px 30px rgba(20,184,166,0.45)' }}>
+            <Leaf className="w-8 h-8 text-white" fill="white" />
           </div>
-          <h1 className="text-3xl font-black text-white">ברוכים הבאים! 👋</h1>
-          <p className="text-slate-400 mt-2">התחברו כדי להמשיך את המסע שלכם</p>
+          <h1 className="text-3xl font-black">
+            <span style={{ background: 'linear-gradient(135deg, #14b8a6, #10b981, #2dd4bf)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>NuraWell</span>
+          </h1>
+          <p className="text-slate-300 font-semibold mt-1">ברוכים הבאים! 👋</p>
+          <p className="text-slate-500 text-sm mt-1">התחברו כדי להמשיך את המסע שלכם</p>
         </div>
 
         {/* Form Card */}
@@ -157,7 +161,7 @@ function LoginFormContent() {
 export default function LoginPage() {
   return (
     <Suspense fallback={
-      <main className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 flex items-center justify-center">
+      <main className="min-h-screen bg-mesh flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-primary-500/30 border-t-primary-500 rounded-full animate-spin" />
       </main>
     }>

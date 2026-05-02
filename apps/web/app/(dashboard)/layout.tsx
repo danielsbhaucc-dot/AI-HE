@@ -16,9 +16,9 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen" style={{background: '#0f172a'}}>
+    <div className="min-h-screen bg-mesh">
       <MobileHeader user={user} />
-      <main className="pb-20 pt-16">
+      <main className="pb-24 pt-16 min-h-screen">
         {children}
       </main>
       <BottomNav />

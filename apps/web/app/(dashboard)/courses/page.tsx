@@ -1,111 +1,112 @@
+import type { Metadata } from 'next';
 import { createClient } from '../../../lib/supabase/server';
 import { redirect } from 'next/navigation';
-import { CourseCard } from '../../../components/shared/CourseCard';
-import { BookOpen } from 'lucide-react';
+import { CoursesClientWrapper } from '../../../components/course/CoursesClientWrapper';
+import type { CourseWithProgress } from '../../../lib/types/course';
+// Note: Supabase client returns 'never' types without generated DB types.
+// Using (supabase as any) with explicit interfaces is intentional until DB types are generated.
+
+export const metadata: Metadata = {
+  title: 'הקורסים שלי',
+  description: 'כל הקורסים שלך ב-NuraWell - התחל ללמוד ולהתקדם',
+};
 
 export default async function CoursesPage() {
   const supabase = await createClient();
-  
-  // Get current user
   const { data: { user } } = await supabase.auth.getUser();
-  
-  if (!user) {
-    redirect('/login');
+
+  if (!user) redirect('/login');
+
+  interface RawEnrollmentRow {
+    course_id: string;
+    course: RawCourseRow | RawCourseRow[] | null;
+  }
+  interface RawCourseRow {
+    id: string;
+    title: string;
+    description: string | null;
+    thumbnail_url: string | null;
+    is_premium: boolean;
+    lessons: { id: string }[];
+  }
+  interface RawProgressRow {
+    lesson_id: string;
+    is_completed: boolean;
   }
 
-  // Get user's enrollments with course data
-  const { data: enrollments } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: rawEnrollments } = await (supabase as any)
     .from('enrollments')
-    .select(`
-      *,
-      course:courses(*, lessons(id))
-    `)
+    .select('course_id, course:courses(id, title, description, thumbnail_url, is_premium, lessons(id))')
     .eq('user_id', user.id)
     .eq('is_active', true);
 
-  // Get all published courses (for discovery)
-  const { data: allCourses } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: rawAllCourses } = await (supabase as any)
     .from('courses')
-    .select('*, lessons(id)')
-    .eq('is_published', true);
+    .select('id, title, description, thumbnail_url, is_premium, lessons(id)')
+    .eq('is_published', true)
+    .order('sort_order');
 
-  const enrolledCourseIds = enrollments?.map(e => e.course_id) || [];
-  
-  const enrolledCourses = enrollments?.map(e => ({
-    ...e.course,
-    progress: Math.floor(Math.random() * 100), // TODO: Calculate real progress
-    isEnrolled: true,
-  })) || [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: rawProgressRows } = await (supabase as any)
+    .from('lesson_progress')
+    .select('lesson_id, is_completed')
+    .eq('user_id', user.id);
 
-  const availableCourses = allCourses
-    ?.filter(c => !enrolledCourseIds.includes(c.id))
+  const enrollments = (rawEnrollments as RawEnrollmentRow[]) || [];
+  const allCourses = (rawAllCourses as RawCourseRow[]) || [];
+  const progressRows = (rawProgressRows as RawProgressRow[]) || [];
+
+  const enrolledCourseIds = new Set(enrollments.map(e => e.course_id));
+  const completedLessonIds = new Set(
+    progressRows.filter(p => p.is_completed).map(p => p.lesson_id)
+  );
+
+  const enrolledCourses: CourseWithProgress[] = enrollments
+    .map(e => {
+      const course = Array.isArray(e.course) ? e.course[0] : e.course;
+      if (!course) return null;
+      const lessons = course.lessons || [];
+      const total = lessons.length || 1;
+      const done = lessons.filter(l => completedLessonIds.has(l.id)).length;
+      return {
+        id: course.id,
+        title: course.title,
+        description: course.description,
+        thumbnail_url: course.thumbnail_url,
+        is_premium: course.is_premium,
+        lessons,
+        progress: Math.round((done / total) * 100),
+        isEnrolled: true,
+      } as CourseWithProgress;
+    })
+    .filter((c): c is CourseWithProgress => c !== null);
+
+  const availableCourses: CourseWithProgress[] = allCourses
+    .filter(c => !enrolledCourseIds.has(c.id))
     .map(c => ({
-      ...c,
+      id: c.id,
+      title: c.title,
+      description: c.description,
+      thumbnail_url: c.thumbnail_url,
+      is_premium: c.is_premium,
+      lessons: c.lessons || [],
       progress: 0,
       isEnrolled: false,
-    })) || [];
+    }));
+
+  const totalLessonsCompleted = completedLessonIds.size;
+  const activeCoursesCount = enrolledCourses.length;
+  const avgProgress = enrolledCourses.length
+    ? Math.round(enrolledCourses.reduce((s, c) => s + c.progress, 0) / enrolledCourses.length)
+    : 0;
 
   return (
-    <div className="container-mobile py-6">
-      <h1 className="text-2xl font-bold text-text-primary mb-2">
-        הקורסים שלי 📚
-      </h1>
-      <p className="text-text-secondary mb-6">
-        המשיכו ללמוד והתקדמו ליעדים שלכם
-      </p>
-
-      {/* Enrolled Courses */}
-      {enrolledCourses.length > 0 && (
-        <section className="mb-8">
-          <h2 className="text-lg font-semibold text-text-primary mb-4 flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-primary-500" />
-            בלמידה
-          </h2>
-          <div className="space-y-4">
-            {enrolledCourses.map((course) => (
-              <CourseCard
-                key={course.id}
-                course={course}
-                progress={course.progress}
-                isEnrolled={true}
-              />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Available Courses */}
-      {availableCourses.length > 0 && (
-        <section>
-          <h2 className="text-lg font-semibold text-text-primary mb-4">
-            קורסים זמינים 🎯
-          </h2>
-          <div className="space-y-4">
-            {availableCourses.map((course) => (
-              <CourseCard
-                key={course.id}
-                course={course}
-                progress={0}
-                isEnrolled={false}
-              />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {enrolledCourses.length === 0 && availableCourses.length === 0 && (
-        <div className="text-center py-12">
-          <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
-            <BookOpen className="w-8 h-8 text-gray-400" />
-          </div>
-          <h3 className="text-lg font-medium text-text-primary mb-2">
-            אין קורסים עדיין
-          </h3>
-          <p className="text-text-secondary">
-            הצטרפו לקורס ראשון כדי להתחיל!
-          </p>
-        </div>
-      )}
-    </div>
+    <CoursesClientWrapper
+      enrolledCourses={enrolledCourses}
+      availableCourses={availableCourses}
+      stats={{ totalLessonsCompleted, activeCoursesCount, avgProgress }}
+    />
   );
 }

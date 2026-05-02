@@ -13,18 +13,14 @@ const nextConfig = {
   },
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '*.supabase.co',
-      },
-      {
-        protocol: 'https',
-        hostname: 'uploadthing.com',
-      },
-      {
-        protocol: 'https',
-        hostname: '*.uploadthing.com',
-      },
+      { protocol: 'https', hostname: '*.supabase.co' },
+      { protocol: 'https', hostname: 'uploadthing.com' },
+      { protocol: 'https', hostname: '*.uploadthing.com' },
+      { protocol: 'https', hostname: '*.utfs.io' },
+      { protocol: 'https', hostname: '*.bunnycdn.com' },
+      { protocol: 'https', hostname: '*.b-cdn.net' },
+      { protocol: 'https', hostname: 'img.youtube.com' },
+      { protocol: 'https', hostname: 'i.vimeocdn.com' },
     ],
   },
   async headers() {
