@@ -21,35 +21,51 @@ interface ToastProps {
 const config = {
   success: {
     icon: CheckCircle,
-    bg: 'rgba(16,185,129,0.15)',
-    border: 'rgba(16,185,129,0.35)',
-    iconColor: '#10b981',
-    titleColor: '#6ee7b7',
-    bar: '#10b981',
+    iconBg: 'rgba(16,185,129,0.2)',
+    iconColor: '#34d399',
+    titleColor: '#a7f3d0',
+    msgColor: '#6ee7b7',
+    border: 'rgba(16,185,129,0.3)',
+    glow: 'rgba(16,185,129,0.12)',
+    bar: 'linear-gradient(90deg, #10b981, #34d399)',
+    cardBg: 'rgba(16,185,129,0.07)',
+    sideBar: '#10b981',
   },
   error: {
     icon: XCircle,
-    bg: 'rgba(239,68,68,0.15)',
+    iconBg: 'rgba(239,68,68,0.2)',
+    iconColor: '#f87171',
+    titleColor: '#fecaca',
+    msgColor: '#fca5a5',
     border: 'rgba(239,68,68,0.35)',
-    iconColor: '#ef4444',
-    titleColor: '#fca5a5',
-    bar: '#ef4444',
+    glow: 'rgba(239,68,68,0.15)',
+    bar: 'linear-gradient(90deg, #ef4444, #f87171)',
+    cardBg: 'rgba(239,68,68,0.08)',
+    sideBar: '#ef4444',
   },
   info: {
     icon: Info,
-    bg: 'rgba(59,130,246,0.15)',
-    border: 'rgba(59,130,246,0.35)',
-    iconColor: '#3b82f6',
-    titleColor: '#93c5fd',
-    bar: '#3b82f6',
+    iconBg: 'rgba(59,130,246,0.2)',
+    iconColor: '#60a5fa',
+    titleColor: '#bfdbfe',
+    msgColor: '#93c5fd',
+    border: 'rgba(59,130,246,0.3)',
+    glow: 'rgba(59,130,246,0.12)',
+    bar: 'linear-gradient(90deg, #3b82f6, #60a5fa)',
+    cardBg: 'rgba(59,130,246,0.07)',
+    sideBar: '#3b82f6',
   },
   warning: {
     icon: AlertTriangle,
-    bg: 'rgba(234,179,8,0.15)',
-    border: 'rgba(234,179,8,0.35)',
-    iconColor: '#eab308',
-    titleColor: '#fde047',
-    bar: '#eab308',
+    iconBg: 'rgba(234,179,8,0.2)',
+    iconColor: '#fbbf24',
+    titleColor: '#fef08a',
+    msgColor: '#fde047',
+    border: 'rgba(234,179,8,0.3)',
+    glow: 'rgba(234,179,8,0.12)',
+    bar: 'linear-gradient(90deg, #eab308, #fbbf24)',
+    cardBg: 'rgba(234,179,8,0.07)',
+    sideBar: '#eab308',
   },
 };
 
@@ -58,57 +74,75 @@ function Toast({ toast, onDismiss }: ToastProps) {
   const Icon = c.icon;
 
   useEffect(() => {
-    const t = setTimeout(() => onDismiss(toast.id), 4000);
+    const t = setTimeout(() => onDismiss(toast.id), 4500);
     return () => clearTimeout(t);
   }, [toast.id, onDismiss]);
 
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, y: -24, scale: 0.95 }}
+      initial={{ opacity: 0, y: -28, scale: 0.93 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: -16, scale: 0.95 }}
-      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-      className="relative overflow-hidden rounded-2xl shadow-2xl w-full max-w-sm"
+      exit={{ opacity: 0, y: -20, scale: 0.95, transition: { duration: 0.18 } }}
+      transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+      className="relative overflow-hidden w-full"
       style={{
-        background: 'rgba(15,23,42,0.92)',
-        backdropFilter: 'blur(24px)',
+        borderRadius: '18px',
+        background: `linear-gradient(135deg, ${c.cardBg}, rgba(11,18,32,0.88))`,
+        backdropFilter: 'blur(32px)',
+        WebkitBackdropFilter: 'blur(32px)',
         border: `1px solid ${c.border}`,
-        boxShadow: `0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px ${c.border}`,
+        boxShadow: `0 12px 40px rgba(0,0,0,0.45), 0 0 0 1px ${c.border}, inset 0 1px 0 rgba(255,255,255,0.06)`,
       }}
     >
-      {/* Progress bar */}
+      {/* Top color glow strip */}
+      <div className="absolute inset-x-0 top-0 h-px" style={{ background: c.bar }} />
+
+      {/* Left color bar (RTL = right side visually) */}
+      <div className="absolute top-3 bottom-3 right-0 w-0.5 rounded-full" style={{ background: c.sideBar, opacity: 0.8 }} />
+
+      {/* Progress bar bottom */}
       <motion.div
-        className="absolute bottom-0 left-0 h-0.5"
+        className="absolute bottom-0 right-0 h-0.5 rounded-full"
         style={{ background: c.bar }}
         initial={{ width: '100%' }}
         animate={{ width: '0%' }}
-        transition={{ duration: 4, ease: 'linear' }}
+        transition={{ duration: 4.5, ease: 'linear' }}
       />
 
-      <div className="flex items-start gap-3 p-4 pr-3">
-        {/* Icon */}
-        <div className="flex-shrink-0 mt-0.5 w-9 h-9 rounded-xl flex items-center justify-center"
-          style={{ background: c.bg }}>
+      <div className="flex items-start gap-3 px-4 py-3.5 pr-5">
+        {/* Icon badge */}
+        <div
+          className="flex-shrink-0 mt-0.5 w-10 h-10 rounded-2xl flex items-center justify-center"
+          style={{
+            background: c.iconBg,
+            boxShadow: `0 0 12px ${c.glow}`,
+          }}
+        >
           <Icon className="w-5 h-5" style={{ color: c.iconColor }} />
         </div>
 
         {/* Text */}
         <div className="flex-1 min-w-0 text-right">
-          <p className="font-bold text-sm leading-tight" style={{ color: c.titleColor }}>
+          <p className="font-bold text-base leading-tight" style={{ color: c.titleColor, fontFamily: 'Rubik, Heebo, sans-serif' }}>
             {toast.title}
           </p>
           {toast.message && (
-            <p className="text-xs text-slate-400 mt-0.5 leading-relaxed">{toast.message}</p>
+            <p className="text-sm mt-0.5 leading-relaxed" style={{ color: c.msgColor, opacity: 0.85 }}>
+              {toast.message}
+            </p>
           )}
         </div>
 
         {/* Close */}
         <button
           onClick={() => onDismiss(toast.id)}
-          className="flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center text-slate-500 hover:text-white hover:bg-white/10 transition-colors"
+          className="flex-shrink-0 w-7 h-7 rounded-xl flex items-center justify-center transition-colors"
+          style={{ color: 'rgba(255,255,255,0.35)' }}
+          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')}
+          onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
         >
-          <X className="w-3.5 h-3.5" />
+          <X className="w-4 h-4" />
         </button>
       </div>
     </motion.div>

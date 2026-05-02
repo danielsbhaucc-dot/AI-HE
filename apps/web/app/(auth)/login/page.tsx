@@ -58,9 +58,10 @@ function LoginFormContent() {
         className="min-h-screen flex flex-col justify-center px-4 py-10"
         style={{ background: '#0c1523' }}
       >
-        {/* Subtle top glow only */}
-        <div className="fixed inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at 50% -10%, rgba(20,184,166,0.08) 0%, transparent 55%)' }} />
+        {/* Deep glass background layers */}
+        <div className="fixed inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 50% -5%, rgba(20,184,166,0.09) 0%, transparent 50%)' }} />
+        <div className="fixed inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 80% 80%, rgba(16,185,129,0.05) 0%, transparent 45%)' }} />
+        <div className="fixed inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 10% 90%, rgba(99,102,241,0.04) 0%, transparent 40%)' }} />
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -86,10 +87,11 @@ function LoginFormContent() {
 
           {/* ── Form Card ── */}
           <div className="rounded-3xl p-8" style={{
-            background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.09)',
-            backdropFilter: 'blur(16px)',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+            background: 'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
+            border: '1px solid rgba(255,255,255,0.10)',
+            backdropFilter: 'blur(40px)',
+            WebkitBackdropFilter: 'blur(40px)',
+            boxShadow: '0 24px 64px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08)',
           }}>
             {/* Section title */}
             <div className="flex items-center gap-2 mb-6">
