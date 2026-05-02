@@ -37,14 +37,14 @@ export default async function CoursesPage() {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: rawEnrollments, error: enrollErr } = await (supabase as any)
+  const { data: rawEnrollments } = await (supabase as any)
     .from('enrollments')
     .select('course_id, course:courses(id, title, description, thumbnail_url, is_premium, lessons(id))')
     .eq('user_id', user.id)
     .eq('is_active', true);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: rawAllCourses, error: coursesErr } = await (supabase as any)
+  const { data: rawAllCourses } = await (supabase as any)
     .from('courses')
     .select('id, title, description, thumbnail_url, is_premium, lessons(id)')
     .eq('is_published', true)
@@ -59,19 +59,11 @@ export default async function CoursesPage() {
   const enrollments = (rawEnrollments as RawEnrollmentRow[]) || [];
   const allCourses = (rawAllCourses as RawCourseRow[]) || [];
   const progressRows = (rawProgressRows as RawProgressRow[]) || [];
-
   const enrolledCourseIds = new Set(enrollments.map(e => e.course_id));
   const completedLessonIds = new Set(
     progressRows.filter(p => p.is_completed).map(p => p.lesson_id)
   );
 
-  const debugInfo = {
-    userId: user.id,
-    allCoursesCount: allCourses.length,
-    enrollmentsCount: enrollments.length,
-    coursesError: coursesErr?.message ?? null,
-    enrollError: enrollErr?.message ?? null,
-  };
 
   const enrolledCourses: CourseWithProgress[] = enrollments
     .map(e => {
@@ -113,21 +105,10 @@ export default async function CoursesPage() {
     : 0;
 
   return (
-    <>
-      {/* TEMP DEBUG - remove after fixing */}
-      <div style={{ position: 'fixed', bottom: 80, left: 8, right: 8, zIndex: 9999, background: 'rgba(0,0,0,0.9)', border: '1px solid #f59e0b', borderRadius: 12, padding: '10px 14px', fontSize: 11, color: '#fde68a', fontFamily: 'monospace', lineHeight: 1.6 }}>
-        <div><b>DEBUG:</b></div>
-        <div>courses in DB: <b style={{ color: allCourses.length > 0 ? '#34d399' : '#f87171' }}>{allCourses.length}</b></div>
-        <div>enrollments: <b style={{ color: enrollments.length > 0 ? '#34d399' : '#f87171' }}>{enrollments.length}</b></div>
-        <div>coursesErr: <b style={{ color: debugInfo.coursesError ? '#f87171' : '#34d399' }}>{debugInfo.coursesError ?? 'none'}</b></div>
-        <div>enrollErr: <b style={{ color: debugInfo.enrollError ? '#f87171' : '#34d399' }}>{debugInfo.enrollError ?? 'none'}</b></div>
-        <div>userId: {debugInfo.userId?.slice(0, 8)}...</div>
-      </div>
-      <CoursesClientWrapper
-        enrolledCourses={enrolledCourses}
-        availableCourses={availableCourses}
-        stats={{ totalLessonsCompleted, activeCoursesCount, avgProgress }}
-      />
-    </>
+    <CoursesClientWrapper
+      enrolledCourses={enrolledCourses}
+      availableCourses={availableCourses}
+      stats={{ totalLessonsCompleted, activeCoursesCount, avgProgress }}
+    />
   );
 }

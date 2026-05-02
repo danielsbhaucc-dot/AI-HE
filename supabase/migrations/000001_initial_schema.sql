@@ -138,12 +138,19 @@ ALTER TABLE public.media_files ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.enrollments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.lesson_progress ENABLE ROW LEVEL SECURITY;
 
--- Profiles policies
+-- Helper function: check admin without triggering RLS recursion
+CREATE OR REPLACE FUNCTION public.is_admin()
+RETURNS BOOLEAN AS $$
+    SELECT EXISTS (
+        SELECT 1 FROM public.profiles
+        WHERE id = auth.uid() AND role = 'admin'
+    );
+$$ LANGUAGE SQL SECURITY DEFINER STABLE;
+
+-- Profiles policies (no self-reference to avoid recursion)
 CREATE POLICY "Users can view own profile"
     ON public.profiles FOR SELECT
-    USING (auth.uid() = id OR EXISTS (
-        SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'
-    ));
+    USING (auth.uid() = id OR public.is_admin());
 
 CREATE POLICY "Users can update own profile"
     ON public.profiles FOR UPDATE
@@ -152,31 +159,23 @@ CREATE POLICY "Users can update own profile"
 -- Courses policies
 CREATE POLICY "Anyone can view published courses"
     ON public.courses FOR SELECT
-    USING (is_published = TRUE OR EXISTS (
-        SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'
-    ));
+    USING (is_published = TRUE OR public.is_admin());
 
 CREATE POLICY "Only admin can modify courses"
     ON public.courses FOR ALL
-    USING (EXISTS (
-        SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'
-    ));
+    USING (public.is_admin());
 
 -- Lessons policies
 CREATE POLICY "Enrolled users can view lessons"
     ON public.lessons FOR SELECT
     USING (EXISTS (
-        SELECT 1 FROM public.enrollments 
+        SELECT 1 FROM public.enrollments
         WHERE user_id = auth.uid() AND course_id = lessons.course_id
-    ) OR EXISTS (
-        SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'
-    ));
+    ) OR public.is_admin());
 
 CREATE POLICY "Only admin can modify lessons"
     ON public.lessons FOR ALL
-    USING (EXISTS (
-        SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'
-    ));
+    USING (public.is_admin());
 
 -- Media files policies
 CREATE POLICY "Enrolled users can view media"
@@ -185,35 +184,25 @@ CREATE POLICY "Enrolled users can view media"
         SELECT 1 FROM public.lessons l
         JOIN public.enrollments e ON e.course_id = l.course_id
         WHERE l.id = media_files.lesson_id AND e.user_id = auth.uid()
-    ) OR EXISTS (
-        SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'
-    ));
+    ) OR public.is_admin());
 
 CREATE POLICY "Only admin can modify media"
     ON public.media_files FOR ALL
-    USING (EXISTS (
-        SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'
-    ));
+    USING (public.is_admin());
 
 -- Enrollments policies
 CREATE POLICY "Users can view own enrollments"
     ON public.enrollments FOR SELECT
-    USING (user_id = auth.uid() OR EXISTS (
-        SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'
-    ));
+    USING (user_id = auth.uid() OR public.is_admin());
 
 CREATE POLICY "Admin can manage enrollments"
     ON public.enrollments FOR ALL
-    USING (EXISTS (
-        SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'
-    ));
+    USING (public.is_admin());
 
 -- Lesson progress policies
 CREATE POLICY "Users can view own progress"
     ON public.lesson_progress FOR SELECT
-    USING (user_id = auth.uid() OR EXISTS (
-        SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'
-    ));
+    USING (user_id = auth.uid() OR public.is_admin());
 
 CREATE POLICY "Users can update own progress"
     ON public.lesson_progress FOR ALL
