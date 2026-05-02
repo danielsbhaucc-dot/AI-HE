@@ -12,7 +12,7 @@ export function NuraWellLogo({ size = 'sm', showTagline = false, animate = true 
   const fontSizeAi = size === 'sm' ? 10 : size === 'md' ? 12 : 14;
 
   return (
-    <div className="flex items-center gap-2.5 select-none">
+    <div className="flex items-center gap-2.5 select-none" dir="ltr">
       {/* Heart + Heartbeat Icon */}
       <div className="relative flex-shrink-0" style={{ width: iconSize, height: Math.round(iconSize * 0.85) }}>
         {/* Glow */}

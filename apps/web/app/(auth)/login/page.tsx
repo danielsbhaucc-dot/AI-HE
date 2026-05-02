@@ -4,164 +4,177 @@ import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Mail, Lock, Eye, EyeOff, ArrowLeft, Leaf } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, LogIn } from 'lucide-react';
 import { createClient } from '../../../lib/supabase/client';
+import { NuraWellLogo } from '../../../components/shared/NuraWellLogo';
+import { useToast, ToastContainer } from '../../../components/shared/Toast';
 
-// Prevent static generation issues
 export const dynamic = 'force-dynamic';
 
 function LoginFormContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams?.get('redirect') || '/courses';
-  
+  const toast = useToast();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
 
     try {
       const supabase = createClient();
-      const { error: authError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
 
       if (authError) {
-        setError('אימייל או סיסמה לא נכונים');
+        toast.error('התחברות נכשלה', 'אימייל או סיסמה שגויים');
         return;
       }
 
-      router.push(redirect);
-      router.refresh();
+      toast.success('התחברת בהצלחה!', 'מעבירים אותך לקורסים...');
+      setTimeout(() => {
+        router.push(redirect);
+        router.refresh();
+      }, 800);
     } catch {
-      setError('משהו השתבש, נסו שוב');
+      toast.error('שגיאה', 'משהו השתבש, נסו שוב');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <main className="min-h-screen flex flex-col justify-center px-4 py-12" style={{background: 'linear-gradient(135deg, #0f172a 0%, #0d1f2d 50%, #0a1628 100%)'}}>
-      <div className="fixed inset-0 pointer-events-none" style={{background: 'radial-gradient(ellipse at 50% 0%, rgba(20,184,166,0.15) 0%, transparent 60%)'}} />
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-md mx-auto w-full relative z-10"
+    <>
+      <ToastContainer toasts={toast.toasts} onDismiss={toast.dismiss} />
+      <main
+        className="min-h-screen flex flex-col justify-center px-4 py-10"
+        style={{ background: '#0c1523' }}
       >
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4"
-            style={{ background: 'linear-gradient(135deg, #14b8a6, #10b981)', boxShadow: '0 12px 30px rgba(20,184,166,0.45)' }}>
-            <Leaf className="w-8 h-8 text-white" fill="white" />
+        {/* Subtle top glow only */}
+        <div className="fixed inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at 50% -10%, rgba(20,184,166,0.08) 0%, transparent 55%)' }} />
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, ease: 'easeOut' }}
+          className="max-w-md mx-auto w-full relative z-10"
+        >
+          {/* ── Header ── */}
+          <div className="text-center mb-10">
+            <div className="flex justify-center mb-5">
+              <NuraWellLogo size="lg" showTagline />
+            </div>
+            {/* Decorative divider */}
+            <div className="flex items-center justify-center gap-3 mt-4">
+              <div className="h-px flex-1 max-w-[60px]" style={{ background: 'linear-gradient(to left, rgba(20,184,166,0.5), transparent)' }} />
+              <span className="text-slate-400 text-sm font-medium" style={{ fontFamily: 'Heebo, sans-serif' }}>
+                ברוכים הבאים
+              </span>
+              <div className="h-px flex-1 max-w-[60px]" style={{ background: 'linear-gradient(to right, rgba(20,184,166,0.5), transparent)' }} />
+            </div>
+            <p className="text-slate-500 text-sm mt-2">התחברו כדי להמשיך את המסע שלכם</p>
           </div>
-          <h1 className="text-3xl font-black">
-            <span style={{ background: 'linear-gradient(135deg, #14b8a6, #10b981, #2dd4bf)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>NuraWell</span>
-          </h1>
-          <p className="text-slate-300 font-semibold mt-1">ברוכים הבאים! 👋</p>
-          <p className="text-slate-500 text-sm mt-1">התחברו כדי להמשיך את המסע שלכם</p>
-        </div>
 
-        {/* Form Card */}
-        <div className="rounded-3xl p-8" style={{background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(20px)', boxShadow: '0 25px 50px rgba(0,0,0,0.5)'}}>
-          {error && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              className="mb-4 p-3 rounded-2xl bg-red-500/20 border border-red-500/30 text-red-400 text-sm text-center"
-            >
-              {error}
-            </motion.div>
-          )}
-
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div>
-              <label className="block text-sm font-semibold text-slate-300 mb-2">אימייל 📧</label>
-              <div className="relative">
-                <Mail className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="w-full px-5 py-4 pr-12 rounded-2xl text-white placeholder-slate-500 outline-none transition-all"
-                  style={{background: 'rgba(255,255,255,0.08)', border: '1.5px solid rgba(255,255,255,0.12)'}}
-                  placeholder="your@email.com"
-                />
-              </div>
+          {/* ── Form Card ── */}
+          <div className="rounded-3xl p-8" style={{
+            background: 'rgba(255,255,255,0.04)',
+            border: '1px solid rgba(255,255,255,0.09)',
+            backdropFilter: 'blur(16px)',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+          }}>
+            {/* Section title */}
+            <div className="flex items-center gap-2 mb-6">
+              <div className="w-1 h-5 rounded-full" style={{ background: 'linear-gradient(to bottom, #14FFEC, #10b981)' }} />
+              <h2 className="text-white font-bold text-lg" style={{ fontFamily: 'Rubik, Heebo, sans-serif' }}>כניסה לחשבון</h2>
             </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-slate-300 mb-2">סיסמה 🔒</label>
-              <div className="relative">
-                <Lock className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="w-full px-5 py-4 pr-12 pl-12 rounded-2xl text-white placeholder-slate-500 outline-none transition-all"
-                  style={{background: 'rgba(255,255,255,0.08)', border: '1.5px solid rgba(255,255,255,0.12)'}}
-                  placeholder="******"
-                />
-                <button type="button" onClick={() => setShowPassword(!showPassword)}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors">
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Email */}
+              <div>
+                <label className="flex items-center gap-1.5 text-sm font-semibold text-slate-300 mb-2">
+                  <Mail className="w-3.5 h-3.5 text-primary-400" />
+                  כתובת אימייל
+                </label>
+                <div className="relative">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    dir="ltr"
+                    className="w-full px-4 py-3.5 rounded-2xl text-white placeholder-slate-500 outline-none transition-all text-sm"
+                    style={{ background: 'rgba(255,255,255,0.06)', border: '1.5px solid rgba(255,255,255,0.10)' }}
+                    placeholder="your@email.com"
+                  />
+                </div>
+              </div>
+
+              {/* Password */}
+              <div>
+                <label className="flex items-center gap-1.5 text-sm font-semibold text-slate-300 mb-2">
+                  <Lock className="w-3.5 h-3.5 text-primary-400" />
+                  סיסמה
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    dir="ltr"
+                    className="w-full px-4 py-3.5 pl-12 rounded-2xl text-white placeholder-slate-500 outline-none transition-all text-sm"
+                    style={{ background: 'rgba(255,255,255,0.06)', border: '1.5px solid rgba(255,255,255,0.10)' }}
+                    placeholder="••••••"
+                  />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors p-1">
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
+
+              {/* Divider before CTA */}
+              <div className="pt-1">
+                <div className="h-px w-full mb-4" style={{ background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent)' }} />
+                <button type="submit" disabled={isLoading}
+                  className="w-full py-4 rounded-2xl font-bold text-base text-white transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2"
+                  style={{ background: 'linear-gradient(135deg, #14b8a6, #10b981)', boxShadow: '0 8px 24px rgba(20,184,166,0.3)' }}>
+                  {isLoading ? (
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : (
+                    <>
+                      <LogIn className="w-4.5 h-4.5" />
+                      כניסה לחשבון
+                    </>
+                  )}
                 </button>
               </div>
+            </form>
+
+            <div className="mt-5 text-center">
+              <p className="text-slate-500 text-sm">
+                אין לכם חשבון?{' '}
+                <Link href="/register" className="text-primary-400 font-bold hover:text-primary-300 transition-colors">
+                  הרשמה חינם
+                </Link>
+              </p>
             </div>
-
-            <button type="submit" disabled={isLoading}
-              className="w-full py-4 rounded-2xl font-black text-lg text-white transition-all hover:scale-[1.02] active:scale-95"
-              style={{background: 'linear-gradient(135deg, #14b8a6, #10b981)', boxShadow: '0 10px 30px rgba(20,184,166,0.4)'}}>
-              {isLoading ? (
-                <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto" />
-              ) : (
-                <span className="flex items-center justify-center gap-2">
-                  <ArrowLeft className="w-5 h-5" />
-                  התחברות
-                </span>
-              )}
-            </button>
-          </form>
-
-          <div className="mt-6 text-center">
-            <p className="text-slate-400 text-sm">
-              אין לכם חשבון?{' '}
-              <Link href="/register" className="text-primary-400 font-bold hover:text-primary-300 transition-colors">
-                הירשמו עכשיו 🚀
-              </Link>
-            </p>
           </div>
-        </div>
-
-        {/* Back Link */}
-        <div className="mt-6 text-center">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-300 transition-colors text-sm"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            חזרה לדף הבית
-          </Link>
-        </div>
-      </motion.div>
-    </main>
+        </motion.div>
+      </main>
+    </>
   );
 }
 
-// Wrapper with Suspense for useSearchParams
 export default function LoginPage() {
   return (
     <Suspense fallback={
-      <main className="min-h-screen bg-mesh flex items-center justify-center">
+      <main className="min-h-screen bg-[#0c1523] flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-primary-500/30 border-t-primary-500 rounded-full animate-spin" />
       </main>
     }>
