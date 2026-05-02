@@ -52,7 +52,7 @@ export function MobileHeader({ user, title }: MobileHeaderProps) {
               aria-label="התראות"
               className="btn-icon text-slate-400 hover:text-white"
             >
-              <Bell className="w-4.5 h-4.5" />
+              <Bell className="w-5 h-5" />
             </button>
             <button
               aria-label={isMenuOpen ? 'סגור תפריט' : 'פתח תפריט'}
@@ -90,7 +90,7 @@ export function MobileHeader({ user, title }: MobileHeaderProps) {
                     key={item.href}
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`flex items-center gap-3 px-5 py-4 transition-all hover:bg-white/5 active:bg-white/8 no-tap-highlight ${idx < menuItems.length - 1 ? 'border-b border-white/5' : ''}`}
+                    className={`flex items-center gap-3 px-5 py-4 transition-all hover:bg-white/5 active:bg-white/10 no-tap-highlight ${idx < menuItems.length - 1 ? 'border-b border-white/5' : ''}`}
                   >
                     <span className="text-xl">{item.emoji}</span>
                     <span className="font-semibold text-slate-200">{item.label}</span>
