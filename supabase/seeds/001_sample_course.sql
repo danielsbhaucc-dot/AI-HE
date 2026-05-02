@@ -92,7 +92,7 @@ VALUES (
 -- ── LESSON 2: Video (YouTube embed - nutrition) ────
 INSERT INTO public.media_files (id, lesson_id, file_type, video_provider, video_external_id, video_external_url, sort_order)
 VALUES (
-  'mmmmmmmm-0002-0002-0002-mmmmmmmmmmmm',
+  'bbbbbbbb-0002-0002-0002-bbbbbbbbbbbb',
   'aaaaaaaa-0002-0002-0002-aaaaaaaaaaaa',
   'video_url',
   'youtube',
@@ -142,7 +142,7 @@ VALUES (
 -- ── LESSON 3: Audio file (walking guidance) ────
 INSERT INTO public.media_files (id, lesson_id, file_type, uploadthing_url, uploadthing_name, duration_seconds, sort_order)
 VALUES (
-  'mmmmmmmm-0003-0003-0003-mmmmmmmmmmmm',
+  'bbbbbbbb-0003-0003-0003-bbbbbbbbbbbb',
   'aaaaaaaa-0003-0003-0003-aaaaaaaaaaaa',
   'audio',
   'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
@@ -267,7 +267,7 @@ VALUES (
 -- ── LESSON 6: Video (YouTube – summary/motivation) ────
 INSERT INTO public.media_files (id, lesson_id, file_type, video_provider, video_external_id, video_external_url, sort_order)
 VALUES (
-  'mmmmmmmm-0006-0006-0006-mmmmmmmmmmmm',
+  'bbbbbbbb-0006-0006-0006-bbbbbbbbbbbb',
   'aaaaaaaa-0006-0006-0006-aaaaaaaaaaaa',
   'video_url',
   'youtube',

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, XCircle, Info, AlertTriangle, X } from 'lucide-react';
 
@@ -80,11 +80,13 @@ const config = {
 function Toast({ toast, onDismiss }: ToastProps) {
   const c = config[toast.type];
   const Icon = c.icon;
+  const dismissRef = useRef(onDismiss);
+  useEffect(() => { dismissRef.current = onDismiss; });
 
   useEffect(() => {
-    const t = setTimeout(() => onDismiss(toast.id), 5000);
+    const t = setTimeout(() => dismissRef.current(toast.id), 4000);
     return () => clearTimeout(t);
-  }, [toast.id, onDismiss]);
+  }, [toast.id]);
 
   return (
     <motion.div
@@ -115,7 +117,7 @@ function Toast({ toast, onDismiss }: ToastProps) {
         style={{ background: c.bar, opacity: 0.6 }}
         initial={{ width: '100%' }}
         animate={{ width: '0%' }}
-        transition={{ duration: 5.0, ease: 'linear' }}
+        transition={{ duration: 4.0, ease: 'linear' }}
       />
 
       <div className="flex items-start gap-3.5 px-4 py-4 pr-5">
@@ -187,9 +189,9 @@ export function useToast() {
     setToasts((prev) => [...prev, { id, type, title, message }]);
   };
 
-  const dismiss = (id: string) => {
+  const dismiss = useCallback((id: string) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
-  };
+  }, []);
 
   return {
     toasts,

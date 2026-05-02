@@ -74,15 +74,17 @@ function LoginFormContent() {
             <div className="flex justify-center mb-5">
               <NuraWellLogo size="lg" showTagline />
             </div>
-            {/* Decorative divider */}
-            <div className="flex items-center justify-center gap-3 mt-4">
-              <div className="h-px flex-1 max-w-[60px]" style={{ background: 'linear-gradient(to left, rgba(20,184,166,0.5), transparent)' }} />
-              <span className="text-slate-300 text-base font-semibold" style={{ fontFamily: 'Heebo, sans-serif' }}>
+            <div className="mt-5 mb-2">
+              <h1 className="text-3xl font-black leading-tight" style={{ fontFamily: 'Rubik, Heebo, sans-serif', background: 'linear-gradient(135deg, #ffffff 0%, #5eead4 50%, #34d399 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
                 ברוכים הבאים
-              </span>
-              <div className="h-px flex-1 max-w-[60px]" style={{ background: 'linear-gradient(to right, rgba(20,184,166,0.5), transparent)' }} />
+              </h1>
             </div>
-            <p className="text-slate-400 text-sm mt-2">התחברו כדי להמשיך את המסע שלכם</p>
+            <p className="text-slate-400 text-[15px] mt-1.5 font-medium">התחברו כדי להמשיך את המסע שלכם</p>
+            <div className="flex items-center justify-center gap-2 mt-4">
+              <div className="h-px flex-1 max-w-[50px]" style={{ background: 'linear-gradient(to left, rgba(20,184,166,0.4), transparent)' }} />
+              <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#14b8a6' }} />
+              <div className="h-px flex-1 max-w-[50px]" style={{ background: 'linear-gradient(to right, rgba(20,184,166,0.4), transparent)' }} />
+            </div>
           </div>
 
           {/* ── Form Card ── */}
@@ -94,9 +96,10 @@ function LoginFormContent() {
             boxShadow: '0 24px 64px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08)',
           }}>
             {/* Section title */}
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-1 h-6 rounded-full" style={{ background: 'linear-gradient(to bottom, #14FFEC, #10b981)' }} />
-              <h2 className="text-white font-bold text-xl" style={{ fontFamily: 'Rubik, Heebo, sans-serif' }}>כניסה לחשבון</h2>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-1.5 h-7 rounded-full" style={{ background: 'linear-gradient(to bottom, #14FFEC, #10b981)' }} />
+              <LogIn className="w-5 h-5 text-primary-400" />
+              <h2 className="text-white font-black text-xl" style={{ fontFamily: 'Rubik, Heebo, sans-serif' }}>כניסה לחשבון</h2>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4" noValidate>
