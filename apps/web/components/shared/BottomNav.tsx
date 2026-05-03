@@ -35,7 +35,7 @@ export function BottomNav() {
                   <motion.div
                     layoutId="nav-indicator"
                     className="absolute inset-0 rounded-2xl"
-                    style={{ background: 'rgba(20,184,166,0.15)', border: '1px solid rgba(20,184,166,0.25)' }}
+                    style={{ background: 'rgba(123,110,246,0.18)', border: '1px solid rgba(123,110,246,0.35)' }}
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
                 )}

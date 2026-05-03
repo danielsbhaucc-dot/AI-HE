@@ -70,12 +70,12 @@ export default function RegisterPage() {
       <ToastContainer toasts={toast.toasts} onDismiss={toast.dismiss} />
       <main
         className="min-h-screen flex flex-col justify-center px-4 py-10"
-        style={{ background: '#0c1523' }}
+        style={{ background: '#1a1040' }}
       >
         {/* Deep glass background layers */}
-        <div className="fixed inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 50% -5%, rgba(20,184,166,0.09) 0%, transparent 50%)' }} />
-        <div className="fixed inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 80% 80%, rgba(16,185,129,0.05) 0%, transparent 45%)' }} />
-        <div className="fixed inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 10% 90%, rgba(99,102,241,0.04) 0%, transparent 40%)' }} />
+        <div className="fixed inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(58,47,160,0.65) 0%, transparent 60%)' }} />
+        <div className="fixed inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 85% 15%, rgba(74,59,196,0.2) 0%, transparent 50%)' }} />
+        <div className="fixed inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 10% 90%, rgba(45,27,142,0.18) 0%, transparent 40%)' }} />
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -89,28 +89,28 @@ export default function RegisterPage() {
               <NuraWellLogo size="lg" showTagline />
             </div>
             <div className="mt-5 mb-2">
-              <h1 className="text-3xl font-black leading-tight" style={{ fontFamily: 'Rubik, Heebo, sans-serif', background: 'linear-gradient(135deg, #ffffff 0%, #a5f3fc 40%, #34d399 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+              <h1 className="text-3xl font-black leading-tight" style={{ fontFamily: 'Rubik, Heebo, sans-serif', background: 'linear-gradient(135deg, #ffffff 0%, #c4b5fd 50%, #a99df8 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
                 הרשמה חינמית
               </h1>
             </div>
             <p className="text-slate-400 text-[15px] mt-1.5 font-medium">התחילו את המסע לחיים בריאים יותר</p>
             <div className="flex items-center justify-center gap-2 mt-4">
-              <div className="h-px flex-1 max-w-[50px]" style={{ background: 'linear-gradient(to left, rgba(20,184,166,0.4), transparent)' }} />
-              <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#34d399' }} />
-              <div className="h-px flex-1 max-w-[50px]" style={{ background: 'linear-gradient(to right, rgba(20,184,166,0.4), transparent)' }} />
+              <div className="h-px flex-1 max-w-[50px]" style={{ background: 'linear-gradient(to left, rgba(123,110,246,0.5), transparent)' }} />
+              <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#7b6ef6' }} />
+              <div className="h-px flex-1 max-w-[50px]" style={{ background: 'linear-gradient(to right, rgba(123,110,246,0.5), transparent)' }} />
             </div>
           </div>
 
           {/* ── Form Card ── */}
           <div className="rounded-3xl p-8" style={{
-            background: 'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
-            border: '1px solid rgba(255,255,255,0.10)',
+            background: 'linear-gradient(145deg, rgba(255,255,255,0.09) 0%, rgba(123,110,246,0.04) 100%)',
+            border: '1px solid rgba(255,255,255,0.15)',
             backdropFilter: 'blur(40px)',
             WebkitBackdropFilter: 'blur(40px)',
-            boxShadow: '0 24px 64px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08)',
+            boxShadow: '0 24px 64px rgba(45,27,142,0.5), inset 0 1px 0 rgba(255,255,255,0.12)',
           }}>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-1.5 h-7 rounded-full" style={{ background: 'linear-gradient(to bottom, #14FFEC, #10b981)' }} />
+              <div className="w-1.5 h-7 rounded-full" style={{ background: 'linear-gradient(to bottom, #c4b5fd, #4a3bc4)' }} />
               <UserPlus className="w-5 h-5 text-primary-400" />
               <h2 className="text-white font-black text-xl" style={{ fontFamily: 'Rubik, Heebo, sans-serif' }}>יצירת חשבון</h2>
             </div>
@@ -177,7 +177,7 @@ export default function RegisterPage() {
                 <div className="h-px w-full mb-4" style={{ background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent)' }} />
                 <button type="submit" disabled={isLoading}
                   className="w-full py-4 rounded-2xl font-bold text-lg text-white transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2"
-                  style={{ background: 'linear-gradient(135deg, #14b8a6, #10b981)', boxShadow: '0 8px 24px rgba(20,184,166,0.3)' }}>
+                  style={{ background: 'linear-gradient(135deg, #4a3bc4, #7b6ef6)', boxShadow: '0 8px 24px rgba(123,110,246,0.4)' }}>
                   {isLoading ? (
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   ) : (

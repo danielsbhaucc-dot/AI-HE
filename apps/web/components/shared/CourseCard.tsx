@@ -45,7 +45,7 @@ export function CourseCard({ course, progress, isEnrolled }: CourseCardProps) {
           style={{ background: isCompleted
             ? 'linear-gradient(90deg, transparent, #10b981, #34d399, transparent)'
             : isEnrolled
-            ? 'linear-gradient(90deg, transparent, #14b8a6, #2dd4bf, transparent)'
+            ? 'linear-gradient(90deg, transparent, #7b6ef6, #a99df8, transparent)'
             : 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)'
           }} />
 
@@ -61,15 +61,15 @@ export function CourseCard({ course, progress, isEnrolled }: CourseCardProps) {
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, #0c4a6e 0%, #0f766e 50%, #064e3b 100%)' }}>
-              <BookOpen className="w-16 h-16" style={{ color: 'rgba(45,212,191,0.35)' }} />
+              style={{ background: 'linear-gradient(135deg, #1e1260 0%, #3730a3 50%, #2d1b8e 100%)' }}>
+              <BookOpen className="w-16 h-16" style={{ color: 'rgba(169,157,248,0.45)' }} />
             </div>
           )}
 
           {/* Gradient overlays */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
           {!course.thumbnail_url && (
-            <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 40%, rgba(20,184,166,0.12), transparent 60%)' }} />
+            <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 40%, rgba(123,110,246,0.14), transparent 60%)' }} />
           )}
 
           {/* Play button */}
@@ -107,7 +107,7 @@ export function CourseCard({ course, progress, isEnrolled }: CourseCardProps) {
           {/* Progress badge */}
           {isEnrolled && progress > 0 && !isCompleted && (
             <div className="absolute bottom-3 left-3 px-2.5 py-1 rounded-full text-xs font-black text-white z-10"
-              style={{ background: 'rgba(20,184,166,0.9)', backdropFilter: 'blur(8px)', boxShadow: '0 2px 8px rgba(20,184,166,0.4)' }}>
+              style={{ background: 'rgba(123,110,246,0.9)', backdropFilter: 'blur(8px)', boxShadow: '0 2px 8px rgba(123,110,246,0.5)' }}>
               {progress}%
             </div>
           )}
@@ -153,7 +153,7 @@ export function CourseCard({ course, progress, isEnrolled }: CourseCardProps) {
             <div>
               <div className="flex justify-between items-center mb-1.5">
                 <span className="text-xs text-slate-500 font-medium">התקדמות</span>
-                <span className="text-xs font-black" style={{ color: isCompleted ? '#34d399' : '#14b8a6' }}>{progress}%</span>
+                <span className="text-xs font-black" style={{ color: isCompleted ? '#34d399' : '#a99df8' }}>{progress}%</span>
               </div>
               <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.07)' }}>
                 <motion.div
@@ -163,8 +163,8 @@ export function CourseCard({ course, progress, isEnrolled }: CourseCardProps) {
                   transition={{ duration: 0.8, ease: 'easeOut', delay: 0.15 }}
                   style={{ background: isCompleted
                     ? 'linear-gradient(90deg, #059669, #10b981, #34d399)'
-                    : 'linear-gradient(90deg, #0f766e, #14b8a6, #2dd4bf)',
-                    boxShadow: '0 0 8px rgba(20,184,166,0.5)' }}
+                    : 'linear-gradient(90deg, #4a3bc4, #7b6ef6, #a99df8)',
+                    boxShadow: isCompleted ? '0 0 8px rgba(16,185,129,0.5)' : '0 0 8px rgba(123,110,246,0.5)' }}
                 />
               </div>
             </div>

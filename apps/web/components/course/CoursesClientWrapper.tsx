@@ -25,28 +25,28 @@ const statCards = (stats: UserStats) => [
     label: 'קורסים פעילים',
     value: stats.activeCoursesCount,
     icon: GraduationCap,
-    color: '#14b8a6',
-    glow: 'rgba(20,184,166,0.25)',
-    bg: 'linear-gradient(135deg, rgba(20,184,166,0.18), rgba(20,184,166,0.06))',
-    border: 'rgba(20,184,166,0.3)',
+    color: '#7b6ef6',
+    glow: 'rgba(123,110,246,0.3)',
+    bg: 'linear-gradient(135deg, rgba(123,110,246,0.18), rgba(74,59,196,0.08))',
+    border: 'rgba(123,110,246,0.35)',
   },
   {
     label: 'שיעורים הושלמו',
     value: stats.totalLessonsCompleted,
     icon: Award,
-    color: '#10b981',
-    glow: 'rgba(16,185,129,0.25)',
-    bg: 'linear-gradient(135deg, rgba(16,185,129,0.18), rgba(16,185,129,0.06))',
-    border: 'rgba(16,185,129,0.3)',
+    color: '#0dbdb8',
+    glow: 'rgba(13,189,184,0.25)',
+    bg: 'linear-gradient(135deg, rgba(13,189,184,0.18), rgba(13,189,184,0.06))',
+    border: 'rgba(13,189,184,0.35)',
   },
   {
     label: 'ממוצע התקדמות',
     value: `${stats.avgProgress}%`,
     icon: TrendingUp,
-    color: '#d946ef',
-    glow: 'rgba(217,70,239,0.25)',
-    bg: 'linear-gradient(135deg, rgba(217,70,239,0.18), rgba(217,70,239,0.06))',
-    border: 'rgba(217,70,239,0.3)',
+    color: '#f5a623',
+    glow: 'rgba(245,166,35,0.28)',
+    bg: 'linear-gradient(135deg, rgba(245,166,35,0.18), rgba(245,166,35,0.06))',
+    border: 'rgba(245,166,35,0.35)',
   },
 ];
 
@@ -66,7 +66,7 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
         >
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0"
-              style={{ background: 'linear-gradient(135deg, rgba(20,184,166,0.3), rgba(16,185,129,0.15))', border: '1px solid rgba(20,184,166,0.4)', boxShadow: '0 4px 16px rgba(20,184,166,0.2)' }}>
+              style={{ background: 'linear-gradient(135deg, rgba(123,110,246,0.25), rgba(74,59,196,0.12))', border: '1px solid rgba(123,110,246,0.4)', boxShadow: '0 4px 16px rgba(123,110,246,0.25)' }}>
               <BookOpen className="w-5 h-5 text-primary-300" />
             </div>
             <div>
@@ -74,7 +74,7 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
               <p className="text-slate-400 text-sm mt-0.5">המשיכו ללמוד והתקדמו ליעדים שלכם</p>
             </div>
           </div>
-          <div className="h-px mt-4" style={{ background: 'linear-gradient(to left, transparent, rgba(20,184,166,0.4), rgba(16,185,129,0.2), transparent)' }} />
+          <div className="h-px mt-4" style={{ background: 'linear-gradient(to left, transparent, rgba(123,110,246,0.5), rgba(74,59,196,0.25), transparent)' }} />
         </motion.div>
 
         {/* ── Stats Row ── */}
@@ -112,7 +112,7 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
               transition={{ delay: 0.18, duration: 0.3 }}
               className="flex items-center gap-3 mb-5"
             >
-              <div className="w-1.5 h-7 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #14FFEC, #10b981)' }} />
+              <div className="w-1.5 h-7 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #c4b5fd, #4a3bc4)' }} />
               <div className="flex items-center gap-2.5 flex-1">
                 <Zap className="w-4.5 h-4.5 text-primary-400" />
                 <h2 className="text-lg font-black text-white">בלמידה</h2>
@@ -173,7 +173,7 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
           >
             <div className="relative w-24 h-24 mx-auto mb-6">
               <div className="absolute inset-0 rounded-3xl"
-                style={{ background: 'linear-gradient(135deg, rgba(20,184,166,0.15), rgba(16,185,129,0.08))', border: '1px solid rgba(20,184,166,0.25)', boxShadow: '0 8px 32px rgba(20,184,166,0.15)' }} />
+                style={{ background: 'linear-gradient(135deg, rgba(123,110,246,0.15), rgba(74,59,196,0.08))', border: '1px solid rgba(123,110,246,0.3)', boxShadow: '0 8px 32px rgba(123,110,246,0.2)' }} />
               <div className="absolute inset-0 flex items-center justify-center">
                 <GraduationCap className="w-10 h-10 text-primary-400" />
               </div>

@@ -30,7 +30,7 @@ html {
   }
 
   ::selection {
-    background: rgba(20, 184, 166, 0.3);
+    background: rgba(123, 110, 246, 0.35);
     color: #ffffff;
   }
 
@@ -55,19 +55,21 @@ html {
 
   /* ---- GLASS CARDS ---- */
   .glass-card {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    @apply rounded-3xl shadow-glass;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 8px 32px rgba(45, 27, 142, 0.2), inset 0 1px 0 rgba(255,255,255,0.10);
+    @apply rounded-3xl;
   }
 
   .glass-card-strong {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(32px);
     -webkit-backdrop-filter: blur(32px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    @apply rounded-3xl shadow-glass;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: 0 8px 32px rgba(45, 27, 142, 0.3), inset 0 1px 0 rgba(255,255,255,0.15);
+    @apply rounded-3xl;
   }
 
   .glass-card-dark {
@@ -90,7 +92,7 @@ html {
   .card-gradient {
     @apply bg-gradient-to-br from-primary-500 via-primary-600 to-secondary-500 rounded-3xl shadow-card p-6 text-white;
     @apply border border-white/20 hover:scale-[1.02] transition-all duration-300;
-    box-shadow: 0 20px 60px -10px rgba(20, 184, 166, 0.4);
+    box-shadow: 0 20px 60px -10px rgba(123, 110, 246, 0.4);
   }
 
   .card-lesson {
@@ -108,22 +110,23 @@ html {
   }
 
   .card-lesson.active {
-    border-color: rgba(20, 184, 166, 0.5);
-    background: rgba(20, 184, 166, 0.10);
-    box-shadow: 0 0 20px rgba(20, 184, 166, 0.15);
+    border-color: rgba(123, 110, 246, 0.5);
+    background: rgba(123, 110, 246, 0.10);
+    box-shadow: 0 0 20px rgba(123, 110, 246, 0.15);
   }
 
   /* ---- BUTTONS ---- */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl font-bold text-base transition-all duration-200;
-    @apply bg-gradient-to-r from-primary-400 via-primary-500 to-secondary-500 text-white;
+    background: linear-gradient(135deg, #4a3bc4, #7b6ef6);
+    @apply text-white;
     @apply border border-white/20;
     @apply hover:scale-105 active:scale-95;
-    box-shadow: 0 8px 25px rgba(20, 184, 166, 0.35);
+    box-shadow: 0 8px 25px rgba(123, 110, 246, 0.35);
   }
 
   .btn-primary:hover {
-    box-shadow: 0 12px 35px rgba(20, 184, 166, 0.5);
+    box-shadow: 0 12px 35px rgba(123, 110, 246, 0.5);
   }
 
   .btn-secondary {
@@ -164,9 +167,9 @@ html {
   }
 
   .input-premium:focus {
-    border-color: rgba(20, 184, 166, 0.6);
+    border-color: rgba(123, 110, 246, 0.6);
     background: rgba(255, 255, 255, 0.09);
-    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+    box-shadow: 0 0 0 3px rgba(123, 110, 246, 0.15);
   }
 
   /* ---- BADGES ---- */
@@ -176,8 +179,8 @@ html {
 
   .badge-primary {
     @apply badge;
-    background: rgba(20, 184, 166, 0.2);
-    border: 1px solid rgba(20, 184, 166, 0.35);
+    background: rgba(123, 110, 246, 0.2);
+    border: 1px solid rgba(123, 110, 246, 0.35);
     @apply text-primary-300;
   }
 
@@ -246,8 +249,8 @@ html {
 
   .progress-bar-fill {
     @apply absolute inset-y-0 right-0 rounded-full transition-all duration-700 ease-out;
-    background: linear-gradient(90deg, #10b981, #14b8a6, #2dd4bf);
-    box-shadow: 0 0 8px rgba(20, 184, 166, 0.5);
+    background: linear-gradient(90deg, #4a3bc4, #7b6ef6, #a99df8);
+    box-shadow: 0 0 8px rgba(123, 110, 246, 0.5);
   }
 
   .progress-bar-lg {
@@ -272,12 +275,12 @@ html {
   .lesson-content a { @apply text-primary-400 hover:text-primary-300 underline underline-offset-2; }
   .lesson-content blockquote {
     @apply border-r-4 border-primary-500 pr-4 py-2 my-4;
-    background: rgba(20, 184, 166, 0.08);
+    background: rgba(123, 110, 246, 0.08);
     @apply rounded-l-xl text-slate-300 italic;
   }
   .lesson-content code {
     @apply px-2 py-0.5 rounded-md text-sm font-mono;
-    background: rgba(20, 184, 166, 0.15);
+    background: rgba(123, 110, 246, 0.15);
     @apply text-primary-300;
   }
 
@@ -291,8 +294,8 @@ html {
   /* ---- AUDIO PLAYER ---- */
   .audio-player {
     @apply w-full rounded-2xl p-4;
-    background: rgba(20, 184, 166, 0.08);
-    border: 1px solid rgba(20, 184, 166, 0.2);
+    background: rgba(123, 110, 246, 0.08);
+    border: 1px solid rgba(123, 110, 246, 0.2);
   }
 
   /* ---- HABIT TRACKER ---- */
@@ -326,15 +329,16 @@ html {
   .nav-header {
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    background: rgba(15, 23, 42, 0.92);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(26, 16, 64, 0.88);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .nav-bottom {
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    background: rgba(15, 23, 42, 0.95);
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    background: rgba(26, 16, 64, 0.94);
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow: 0 -4px 30px rgba(45, 27, 142, 0.15);
   }
 }
 
@@ -345,7 +349,7 @@ html {
   /* Text Gradients */
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #2dd4bf, #10b981);
+    background-image: linear-gradient(135deg, #c4b5fd, #7b6ef6);
   }
 
   .text-gradient-accent {
@@ -372,32 +376,32 @@ html {
 
   /* Background Meshes */
   .bg-mesh {
-    background-color: #0b1220;
+    background-color: #1a1040;
     background-image:
-      radial-gradient(at 20% 15%, hsla(168, 60%, 28%, 0.06) 0px, transparent 55%),
-      radial-gradient(at 85% 5%,  hsla(152, 60%, 28%, 0.06) 0px, transparent 55%),
-      radial-gradient(at 5% 60%,  hsla(280, 50%, 35%, 0.03) 0px, transparent 50%),
-      radial-gradient(at 90% 60%, hsla(168, 50%, 28%, 0.05) 0px, transparent 50%),
-      radial-gradient(at 50% 90%, hsla(152, 50%, 28%, 0.04) 0px, transparent 50%);
+      radial-gradient(ellipse at 30% 50%, rgba(58, 47, 160, 0.65) 0%, transparent 60%),
+      radial-gradient(ellipse at 85% 15%, rgba(74, 59, 196, 0.20) 0%, transparent 50%),
+      radial-gradient(at 5% 85%, rgba(45, 27, 142, 0.18) 0px, transparent 50%),
+      radial-gradient(at 90% 75%, rgba(13, 189, 184, 0.05) 0px, transparent 45%);
   }
 
   .bg-mesh-subtle {
-    background-color: #0b1220;
+    background-color: #1a1040;
     background-image:
-      radial-gradient(at 30% 20%, hsla(168, 45%, 28%, 0.05) 0px, transparent 50%),
-      radial-gradient(at 80% 80%, hsla(152, 45%, 28%, 0.05) 0px, transparent 50%);
+      radial-gradient(at 30% 20%, rgba(58, 47, 160, 0.25) 0%, transparent 50%),
+      radial-gradient(at 80% 80%, rgba(74, 59, 196, 0.12) 0%, transparent 50%);
   }
 
   /* Glass Utility */
   .glass {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
   }
 
   /* Glow Utilities */
-  .glow-primary { box-shadow: 0 0 20px rgba(20, 184, 166, 0.4); }
+  .glow-primary { box-shadow: 0 0 20px rgba(123, 110, 246, 0.5); }
   .glow-secondary { box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
   .glow-accent { box-shadow: 0 0 20px rgba(217, 70, 239, 0.4); }
   .glow-energy { box-shadow: 0 0 20px rgba(249, 115, 22, 0.4); }
@@ -416,7 +420,7 @@ html {
 
   .section-title-bar {
     @apply w-1.5 h-7 rounded-full flex-shrink-0;
-    background: linear-gradient(to bottom, #14FFEC, #10b981);
+    background: linear-gradient(to bottom, #c4b5fd, #4a3bc4);
   }
 
   .section-title-text {
@@ -426,12 +430,12 @@ html {
 
   .section-divider {
     @apply w-full h-px my-5;
-    background: linear-gradient(to right, rgba(20,184,166,0.3), rgba(16,185,129,0.2), transparent);
+    background: linear-gradient(to right, rgba(123,110,246,0.35), rgba(74,59,196,0.2), transparent);
   }
 
   .section-divider-center {
     @apply w-full h-px my-5;
-    background: linear-gradient(to right, transparent, rgba(20,184,166,0.35), rgba(16,185,129,0.25), transparent);
+    background: linear-gradient(to right, transparent, rgba(123,110,246,0.4), rgba(74,59,196,0.25), transparent);
   }
 
   /* ---- PAGE TRANSITION ---- */
@@ -508,11 +512,11 @@ html {
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
-    background: rgba(20, 184, 166, 0.3);
+    background: rgba(123, 110, 246, 0.3);
     border-radius: 99px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(20, 184, 166, 0.55);
+    background: rgba(123, 110, 246, 0.55);
   }
 }
 
@@ -525,3 +529,36 @@ html {
 
 /* Prevent body scroll when modal/overlay open */
 body.overflow-hidden { overflow: hidden; }
+
+/* =============================================
+   GLASSMORPHISM EXTRAS
+   ============================================= */
+@keyframes spinRing {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shineSweep {
+  0%, 100% { left: -60%; }
+  50% { left: 130%; }
+}
+
+.spin-ring {
+  animation: spinRing 6s linear infinite;
+}
+
+.glass-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(20px);
+}
+
+.header-grid-pattern {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}

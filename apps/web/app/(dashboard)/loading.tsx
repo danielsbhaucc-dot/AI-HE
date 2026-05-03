@@ -5,7 +5,7 @@ export default function DashboardLoading() {
 
         {/* Header skeleton */}
         <div className="flex items-center gap-3 mb-7">
-          <div className="w-10 h-10 rounded-2xl animate-pulse" style={{ background: 'rgba(20,184,166,0.12)', border: '1px solid rgba(20,184,166,0.15)' }} />
+          <div className="w-10 h-10 rounded-2xl animate-pulse" style={{ background: 'rgba(123,110,246,0.15)', border: '1px solid rgba(123,110,246,0.2)' }} />
           <div className="space-y-1.5">
             <div className="h-6 w-36 rounded-xl animate-pulse" style={{ background: 'rgba(255,255,255,0.08)' }} />
             <div className="h-3.5 w-52 rounded-lg animate-pulse" style={{ background: 'rgba(255,255,255,0.05)' }} />
@@ -26,7 +26,7 @@ export default function DashboardLoading() {
 
         {/* Section title skeleton */}
         <div className="flex items-center gap-3 mb-5">
-          <div className="w-1.5 h-7 rounded-full" style={{ background: 'rgba(20,184,166,0.2)' }} />
+          <div className="w-1.5 h-7 rounded-full" style={{ background: 'rgba(123,110,246,0.3)' }} />
           <div className="h-5 w-24 rounded-xl animate-pulse" style={{ background: 'rgba(255,255,255,0.08)' }} />
         </div>
 

@@ -49,7 +49,7 @@ export default function LandingPage() {
           {/* Badge */}
           <motion.div variants={itemVariants} className="mb-8">
             <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm"
-              style={{background: 'rgba(20,184,166,0.2)', border: '1px solid rgba(20,184,166,0.4)', color: '#5eead4'}}>
+              style={{background: 'rgba(123,110,246,0.2)', border: '1px solid rgba(123,110,246,0.4)', color: '#c4b5fd'}}>
               <Sparkles className="w-4 h-4" />
               מופעל ב-AI ✨
             </span>
@@ -60,7 +60,7 @@ export default function LandingPage() {
             variants={itemVariants}
             className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight"
           >
-            <span style={{background: 'linear-gradient(135deg, #5eead4, #34d399)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
+            <span style={{background: 'linear-gradient(135deg, #c4b5fd, #a99df8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
               הדרך החכמה
             </span>
             <br />
@@ -87,7 +87,7 @@ export default function LandingPage() {
             <Link
               href="/register"
               className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-black text-lg text-white transition-all hover:scale-105 active:scale-95"
-              style={{background: 'linear-gradient(135deg, #14b8a6, #10b981)', boxShadow: '0 8px 25px rgba(20,184,166,0.4)'}}
+              style={{background: 'linear-gradient(135deg, #7b6ef6, #4a3bc4)', boxShadow: '0 8px 25px rgba(123,110,246,0.45)'}}
             >
               <Play className="w-5 h-5 flex-shrink-0" />
               <span>התחל עכשיו - חינם!</span>
@@ -140,7 +140,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4" style={{background: 'linear-gradient(180deg, #0f172a 0%, #0d1f2d 100%)'}}>
+      <section className="py-20 px-4" style={{background: 'linear-gradient(180deg, #1a1040 0%, #150d38 100%)'}}>
         <div className="max-w-4xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -188,7 +188,7 @@ export default function LandingPage() {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 px-4" style={{background: 'linear-gradient(180deg, #0d1f2d 0%, #0a1628 100%)'}}>
+      <section className="py-20 px-4" style={{background: 'linear-gradient(180deg, #150d38 0%, #120b30 100%)'}}>
         <div className="max-w-2xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -214,7 +214,7 @@ export default function LandingPage() {
                 style={{background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(10px)'}}
               >
                 <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white font-black text-xl flex-shrink-0 shadow-lg"
-                  style={{background: 'linear-gradient(135deg, #14b8a6, #10b981)'}}>
+                  style={{background: 'linear-gradient(135deg, #7b6ef6, #4a3bc4)'}}>
                   {step.number}
                 </div>
                 <div className="text-right flex-1">
@@ -229,9 +229,9 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-4 relative overflow-hidden" style={{background: 'linear-gradient(180deg, #0a1628 0%, #0f172a 100%)'}}>
+      <section className="py-24 px-4 relative overflow-hidden" style={{background: 'linear-gradient(180deg, #120b30 0%, #1a1040 100%)'}}>
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full opacity-20" style={{background: 'radial-gradient(circle, #14b8a6, transparent 70%)'}} />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full opacity-20" style={{background: 'radial-gradient(circle, #7b6ef6, transparent 70%)'}} />
         </div>
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -240,7 +240,7 @@ export default function LandingPage() {
           transition={{ duration: 0.6 }}
           className="max-w-lg mx-auto text-center relative z-10"
         >
-          <div className="rounded-3xl p-10 shadow-2xl" style={{background: 'linear-gradient(135deg, rgba(20,184,166,0.9), rgba(16,185,129,0.9))', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.2)'}}>
+          <div className="rounded-3xl p-10 shadow-2xl" style={{background: 'linear-gradient(135deg, rgba(45,27,142,0.97), rgba(107,95,212,0.92))', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 32px 80px rgba(45,27,142,0.5)'}}>
             <div className="text-5xl mb-4">🎉</div>
             <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
               מוכנים להתחיל?
@@ -277,8 +277,8 @@ const features = [
     emoji: '📚',
     title: 'קורסים מובנים',
     description: 'שיעורים בווידאו, אודיו, טקסט ומצגות - כל מה שצריך להצלחה',
-    color1: '#14b8a6',
-    color2: '#0d9488',
+    color1: '#7b6ef6',
+    color2: '#4a3bc4',
   },
   {
     emoji: '📊',
@@ -298,8 +298,8 @@ const features = [
     emoji: '🤖',
     title: 'AI ליווי אישי',
     description: 'קבלו המלצות חכמות מותאמות אישית לפרוגרס שלכם',
-    color1: '#10b981',
-    color2: '#059669',
+    color1: '#0dbdb8',
+    color2: '#0a9490',
   },
 ];
 

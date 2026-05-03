@@ -13,8 +13,8 @@ interface MobileHeaderProps {
 }
 
 const menuItems = [
-  { href: '/courses',  label: 'הקורסים שלי',  icon: BookOpen,    color: '#14b8a6' },
-  { href: '/progress', label: 'התקדמות שלי', icon: TrendingUp,  color: '#10b981' },
+  { href: '/courses',  label: 'הקורסים שלי',  icon: BookOpen,    color: '#7b6ef6' },
+  { href: '/progress', label: 'התקדמות שלי', icon: TrendingUp,  color: '#0dbdb8' },
   { href: '/profile',  label: 'הפרופיל שלי',  icon: UserCircle, color: '#d946ef' },
 ];
 
@@ -23,8 +23,23 @@ export function MobileHeader({ user, title }: MobileHeaderProps) {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 safe-area-top nav-header">
-        <div className="container-mobile h-16 flex items-center justify-between gap-3">
+      <header className="fixed top-0 left-0 right-0 z-50 safe-area-top overflow-hidden"
+        style={{ background: 'linear-gradient(160deg, #1e1260 0%, #3730A3 50%, #6B5FD4 100%)' }}>
+        {/* Orb 1 */}
+        <div className="absolute pointer-events-none" style={{
+          width: '200px', height: '200px', borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(123,110,246,0.45) 0%, transparent 70%)',
+          top: '-80px', left: '-60px', filter: 'blur(20px)'
+        }} />
+        {/* Orb 2 */}
+        <div className="absolute pointer-events-none" style={{
+          width: '130px', height: '130px', borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(13,189,184,0.35) 0%, transparent 70%)',
+          top: '8px', right: '-30px', filter: 'blur(16px)'
+        }} />
+        {/* Grid pattern */}
+        <div className="header-grid-pattern" />
+        <div className="container-mobile h-16 flex items-center justify-between gap-3 relative z-10">
           {/* Logo */}
           <Link
             href="/courses"
@@ -36,7 +51,7 @@ export function MobileHeader({ user, title }: MobileHeaderProps) {
 
           {/* Center Title */}
           {title && (
-            <p className="flex-1 text-center text-sm font-semibold text-slate-300 line-clamp-1 px-2">
+            <p className="flex-1 text-center text-sm font-semibold text-white/80 line-clamp-1 px-2">
               {title}
             </p>
           )}
@@ -45,23 +60,25 @@ export function MobileHeader({ user, title }: MobileHeaderProps) {
           <div className="flex items-center gap-2">
             <button
               aria-label="התראות"
-              className="btn-icon text-slate-400 hover:text-white"
+              className="w-10 h-10 rounded-2xl flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-90"
+              style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.15)' }}
             >
-              <Bell className="w-5 h-5" />
+              <Bell className="w-5 h-5 text-white/90" />
             </button>
             <button
               aria-label={isMenuOpen ? 'סגור תפריט' : 'פתח תפריט'}
-              className="btn-icon text-slate-300 hover:text-white"
+              className="w-10 h-10 rounded-2xl flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-90"
+              style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.15)' }}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <AnimatePresence mode="wait" initial={false}>
                 {isMenuOpen ? (
                   <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                    <X className="w-5 h-5" />
+                    <X className="w-5 h-5 text-white" />
                   </motion.span>
                 ) : (
                   <motion.span key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                    <Menu className="w-5 h-5" />
+                    <Menu className="w-5 h-5 text-white" />
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -79,13 +96,13 @@ export function MobileHeader({ user, title }: MobileHeaderProps) {
               transition={{ duration: 0.2, ease: 'easeOut' }}
               className="container-mobile pb-4 pt-2"
             >
-              <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(15,23,42,0.97)', border: '1px solid rgba(255,255,255,0.10)' }}>
+              <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(26,16,64,0.97)', backdropFilter: 'blur(24px)', border: '1px solid rgba(123,110,246,0.25)', boxShadow: '0 8px 32px rgba(45,27,142,0.4)' }}>
                 {menuItems.map((item, idx) => (
                   <Link
                     key={item.href}
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`flex items-center gap-3.5 px-5 py-4 transition-all hover:bg-white/5 active:bg-white/10 no-tap-highlight ${idx < menuItems.length - 1 ? 'border-b border-white/5' : ''}`}
+                    className={`flex items-center gap-3.5 px-5 py-4 transition-all hover:bg-white/8 active:bg-white/12 no-tap-highlight ${idx < menuItems.length - 1 ? 'border-b border-white/8' : ''}`}
                   >
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
                       style={{ background: `${item.color}18`, border: `1px solid ${item.color}33` }}>
