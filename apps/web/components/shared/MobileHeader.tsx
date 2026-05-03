@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { User } from '@supabase/supabase-js';
 import { BookOpen, TrendingUp, UserCircle, X, Menu, Bell } from 'lucide-react';
-import { NuraWellLogo } from './NuraWellLogo';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -20,6 +19,10 @@ const menuItems = [
 
 export function MobileHeader({ user, title }: MobileHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const userName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'שלום';
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'בוקר טוב,' : hour < 17 ? 'צהריים טובים,' : hour < 21 ? 'ערב טוב,' : 'לילה טוב,';
 
   return (
     <>
@@ -39,36 +42,29 @@ export function MobileHeader({ user, title }: MobileHeaderProps) {
         }} />
         {/* Grid pattern */}
         <div className="header-grid-pattern" />
-        <div className="container-mobile h-16 flex items-center justify-between gap-3 relative z-10">
-          {/* Logo */}
-          <Link
-            href="/courses"
-            className="no-tap-highlight"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <NuraWellLogo size="sm" />
-          </Link>
 
-          {/* Center Title */}
-          {title && (
-            <p className="flex-1 text-center text-sm font-semibold text-white/80 line-clamp-1 px-2">
-              {title}
-            </p>
-          )}
+        <div className="container-mobile h-16 flex items-center justify-between gap-3 relative z-10">
+          {/* Greeting */}
+          <Link href="/courses" className="no-tap-highlight" onClick={() => setIsMenuOpen(false)}>
+            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)', fontWeight: 400, marginBottom: '2px' }}>{greeting}</div>
+            <div style={{ fontSize: '22px', fontWeight: 900, color: '#fff', lineHeight: 1, fontFamily: "'Rubik','Heebo',sans-serif" }}>
+              {userName} <span style={{ fontSize: '18px' }}>☀️</span>
+            </div>
+          </Link>
 
           {/* Actions */}
           <div className="flex items-center gap-2">
             <button
               aria-label="התראות"
-              className="w-10 h-10 rounded-2xl flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-90"
-              style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.15)' }}
+              className="w-[42px] h-[42px] rounded-[14px] flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-90"
+              style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.15)' }}
             >
               <Bell className="w-5 h-5 text-white/90" />
             </button>
             <button
               aria-label={isMenuOpen ? 'סגור תפריט' : 'פתח תפריט'}
-              className="w-10 h-10 rounded-2xl flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-90"
-              style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.15)' }}
+              className="w-[42px] h-[42px] rounded-[14px] flex flex-col items-center justify-center gap-[4px] transition-all duration-200 hover:scale-105 active:scale-90"
+              style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.15)' }}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <AnimatePresence mode="wait" initial={false}>

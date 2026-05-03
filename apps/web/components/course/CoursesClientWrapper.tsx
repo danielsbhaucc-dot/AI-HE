@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { BookOpen, Zap, TrendingUp, Award, GraduationCap, Sparkles } from 'lucide-react';
+import { GraduationCap, BookOpen, TrendingUp, Award } from 'lucide-react';
 import { CourseCard } from '../shared/CourseCard';
 import type { CourseWithProgress, UserStats } from '../../lib/types/course';
 
@@ -52,74 +52,157 @@ const statCards = (stats: UserStats) => [
 
 export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats }: CoursesClientWrapperProps) {
   const isEmpty = enrolledCourses.length === 0 && availableCourses.length === 0;
+  const totalSegments = enrolledCourses.length > 0 ? Math.max(enrolledCourses.length, 6) : 6;
 
   return (
-    <div className="min-h-screen bg-mesh-subtle">
-      <div className="container-mobile py-6 pb-10">
+    <div>
+      {/* ═══ PURPLE HERO — extends behind fixed header ═══ */}
+      <div className="-mt-16 pt-16 relative overflow-hidden"
+        style={{ background: 'linear-gradient(160deg, #1e1260 0%, #3730A3 50%, #6B5FD4 80%, #9B8FF0 100%)' }}>
+        {/* Orbs */}
+        <div className="absolute pointer-events-none" style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(245,166,35,0.3) 0%, transparent 70%)', bottom: '20px', left: '50%', filter: 'blur(12px)' }} />
 
-        {/* ── Page Header ── */}
-        <motion.div
-          initial={{ opacity: 0, y: -12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.38 }}
-          className="mb-7"
-        >
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0"
-              style={{ background: 'linear-gradient(135deg, rgba(123,110,246,0.25), rgba(74,59,196,0.12))', border: '1px solid rgba(123,110,246,0.4)', boxShadow: '0 4px 16px rgba(123,110,246,0.25)' }}>
-              <BookOpen className="w-5 h-5 text-primary-300" />
+        <div className="relative z-10" style={{ padding: '12px 20px 40px' }}>
+          {/* Avatar + Speech Bubble */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="flex items-end gap-3.5"
+          >
+            {/* Avatar with spinning ring */}
+            <div className="relative flex-shrink-0">
+              <div className="absolute rounded-full" style={{ inset: '-8px', background: 'conic-gradient(from 0deg, #0DBDB8, #7B6EF6, #F5A623, #7B6EF6, #0DBDB8)', filter: 'blur(14px)', opacity: 0.55, zIndex: -1, animation: 'spinRing 6s linear infinite' }} />
+              <div className="spin-ring" style={{
+                width: '82px', height: '82px', borderRadius: '50%',
+                background: 'conic-gradient(from 0deg, #0DBDB8 0%, #7B6EF6 30%, #F5A623 55%, #7B6EF6 75%, #0DBDB8 100%)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                boxShadow: '0 0 20px rgba(123,110,246,0.5), 0 0 40px rgba(13,189,184,0.2)',
+              }}>
+                <div style={{ width: '74px', height: '74px', borderRadius: '50%', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '3px' }}>
+                  <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: 'linear-gradient(145deg, #4A3BC4, #2D1B8E)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '34px', overflow: 'hidden' }}>
+                    🧑‍⚕️
+                  </div>
+                </div>
+              </div>
+              {/* Speaking pill */}
+              <div style={{ position: 'absolute', bottom: '0px', left: '-2px', background: '#0DBDB8', border: '2px solid white', borderRadius: '20px', padding: '3px 7px', display: 'flex', gap: '2px', alignItems: 'center', boxShadow: '0 2px 8px rgba(13,189,184,0.4)' }}>
+                <span style={{ width: '3px', height: '3px', background: 'white', borderRadius: '50%', display: 'inline-block' }} />
+                <span style={{ width: '3px', height: '3px', background: 'white', borderRadius: '50%', display: 'inline-block' }} />
+                <span style={{ width: '3px', height: '3px', background: 'white', borderRadius: '50%', display: 'inline-block' }} />
+              </div>
             </div>
-            <div>
-              <h1 className="text-2xl font-black text-white leading-tight">הקורסים שלי</h1>
-              <p className="text-slate-400 text-sm mt-0.5">המשיכו ללמוד והתקדמו ליעדים שלכם</p>
-            </div>
-          </div>
-          <div className="h-px mt-4" style={{ background: 'linear-gradient(to left, transparent, rgba(123,110,246,0.5), rgba(74,59,196,0.25), transparent)' }} />
-        </motion.div>
 
-        {/* ── Stats Row ── */}
+            {/* Glass speech bubble */}
+            <motion.div
+              initial={{ opacity: 0, y: 8, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.35, ease: [0.34, 1.56, 0.64, 1] }}
+              style={{
+                flex: 1, background: 'rgba(255,255,255,0.14)', backdropFilter: 'blur(18px)', WebkitBackdropFilter: 'blur(18px)',
+                border: '1px solid rgba(255,255,255,0.28)', borderRadius: '18px 18px 18px 6px', padding: '11px 14px',
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.25), 0 4px 20px rgba(0,0,0,0.15)',
+              }}
+            >
+              <div style={{ fontSize: '10px', color: '#A5F3F0', fontWeight: 700, letterSpacing: '0.5px', marginBottom: '4px' }}>✦ ד״ר לב — המנטור שלך</div>
+              <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.92)', lineHeight: 1.55, fontWeight: 400, fontFamily: "'Heebo',sans-serif" }}>
+                {enrolledCourses.length > 0
+                  ? <>שלום! יש לנו שיעור חדש היום 🌿<br /><strong style={{ color: '#FFD97D', fontWeight: 700 }}>בואו נמשיך!</strong></>
+                  : <>ברוכים הבאים! 🌿<br /><strong style={{ color: '#FFD97D', fontWeight: 700 }}>בואו נתחיל את המסע.</strong></>
+                }
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* ═══ WHITE ROUNDED SCROLL BODY ═══ */}
+      <div style={{
+        background: '#ECEEF5', borderRadius: '26px 26px 0 0', marginTop: '-18px',
+        padding: '22px 16px 20px', position: 'relative', zIndex: 3, minHeight: '55vh',
+      }}>
+
+        {/* ── Progress Card ── */}
         {enrolledCourses.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.12, duration: 0.38 }}
-            className="grid grid-cols-3 gap-2.5 mb-8"
+            transition={{ duration: 0.4, delay: 0.05 }}
+            className="flex gap-3.5 items-center mb-3.5 p-4"
+            style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(245,245,255,0.9) 100%)',
+              backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.8)', borderRadius: '22px',
+              boxShadow: '0 4px 24px rgba(45,27,142,0.10), 0 1px 4px rgba(45,27,142,0.06), inset 0 1px 0 rgba(255,255,255,1)',
+            }}
           >
-            {statCards(stats).map((s) => (
-              <div
-                key={s.label}
-                className="relative overflow-hidden rounded-2xl p-3 text-center"
-                style={{ background: s.bg, border: `1px solid ${s.border}`, boxShadow: `0 4px 20px ${s.glow}` }}
-              >
-                <div className="absolute inset-x-0 top-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${s.color}, transparent)` }} />
-                <div className="w-8 h-8 rounded-xl mx-auto mb-2 flex items-center justify-center"
-                  style={{ background: `${s.color}22`, boxShadow: `0 0 12px ${s.glow}` }}>
-                  <s.icon className="w-4 h-4" style={{ color: s.color }} />
-                </div>
-                <p className="text-xl font-black leading-none" style={{ color: s.color }}>{s.value}</p>
-                <p className="text-[10px] text-slate-400 mt-1 leading-tight font-medium">{s.label}</p>
+            {/* Day pill */}
+            <div className="flex-shrink-0 flex flex-col items-center justify-center"
+              style={{ width: '58px', height: '58px', background: 'linear-gradient(145deg, #2D1B8E, #6B5FD4)', borderRadius: '18px', boxShadow: '0 4px 16px rgba(45,27,142,0.35)' }}>
+              <span style={{ fontSize: '24px', fontWeight: 900, color: '#fff', lineHeight: 1 }}>{stats.avgProgress}</span>
+              <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>%</span>
+            </div>
+            {/* Progress info */}
+            <div style={{ flex: 1 }}>
+              <p style={{ fontSize: '15px', fontWeight: 800, color: '#1A1730', fontFamily: "'Rubik','Heebo',sans-serif" }}>
+                {stats.activeCoursesCount} קורסים פעילים
+              </p>
+              <p style={{ fontSize: '12px', color: '#9896B8', margin: '2px 0 8px' }}>
+                {stats.totalLessonsCompleted} שיעורים הושלמו ✦
+              </p>
+              {/* Segments */}
+              <div className="flex gap-1">
+                {Array.from({ length: totalSegments }).map((_, i) => {
+                  const course = enrolledCourses[i];
+                  const isDone = course && course.progress === 100;
+                  const isActive = course && course.progress > 0 && course.progress < 100;
+                  return (
+                    <div key={i} style={{
+                      height: '6px', flex: 1, borderRadius: '10px',
+                      background: isDone
+                        ? 'linear-gradient(90deg, #0DBDB8, #6EF0ED)'
+                        : isActive
+                          ? 'linear-gradient(90deg, #4A3BC4, #9B8FF0)'
+                          : 'rgba(0,0,0,0.08)',
+                    }} />
+                  );
+                })}
               </div>
-            ))}
+            </div>
           </motion.div>
         )}
 
-        {/* ── Enrolled Courses ── */}
+        {/* ── Badge / Reminder Card ── */}
         {enrolledCourses.length > 0 && (
-          <section className="mb-9">
-            <motion.div
-              initial={{ opacity: 0, x: 10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.18, duration: 0.3 }}
-              className="flex items-center gap-3 mb-5"
-            >
-              <div className="w-1.5 h-7 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #c4b5fd, #4a3bc4)' }} />
-              <div className="flex items-center gap-2.5 flex-1">
-                <Zap className="w-4.5 h-4.5 text-primary-400" />
-                <h2 className="text-lg font-black text-white">בלמידה</h2>
-                <span className="badge-primary text-xs font-bold px-2.5">{enrolledCourses.length} קורסים</span>
-              </div>
-            </motion.div>
-            <motion.div variants={container} initial="hidden" animate="show" className="space-y-4">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="flex items-center gap-3.5 mb-4 p-3.5 px-4"
+            style={{
+              background: 'linear-gradient(135deg, #FFF8E7 0%, #FFFBF0 100%)',
+              border: '1.5px solid rgba(245,166,35,0.35)', borderRadius: '20px',
+              boxShadow: '0 4px 20px rgba(245,166,35,0.12), inset 0 1px 0 rgba(255,255,255,0.9)',
+            }}
+          >
+            <div className="flex-shrink-0 flex flex-col items-center justify-center"
+              style={{ width: '50px', height: '50px', background: 'linear-gradient(145deg, #F5A623, #FBBF24)', borderRadius: '16px', boxShadow: '0 4px 14px rgba(245,166,35,0.45)' }}>
+              <span style={{ fontSize: '20px', fontWeight: 900, color: 'white', lineHeight: 1 }}>{enrolledCourses.length}</span>
+              <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.85)', fontWeight: 700 }}>קורסים</span>
+            </div>
+            <div>
+              <p style={{ fontSize: '14px', fontWeight: 800, color: '#78350F', fontFamily: "'Rubik','Heebo',sans-serif" }}>⚡ המשיכו ללמוד!</p>
+              <p style={{ fontSize: '12px', color: '#B45309', marginTop: '2px' }}>יש שיעורים שמחכים לכם</p>
+            </div>
+          </motion.div>
+        )}
+
+        {/* ── Section: Enrolled Courses ── */}
+        {enrolledCourses.length > 0 && (
+          <section className="mb-6">
+            <div style={{ fontSize: '10px', fontWeight: 700, color: '#9896B8', letterSpacing: '1.2px', textTransform: 'uppercase', margin: '18px 0 12px 2px' }}>
+              בלמידה
+            </div>
+            <motion.div variants={container} initial="hidden" animate="show" className="space-y-3.5">
               {enrolledCourses.map((course) => (
                 <motion.div key={course.id} variants={item}>
                   <CourseCard course={course} progress={course.progress} isEnrolled={true} />
@@ -129,31 +212,13 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
           </section>
         )}
 
-        {/* ── Divider between sections ── */}
-        {enrolledCourses.length > 0 && availableCourses.length > 0 && (
-          <div className="h-px mb-9" style={{ background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent)' }} />
-        )}
-
-        {/* ── Available Courses ── */}
+        {/* ── Section: Available Courses ── */}
         {availableCourses.length > 0 && (
           <section>
-            <motion.div
-              initial={{ opacity: 0, x: 10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: enrolledCourses.length > 0 ? 0.28 : 0.18, duration: 0.3 }}
-              className="flex items-center gap-3 mb-5"
-            >
-              <div className="w-1.5 h-7 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #a855f7, #6366f1)' }} />
-              <div className="flex items-center gap-2.5 flex-1">
-                <Sparkles className="w-4.5 h-4.5 text-purple-400" />
-                <h2 className="text-lg font-black text-white">קורסים זמינים</h2>
-                <span className="text-xs font-bold px-2.5 py-1 rounded-full"
-                  style={{ background: 'rgba(168,85,247,0.18)', border: '1px solid rgba(168,85,247,0.3)', color: '#c084fc' }}>
-                  {availableCourses.length} זמינים
-                </span>
-              </div>
-            </motion.div>
-            <motion.div variants={container} initial="hidden" animate="show" className="space-y-4">
+            <div style={{ fontSize: '10px', fontWeight: 700, color: '#9896B8', letterSpacing: '1.2px', textTransform: 'uppercase', margin: '18px 0 12px 2px' }}>
+              קורסים זמינים
+            </div>
+            <motion.div variants={container} initial="hidden" animate="show" className="space-y-3.5">
               {availableCourses.map((course) => (
                 <motion.div key={course.id} variants={item}>
                   <CourseCard course={course} progress={0} isEnrolled={false} />
@@ -173,13 +238,13 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
           >
             <div className="relative w-24 h-24 mx-auto mb-6">
               <div className="absolute inset-0 rounded-3xl"
-                style={{ background: 'linear-gradient(135deg, rgba(123,110,246,0.15), rgba(74,59,196,0.08))', border: '1px solid rgba(123,110,246,0.3)', boxShadow: '0 8px 32px rgba(123,110,246,0.2)' }} />
+                style={{ background: 'linear-gradient(145deg, #4a3bc4, #7b6ef6)', boxShadow: '0 8px 32px rgba(74,59,196,0.25)' }} />
               <div className="absolute inset-0 flex items-center justify-center">
-                <GraduationCap className="w-10 h-10 text-primary-400" />
+                <GraduationCap className="w-10 h-10 text-white" />
               </div>
             </div>
-            <h3 className="text-2xl font-black text-white mb-2">אין קורסים עדיין</h3>
-            <p className="text-slate-400 text-sm max-w-[220px] mx-auto leading-relaxed">
+            <h3 className="text-2xl font-black mb-2" style={{ color: '#1A1730', fontFamily: "'Rubik','Heebo',sans-serif" }}>אין קורסים עדיין</h3>
+            <p className="text-sm max-w-[220px] mx-auto leading-relaxed" style={{ color: '#9896B8' }}>
               המנהל יפתח עבורך גישה לקורסים בקרוב
             </p>
           </motion.div>

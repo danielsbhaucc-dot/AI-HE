@@ -30,141 +30,165 @@ export function CourseCard({ course, progress, isEnrolled }: CourseCardProps) {
     >
       <Link
         href={`/courses/${course.id}`}
-        className="block overflow-hidden no-tap-highlight rounded-3xl relative"
+        className="block overflow-hidden no-tap-highlight relative"
         style={{
-          background: 'linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%)',
-          border: '1px solid rgba(255,255,255,0.12)',
-          backdropFilter: 'blur(24px)',
-          WebkitBackdropFilter: 'blur(24px)',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08)',
+          borderRadius: '22px',
+          boxShadow: '0 8px 32px rgba(45,27,142,0.18), 0 2px 8px rgba(45,27,142,0.1)',
           transition: 'all 0.25s ease',
         }}
       >
-        {/* Top color accent line */}
-        <div className="absolute inset-x-0 top-0 h-px z-10"
-          style={{ background: isCompleted
-            ? 'linear-gradient(90deg, transparent, #10b981, #34d399, transparent)'
-            : isEnrolled
-            ? 'linear-gradient(90deg, transparent, #7b6ef6, #a99df8, transparent)'
-            : 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)'
+        {/* ── Purple Gradient Header ── */}
+        <div className="relative overflow-hidden" style={{
+          background: isCompleted
+            ? 'linear-gradient(145deg, #065f46 0%, #059669 50%, #10b981 100%)'
+            : 'linear-gradient(145deg, #1e1260 0%, #3730A3 50%, #6B5FD4 100%)',
+          padding: '18px 16px',
+          display: 'flex', alignItems: 'center', gap: '14px',
+        }}>
+          {/* Shine sweep */}
+          <div className="absolute pointer-events-none" style={{
+            width: '60%', height: '100%', top: 0,
+            background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%)',
+            transform: 'skewX(-12deg)',
+            animation: 'shineSweep 4s ease-in-out infinite',
           }} />
 
-        {/* Thumbnail */}
-        <div className="relative w-full overflow-hidden" style={{ aspectRatio: '16/9' }}>
-          {course.thumbnail_url ? (
-            <Image
-              src={course.thumbnail_url}
-              alt={course.title}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-              sizes="(max-width: 768px) 100vw, 448px"
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, #1e1260 0%, #3730a3 50%, #2d1b8e 100%)' }}>
-              <BookOpen className="w-16 h-16" style={{ color: 'rgba(169,157,248,0.45)' }} />
-            </div>
-          )}
-
-          {/* Gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-          {!course.thumbnail_url && (
-            <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 40%, rgba(123,110,246,0.14), transparent 60%)' }} />
-          )}
-
-          {/* Play button */}
-          {isEnrolled && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-14 h-14 rounded-full flex items-center justify-center transition-transform"
-                style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(12px)', border: '1.5px solid rgba(255,255,255,0.4)', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
-                <Play className="w-5 h-5 text-white" style={{ marginRight: '-2px' }} fill="white" />
-              </div>
-            </div>
-          )}
-
-          {/* Top badges */}
-          <div className="absolute top-3 right-3 flex flex-col gap-1.5 z-10">
-            {isCompleted && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold"
-                style={{ background: 'rgba(16,185,129,0.85)', backdropFilter: 'blur(8px)', border: '1px solid rgba(16,185,129,0.5)', color: '#ecfdf5' }}>
-                <CheckCircle2 className="w-3 h-3" /> הושלם
-              </span>
-            )}
-            {course.is_premium && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold"
-                style={{ background: 'rgba(168,85,247,0.8)', backdropFilter: 'blur(8px)', border: '1px solid rgba(168,85,247,0.5)', color: '#faf5ff' }}>
-                <Crown className="w-3 h-3" /> פרימיום
-              </span>
-            )}
-            {!isEnrolled && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold text-slate-200"
-                style={{ background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.15)' }}>
-                <Lock className="w-3 h-3" /> נעול
-              </span>
+          {/* Icon wrap */}
+          <div className="flex-shrink-0 flex items-center justify-center" style={{
+            width: '48px', height: '48px',
+            background: 'rgba(255,255,255,0.15)',
+            border: '1px solid rgba(255,255,255,0.25)',
+            borderRadius: '15px',
+            backdropFilter: 'blur(8px)',
+          }}>
+            {course.thumbnail_url ? (
+              <Image
+                src={course.thumbnail_url}
+                alt={course.title}
+                width={48}
+                height={48}
+                className="object-cover"
+                style={{ borderRadius: '14px', width: '100%', height: '100%' }}
+              />
+            ) : (
+              <BookOpen className="w-6 h-6" style={{ color: 'rgba(255,255,255,0.9)' }} />
             )}
           </div>
 
-          {/* Progress badge */}
-          {isEnrolled && progress > 0 && !isCompleted && (
-            <div className="absolute bottom-3 left-3 px-2.5 py-1 rounded-full text-xs font-black text-white z-10"
-              style={{ background: 'rgba(123,110,246,0.9)', backdropFilter: 'blur(8px)', boxShadow: '0 2px 8px rgba(123,110,246,0.5)' }}>
-              {progress}%
+          {/* Info */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.55)', fontWeight: 600, letterSpacing: '0.5px', marginBottom: '4px' }}>
+              {lessonCount} שיעורים · ~{lessonCount * 15} דקות
+            </div>
+            <div className="line-clamp-1" style={{ fontSize: '16px', fontWeight: 800, color: '#fff', fontFamily: "'Rubik','Heebo',sans-serif", lineHeight: 1.3 }}>
+              {course.title}
+            </div>
+          </div>
+
+          {/* Play / Lock button */}
+          <div className="flex-shrink-0 flex items-center justify-center" style={{
+            width: '42px', height: '42px',
+            background: isEnrolled ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.2)',
+            border: isEnrolled ? '1.5px solid rgba(255,255,255,0.35)' : '1.5px solid rgba(255,255,255,0.15)',
+            borderRadius: '50%',
+            backdropFilter: 'blur(8px)',
+          }}>
+            {isEnrolled ? (
+              <Play className="w-4.5 h-4.5 text-white" style={{ marginRight: '-2px' }} fill="white" />
+            ) : (
+              <Lock className="w-4 h-4 text-white/60" />
+            )}
+          </div>
+
+          {/* Top-right badges */}
+          {(isCompleted || course.is_premium) && (
+            <div className="absolute top-2.5 left-2.5 flex gap-1.5 z-10">
+              {isCompleted && (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold"
+                  style={{ background: 'rgba(255,255,255,0.25)', backdropFilter: 'blur(6px)', color: '#ecfdf5' }}>
+                  <CheckCircle2 className="w-3 h-3" /> הושלם
+                </span>
+              )}
+              {course.is_premium && (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold"
+                  style={{ background: 'rgba(245,166,35,0.7)', backdropFilter: 'blur(6px)', color: '#fff' }}>
+                  <Crown className="w-3 h-3" /> פרימיום
+                </span>
+              )}
             </div>
           )}
         </div>
 
-        {/* Body */}
-        <div className="p-4 space-y-3">
-          <div>
-            <h3 className="text-base font-black text-white line-clamp-1 mb-1 leading-snug">
-              {course.title}
-            </h3>
-            {course.description && (
-              <p className="text-sm text-slate-400 line-clamp-2 leading-relaxed">
-                {course.description}
-              </p>
-            )}
-          </div>
+        {/* ── White Footer ── */}
+        <div style={{
+          background: 'rgba(255,255,255,0.97)',
+          padding: isEnrolled ? '10px 16px 14px' : '12px 16px',
+          borderTop: '1px solid rgba(45,27,142,0.06)',
+        }}>
+          {/* Description line */}
+          {course.description && (
+            <p className="line-clamp-1" style={{ fontSize: '13px', color: '#5A5880', marginBottom: '8px', fontFamily: "'Heebo',sans-serif" }}>
+              {course.description}
+            </p>
+          )}
 
-          {/* Meta row */}
-          <div className="flex items-center gap-3 text-xs">
-            <div className="flex items-center gap-1.5 text-slate-400">
-              <BookOpen className="w-3.5 h-3.5 text-primary-400" />
-              <span>{lessonCount} שיעורים</span>
+          {/* Meta + status row */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1" style={{ fontSize: '12px', color: '#9896B8' }}>
+              <Clock className="w-3.5 h-3.5" style={{ color: '#9896B8' }} />
+              <span><strong style={{ color: '#4A3BC4' }}>{lessonCount}</strong> שיעורים</span>
             </div>
-            <div className="w-px h-3 bg-slate-700" />
-            <div className="flex items-center gap-1.5 text-slate-400">
-              <Clock className="w-3.5 h-3.5 text-primary-400" />
-              <span>~{lessonCount * 15} דקות</span>
-            </div>
-            {isEnrolled && (
-              <>
-                <div className="w-px h-3 bg-slate-700" />
-                <div className="flex items-center gap-1 text-primary-400">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span className="font-semibold">רשום</span>
-                </div>
-              </>
+            {isEnrolled && !isCompleted && (
+              <div style={{
+                fontSize: '11px', fontWeight: 700,
+                color: '#0DBDB8',
+                background: 'rgba(13,189,184,0.1)',
+                padding: '4px 10px', borderRadius: '20px',
+              }}>
+                🔓 פתוח עכשיו
+              </div>
+            )}
+            {isCompleted && (
+              <div style={{
+                fontSize: '11px', fontWeight: 700,
+                color: '#059669',
+                background: 'rgba(5,150,105,0.1)',
+                padding: '4px 10px', borderRadius: '20px',
+              }}>
+                ✅ הושלם
+              </div>
+            )}
+            {!isEnrolled && (
+              <div style={{
+                fontSize: '11px', fontWeight: 700,
+                color: '#9896B8',
+                background: 'rgba(0,0,0,0.05)',
+                padding: '4px 10px', borderRadius: '20px',
+              }}>
+                🔒 נעול
+              </div>
             )}
           </div>
 
           {/* Progress bar */}
           {isEnrolled && (
-            <div>
-              <div className="flex justify-between items-center mb-1.5">
-                <span className="text-xs text-slate-500 font-medium">התקדמות</span>
-                <span className="text-xs font-black" style={{ color: isCompleted ? '#34d399' : '#a99df8' }}>{progress}%</span>
+            <div style={{ marginTop: '10px' }}>
+              <div className="flex justify-between items-center" style={{ marginBottom: '5px' }}>
+                <span style={{ fontSize: '11px', fontWeight: 500, color: '#9896B8' }}>התקדמות</span>
+                <span style={{ fontSize: '11px', fontWeight: 900, color: isCompleted ? '#059669' : '#6b5fd4' }}>{progress}%</span>
               </div>
-              <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.07)' }}>
+              <div style={{ height: '6px', borderRadius: '10px', background: 'rgba(45,27,142,0.08)', overflow: 'hidden' }}>
                 <motion.div
-                  className="h-full rounded-full"
+                  style={{
+                    height: '100%', borderRadius: '10px',
+                    background: isCompleted
+                      ? 'linear-gradient(90deg, #059669, #10b981, #34d399)'
+                      : 'linear-gradient(90deg, #4a3bc4, #7b6ef6, #a99df8)',
+                    boxShadow: isCompleted ? '0 0 6px rgba(16,185,129,0.4)' : '0 0 6px rgba(123,110,246,0.4)',
+                  }}
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
                   transition={{ duration: 0.8, ease: 'easeOut', delay: 0.15 }}
-                  style={{ background: isCompleted
-                    ? 'linear-gradient(90deg, #059669, #10b981, #34d399)'
-                    : 'linear-gradient(90deg, #4a3bc4, #7b6ef6, #a99df8)',
-                    boxShadow: isCompleted ? '0 0 8px rgba(16,185,129,0.5)' : '0 0 8px rgba(123,110,246,0.5)' }}
                 />
               </div>
             </div>
