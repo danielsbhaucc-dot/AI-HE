@@ -86,20 +86,25 @@ export function MiniGame({ items, existingAnswers, onComplete }: MiniGameProps) 
         ))}
       </div>
 
-      {/* Statement card */}
+      {/* Statement card — green header + white body */}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIdx}
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="rounded-2xl p-6 text-center"
-          style={{ background: 'rgba(255,255,255,0.95)', border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 4px 20px rgba(6,78,59,0.08)' }}
+          className="rounded-2xl overflow-hidden"
+          style={{ border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}
         >
-          <p className="text-lg font-bold leading-relaxed mb-6" style={{ color: '#1A1730' }}>
-            &ldquo;{item.statement}&rdquo;
-          </p>
+          {/* Green gradient header */}
+          <div className="px-6 py-5 text-center" style={{ background: 'linear-gradient(145deg, #047857, #059669, #10b981)' }}>
+            <p className="text-lg font-bold leading-relaxed text-white">
+              &ldquo;{item.statement}&rdquo;
+            </p>
+          </div>
 
+          {/* White body */}
+          <div className="p-5 bg-white">
           {/* True/False buttons */}
           {!isAnswered && (
             <div className="flex gap-3 justify-center">
@@ -140,6 +145,7 @@ export function MiniGame({ items, existingAnswers, onComplete }: MiniGameProps) 
               </div>
             </motion.div>
           )}
+          </div>{/* end white body */}
         </motion.div>
       </AnimatePresence>
 

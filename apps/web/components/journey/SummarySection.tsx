@@ -51,21 +51,24 @@ export function SummarySection({ step, progress, onReplay, onComplete }: Summary
         </div>
       </div>
 
-      {/* Score card */}
+      {/* Score card — green header + white body */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-2xl p-6 text-center"
+        className="rounded-2xl overflow-hidden"
         style={{
-          background: 'linear-gradient(135deg, rgba(236,253,245,1), rgba(209,250,229,0.95))',
-          border: '1.5px solid rgba(16,185,129,0.3)',
-          boxShadow: '0 8px 30px rgba(16,185,129,0.12)',
+          border: '1px solid rgba(0,0,0,0.06)',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
         }}
       >
-        <div className="text-5xl mb-3">{getScoreEmoji(overallScore)}</div>
-        <div className="text-4xl font-black text-emerald-700 mb-1">{overallScore}%</div>
-        <p className="text-gray-600 font-bold mb-3">{getScoreMessage(overallScore)}</p>
-
+        {/* Green gradient header */}
+        <div className="px-6 py-5 text-center" style={{ background: 'linear-gradient(145deg, #047857, #059669, #10b981)' }}>
+          <div className="text-5xl mb-3">{getScoreEmoji(overallScore)}</div>
+          <div className="text-4xl font-black text-white mb-1">{overallScore}%</div>
+          <p className="text-white/90 font-bold">{getScoreMessage(overallScore)}</p>
+        </div>
+        {/* White body */}
+        <div className="p-5 bg-white">
         <div className="flex justify-center gap-4 text-sm">
           <div className="px-3 py-2 rounded-xl" style={{ background: 'rgba(16,185,129,0.1)' }}>
             <span className="text-gray-500">שאלות: </span>
@@ -82,6 +85,7 @@ export function SummarySection({ step, progress, onReplay, onComplete }: Summary
             </div>
           )}
         </div>
+        </div>{/* end white body */}
       </motion.div>
 
       {/* Summary text */}
@@ -91,7 +95,7 @@ export function SummarySection({ step, progress, onReplay, onComplete }: Summary
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
           className="rounded-2xl p-5"
-          style={{ background: 'rgba(255,255,255,0.95)', border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 2px 12px rgba(6,78,59,0.06)' }}
+          style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}
         >
           <div className="flex items-center gap-2 mb-3">
             <div className="w-1.5 h-6 rounded-full" style={{ background: 'linear-gradient(to bottom, #6ee7b7, #047857)' }} />
@@ -109,7 +113,7 @@ export function SummarySection({ step, progress, onReplay, onComplete }: Summary
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
           className="rounded-2xl p-5"
-          style={{ background: 'rgba(255,255,255,0.95)', border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 2px 12px rgba(6,78,59,0.06)' }}
+          style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}
         >
           <div className="flex items-center gap-2 mb-3">
             <div className="w-1.5 h-6 rounded-full" style={{ background: 'linear-gradient(to bottom, #fbbf24, #d97706)' }} />
@@ -138,7 +142,7 @@ export function SummarySection({ step, progress, onReplay, onComplete }: Summary
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
           className="rounded-2xl p-5"
-          style={{ background: 'rgba(255,255,255,0.95)', border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 2px 12px rgba(6,78,59,0.06)' }}
+          style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}
         >
           <div className="flex items-center gap-2 mb-3">
             <div className="w-1.5 h-6 rounded-full" style={{ background: 'linear-gradient(to bottom, #34d399, #047857)' }} />
@@ -167,7 +171,7 @@ export function SummarySection({ step, progress, onReplay, onComplete }: Summary
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
           className="rounded-2xl p-5"
-          style={{ background: 'rgba(255,255,255,0.95)', border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 2px 12px rgba(6,78,59,0.06)' }}
+          style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}
         >
           <div className="flex items-center gap-2 mb-3">
             <div className="w-1.5 h-6 rounded-full" style={{ background: 'linear-gradient(to bottom, #60a5fa, #3b82f6)' }} />
@@ -197,7 +201,7 @@ export function SummarySection({ step, progress, onReplay, onComplete }: Summary
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
           className="flex items-center gap-3 p-4 rounded-2xl transition-all hover:scale-[1.01]"
-          style={{ background: 'rgba(255,255,255,0.95)', border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 2px 12px rgba(6,78,59,0.06)' }}
+          style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}
         >
           <div className="w-10 h-10 rounded-xl flex items-center justify-center"
             style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)' }}>

@@ -27,21 +27,7 @@ export function MobileHeader({ user, title }: MobileHeaderProps) {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 safe-area-top overflow-hidden"
-        style={{ background: 'linear-gradient(160deg, #064e3b 0%, #047857 50%, #10b981 100%)' }}>
-        {/* Orb 1 */}
-        <div className="absolute pointer-events-none" style={{
-          width: '200px', height: '200px', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(16,185,129,0.45) 0%, transparent 70%)',
-          top: '-80px', left: '-60px', filter: 'blur(20px)'
-        }} />
-        {/* Orb 2 */}
-        <div className="absolute pointer-events-none" style={{
-          width: '130px', height: '130px', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(52,211,153,0.35) 0%, transparent 70%)',
-          top: '8px', right: '-30px', filter: 'blur(16px)'
-        }} />
-        {/* Grid pattern */}
-        <div className="header-grid-pattern" />
+        style={{ background: 'linear-gradient(160deg, #047857 0%, #059669 50%, #10b981 100%)' }}>
 
         <div className="container-mobile h-16 flex items-center justify-between gap-3 relative z-10">
           {/* Greeting */}
@@ -92,25 +78,25 @@ export function MobileHeader({ user, title }: MobileHeaderProps) {
               transition={{ duration: 0.2, ease: 'easeOut' }}
               className="container-mobile pb-4 pt-2"
             >
-              <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(10,31,26,0.97)', backdropFilter: 'blur(24px)', border: '1px solid rgba(16,185,129,0.25)', boxShadow: '0 8px 32px rgba(6,78,59,0.4)' }}>
+              <div className="rounded-2xl overflow-hidden bg-white" style={{ border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 8px 32px rgba(0,0,0,0.1)' }}>
                 {menuItems.map((item, idx) => (
                   <Link
                     key={item.href}
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`flex items-center gap-3.5 px-5 py-4 transition-all hover:bg-white/8 active:bg-white/12 no-tap-highlight ${idx < menuItems.length - 1 ? 'border-b border-white/8' : ''}`}
+                    className={`flex items-center gap-3.5 px-5 py-4 transition-all hover:bg-gray-50 active:bg-gray-100 no-tap-highlight ${idx < menuItems.length - 1 ? 'border-b border-gray-100' : ''}`}
                   >
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ background: `${item.color}18`, border: `1px solid ${item.color}33` }}>
+                      style={{ background: `${item.color}12`, border: `1px solid ${item.color}25` }}>
                       <item.icon className="w-4.5 h-4.5" style={{ color: item.color }} />
                     </div>
-                    <span className="font-bold text-slate-100 flex-1">{item.label}</span>
-                    <item.icon className="w-3.5 h-3.5 text-slate-600" />
+                    <span className="font-bold text-gray-800 flex-1">{item.label}</span>
+                    <item.icon className="w-3.5 h-3.5 text-gray-400" />
                   </Link>
                 ))}
-                <div className="px-5 py-3.5 border-t border-white/5 flex items-center gap-2.5">
-                  <UserCircle className="w-4 h-4 text-slate-500" />
-                  <p className="text-xs text-slate-500 font-medium">
+                <div className="px-5 py-3.5 border-t border-gray-100 flex items-center gap-2.5">
+                  <UserCircle className="w-4 h-4 text-gray-400" />
+                  <p className="text-xs text-gray-400 font-medium">
                     שלום, {user.email?.split('@')[0]}
                   </p>
                 </div>

@@ -33,13 +33,6 @@ export default function LandingPage() {
     <main className="min-h-screen bg-mesh overflow-x-hidden">
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col justify-center items-center px-4 pt-20 pb-32">
-        {/* Background Decorations - Teal/Green */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 right-10 w-72 h-72 bg-primary-300/30 rounded-full blur-3xl" />
-          <div className="absolute bottom-40 left-10 w-96 h-96 bg-secondary-300/30 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-100/50 rounded-full blur-3xl" />
-        </div>
-
         <motion.div
           className="container-mobile relative z-10 text-center"
           variants={containerVariants}
@@ -48,8 +41,7 @@ export default function LandingPage() {
         >
           {/* Badge */}
           <motion.div variants={itemVariants} className="mb-8">
-            <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm"
-              style={{background: 'rgba(16,185,129,0.2)', border: '1px solid rgba(16,185,129,0.4)', color: '#a7f3d0'}}>
+            <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm bg-emerald-50 text-emerald-700 border border-emerald-200">
               <Sparkles className="w-4 h-4" />
               מופעל ב-AI ✨
             </span>
@@ -60,22 +52,19 @@ export default function LandingPage() {
             variants={itemVariants}
             className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight"
           >
-            <span style={{background: 'linear-gradient(135deg, #6ee7b7, #34d399)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
-              הדרך החכמה
-            </span>
+            <span className="text-gradient">הדרך החכמה</span>
             <br />
-            <span className="text-white">לחיים בריאים</span>
+            <span className="text-gray-900">לחיים בריאים</span>
           </motion.h1>
 
-          {/* Subtitle in Glass Card */}
-          <motion.div
-            variants={itemVariants}
-            className="mb-10 max-w-md mx-auto"
-          >
-            <div className="rounded-2xl px-6 py-4" style={{background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', backdropFilter: 'blur(12px)'}}>
-              <p className="text-white text-base md:text-lg leading-relaxed font-medium">
-                קורסים אינטראקטיביים עם מעקב התקדמות חכם, משימות יומיות והרגלים בריאים 🌿
-              </p>
+          {/* Subtitle Card — green gradient header style */}
+          <motion.div variants={itemVariants} className="mb-10 max-w-md mx-auto">
+            <div className="rounded-2xl overflow-hidden" style={{boxShadow: '0 4px 20px rgba(4,120,87,0.12)'}}>
+              <div className="px-6 py-4" style={{background: 'linear-gradient(145deg, #047857, #059669, #10b981)'}}>
+                <p className="text-white text-base md:text-lg leading-relaxed font-medium">
+                  קורסים אינטראקטיביים עם מעקב התקדמות חכם, משימות יומיות והרגלים בריאים 🌿
+                </p>
+              </div>
             </div>
           </motion.div>
 
@@ -87,36 +76,33 @@ export default function LandingPage() {
             <Link
               href="/register"
               className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-black text-lg text-white transition-all hover:scale-105 active:scale-95"
-              style={{background: 'linear-gradient(135deg, #10b981, #047857)', boxShadow: '0 8px 25px rgba(16,185,129,0.45)'}}
+              style={{background: 'linear-gradient(135deg, #047857, #10b981)', boxShadow: '0 8px 25px rgba(4,120,87,0.25)'}}
             >
               <Play className="w-5 h-5 flex-shrink-0" />
               <span>התחל עכשיו - חינם!</span>
             </Link>
             <Link
               href="/login"
-              className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold text-lg text-white transition-all hover:scale-105 active:scale-95"
-              style={{background: 'rgba(255,255,255,0.1)', border: '1.5px solid rgba(255,255,255,0.25)', backdropFilter: 'blur(10px)'}}
+              className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold text-lg text-gray-700 bg-white border border-gray-200 transition-all hover:scale-105 active:scale-95 hover:border-emerald-300"
+              style={{boxShadow: '0 2px 8px rgba(0,0,0,0.06)'}}
             >
               <span>כבר יש לי חשבון</span>
               <ArrowLeft className="w-5 h-5 flex-shrink-0" />
             </Link>
           </motion.div>
 
-          {/* Stats - Glass Cards */}
-          <motion.div
-            variants={itemVariants}
-            className="flex justify-center gap-4"
-          >
+          {/* Stats Cards */}
+          <motion.div variants={itemVariants} className="flex justify-center gap-4">
             {[
               { value: '95%', label: 'שביעות רצון', emoji: '⭐' },
               { value: '15kg', label: 'ממוצע ירידה', emoji: '🔥' },
               { value: '+500', label: 'סטודנטים', emoji: '🎓' },
             ].map((stat) => (
               <div key={stat.value}
-                className="flex-1 max-w-[100px] text-center py-3 px-2 rounded-2xl"
-                style={{background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(10px)'}}>
-                <div className="text-xl font-black text-white mb-0.5">{stat.value}</div>
-                <div className="text-xs text-slate-400">{stat.emoji} {stat.label}</div>
+                className="flex-1 max-w-[100px] text-center py-3 px-2 rounded-2xl bg-white border border-gray-100"
+                style={{boxShadow: '0 2px 8px rgba(0,0,0,0.04)'}}>
+                <div className="text-xl font-black text-gray-900 mb-0.5">{stat.value}</div>
+                <div className="text-xs text-gray-500">{stat.emoji} {stat.label}</div>
               </div>
             ))}
           </motion.div>
@@ -129,18 +115,18 @@ export default function LandingPage() {
           transition={{ delay: 1.5 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
         >
-          <div className="w-6 h-10 border-2 border-primary-300 rounded-full flex justify-center">
+          <div className="w-6 h-10 border-2 border-emerald-300 rounded-full flex justify-center">
             <motion.div
               animate={{ y: [0, 12, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-1.5 h-1.5 bg-primary-500 rounded-full mt-2"
+              className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2"
             />
           </div>
         </motion.div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4" style={{background: 'linear-gradient(180deg, #0a1f1a 0%, #071a14 100%)'}}>
+      <section className="py-20 px-4 bg-white border-t border-gray-100">
         <div className="max-w-4xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -149,11 +135,11 @@ export default function LandingPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary-500/20 border border-primary-500/30 text-primary-400 text-sm font-medium mb-4">הפיצ'רים שלנו</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium mb-4">הפיצ׳רים שלנו</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
               מה מחכה לך? 🌟
             </h2>
-            <p className="text-slate-400 text-lg">
+            <p className="text-gray-500 text-lg">
               מערכת שלמה שתלווה אותך בכל שלב
             </p>
           </motion.div>
@@ -166,21 +152,19 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative rounded-3xl p-6 transition-all duration-300 hover:scale-[1.02] cursor-default"
-                style={{background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 8px 32px rgba(0,0,0,0.3)'}}
+                className="group relative rounded-3xl overflow-hidden transition-all duration-300 hover:scale-[1.01] cursor-default"
+                style={{border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 2px 12px rgba(0,0,0,0.04)'}}
               >
-                <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 text-2xl"
-                    style={{background: `linear-gradient(135deg, ${feature.color1}, ${feature.color2})`}}>
-                    {feature.emoji}
-                  </div>
-                  <div className="flex-1 text-right">
-                    <h3 className="text-xl font-bold text-white mb-2">{feature.title}</h3>
-                    <p className="text-slate-300 leading-relaxed">{feature.description}</p>
-                  </div>
+                {/* Green gradient header */}
+                <div className="px-5 py-4 flex items-center gap-3"
+                  style={{background: `linear-gradient(145deg, ${feature.color1}, ${feature.color2})`}}>
+                  <span className="text-2xl">{feature.emoji}</span>
+                  <h3 className="text-lg font-bold text-white">{feature.title}</h3>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 h-px rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                  style={{background: `linear-gradient(90deg, transparent, ${feature.color1}, transparent)`}} />
+                {/* White body */}
+                <div className="px-5 py-4 bg-white">
+                  <p className="text-gray-600 leading-relaxed text-[15px]">{feature.description}</p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -188,7 +172,7 @@ export default function LandingPage() {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 px-4" style={{background: 'linear-gradient(180deg, #071a14 0%, #051510 100%)'}}>
+      <section className="py-20 px-4 bg-gray-50 border-t border-gray-100">
         <div className="max-w-2xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -196,8 +180,8 @@ export default function LandingPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-secondary-500/20 border border-secondary-500/30 text-secondary-400 text-sm font-medium mb-4">כיצד להתחיל</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-teal-50 border border-teal-200 text-teal-700 text-sm font-medium mb-4">כיצד להתחיל</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
               איך זה עובד? 🚀
             </h2>
           </motion.div>
@@ -210,16 +194,16 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.12 }}
-                className="flex items-center gap-5 p-5 rounded-3xl transition-all duration-300 hover:scale-[1.01]"
-                style={{background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(10px)'}}
+                className="flex items-center gap-5 p-5 rounded-3xl bg-white transition-all duration-300 hover:scale-[1.01]"
+                style={{border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 2px 8px rgba(0,0,0,0.04)'}}
               >
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white font-black text-xl flex-shrink-0 shadow-lg"
-                  style={{background: 'linear-gradient(135deg, #10b981, #047857)'}}>
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white font-black text-xl flex-shrink-0"
+                  style={{background: 'linear-gradient(135deg, #047857, #10b981)'}}>
                   {step.number}
                 </div>
                 <div className="text-right flex-1">
-                  <h3 className="text-lg font-bold text-white mb-1">{step.title}</h3>
-                  <p className="text-slate-400 text-sm">{step.description}</p>
+                  <h3 className="text-lg font-bold text-gray-900 mb-1">{step.title}</h3>
+                  <p className="text-gray-500 text-sm">{step.description}</p>
                 </div>
                 <div className="text-2xl">{step.emoji}</div>
               </motion.div>
@@ -229,10 +213,7 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-4 relative overflow-hidden" style={{background: 'linear-gradient(180deg, #051510 0%, #0a1f1a 100%)'}}>
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full opacity-20" style={{background: 'radial-gradient(circle, #10b981, transparent 70%)'}} />
-        </div>
+      <section className="py-24 px-4 relative overflow-hidden bg-white border-t border-gray-100">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -240,29 +221,32 @@ export default function LandingPage() {
           transition={{ duration: 0.6 }}
           className="max-w-lg mx-auto text-center relative z-10"
         >
-          <div className="rounded-3xl p-10 shadow-2xl" style={{background: 'linear-gradient(135deg, rgba(6,78,59,0.97), rgba(16,185,129,0.92))', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 32px 80px rgba(6,78,59,0.5)'}}>
-            <div className="text-5xl mb-4">🎉</div>
-            <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
-              מוכנים להתחיל?
-            </h2>
-            <p className="text-white/90 mb-8 text-lg">
-              הצטרפו עכשיו וקבלו גישה מלאה לכל הקורסים
-            </p>
-            <Link
-              href="/register"
-              className="inline-flex items-center justify-center gap-2 px-10 py-4 bg-white text-primary-600 rounded-2xl font-black text-xl shadow-2xl hover:shadow-white/20 hover:scale-105 transition-all duration-200"
-            >
-              <Flame className="w-6 h-6" />
-              בואו נתחיל!
-            </Link>
+          <div className="rounded-3xl overflow-hidden" style={{boxShadow: '0 8px 40px rgba(4,120,87,0.15)'}}>
+            <div className="p-10" style={{background: 'linear-gradient(145deg, #047857, #059669, #10b981)'}}>
+              <div className="text-5xl mb-4">🎉</div>
+              <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
+                מוכנים להתחיל?
+              </h2>
+              <p className="text-white/90 mb-8 text-lg">
+                הצטרפו עכשיו וקבלו גישה מלאה לכל הקורסים
+              </p>
+              <Link
+                href="/register"
+                className="inline-flex items-center justify-center gap-2 px-10 py-4 bg-white text-emerald-700 rounded-2xl font-black text-xl hover:scale-105 transition-all duration-200"
+                style={{boxShadow: '0 4px 16px rgba(0,0,0,0.1)'}}
+              >
+                <Flame className="w-6 h-6" />
+                בואו נתחיל!
+              </Link>
+            </div>
           </div>
         </motion.div>
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-4 bg-slate-900 border-t border-slate-800">
+      <footer className="py-8 px-4 bg-gray-50 border-t border-gray-200">
         <div className="container-mobile text-center">
-          <p className="text-text-muted text-sm">
+          <p className="text-gray-400 text-sm">
             © 2024 מערכת קורסים לירידה במשקל. כל הזכויות שמורות.
           </p>
         </div>

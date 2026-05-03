@@ -58,7 +58,7 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
     <div>
       {/* ═══ PURPLE HERO — extends behind fixed header ═══ */}
       <div className="-mt-16 pt-16 relative overflow-hidden"
-        style={{ background: 'linear-gradient(160deg, #064e3b 0%, #047857 50%, #10b981 80%, #34d399 100%)' }}>
+        style={{ background: 'linear-gradient(160deg, #047857 0%, #059669 50%, #10b981 80%, #34d399 100%)' }}>
         {/* Orbs */}
         <div className="absolute pointer-events-none" style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(245,166,35,0.3) 0%, transparent 70%)', bottom: '20px', left: '50%', filter: 'blur(12px)' }} />
 
@@ -77,10 +77,10 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
                 width: '82px', height: '82px', borderRadius: '50%',
                 background: 'conic-gradient(from 0deg, #14b8a6 0%, #10b981 30%, #f59e0b 55%, #10b981 75%, #14b8a6 100%)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                boxShadow: '0 0 20px rgba(16,185,129,0.5), 0 0 40px rgba(20,184,166,0.2)',
+                boxShadow: '0 4px 16px rgba(16,185,129,0.2)',
               }}>
                 <div style={{ width: '74px', height: '74px', borderRadius: '50%', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '3px' }}>
-                  <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: 'linear-gradient(145deg, #047857, #064e3b)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '34px', overflow: 'hidden' }}>
+                  <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: 'linear-gradient(145deg, #047857, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '34px', overflow: 'hidden' }}>
                     🧑‍⚕️
                   </div>
                 </div>
@@ -137,7 +137,7 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
           >
             {/* Day pill */}
             <div className="flex-shrink-0 flex flex-col items-center justify-center"
-              style={{ width: '58px', height: '58px', background: 'linear-gradient(145deg, #064e3b, #10b981)', borderRadius: '18px', boxShadow: '0 4px 16px rgba(6,78,59,0.35)' }}>
+              style={{ width: '58px', height: '58px', background: 'linear-gradient(145deg, #047857, #10b981)', borderRadius: '18px', boxShadow: '0 4px 12px rgba(4,120,87,0.2)' }}>
               <span style={{ fontSize: '24px', fontWeight: 900, color: '#fff', lineHeight: 1 }}>{stats.avgProgress}</span>
               <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>%</span>
             </div>

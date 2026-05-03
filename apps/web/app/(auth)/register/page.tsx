@@ -69,13 +69,8 @@ export default function RegisterPage() {
     <>
       <ToastContainer toasts={toast.toasts} onDismiss={toast.dismiss} />
       <main
-        className="min-h-screen flex flex-col justify-center px-4 py-10"
-        style={{ background: '#0a1f1a' }}
+        className="min-h-screen flex flex-col justify-center px-4 py-10 bg-mesh"
       >
-        {/* Deep glass background layers */}
-        <div className="fixed inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(4,120,87,0.55) 0%, transparent 60%)' }} />
-        <div className="fixed inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 85% 15%, rgba(16,185,129,0.2) 0%, transparent 50%)' }} />
-        <div className="fixed inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 10% 90%, rgba(6,78,59,0.18) 0%, transparent 40%)' }} />
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -89,36 +84,33 @@ export default function RegisterPage() {
               <NuraWellLogo size="lg" showTagline />
             </div>
             <div className="mt-5 mb-2">
-              <h1 className="text-3xl font-black leading-tight" style={{ fontFamily: 'Rubik, Heebo, sans-serif', background: 'linear-gradient(135deg, #ffffff 0%, #6ee7b7 50%, #34d399 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+              <h1 className="text-3xl font-black leading-tight text-gray-900" style={{ fontFamily: 'Rubik, Heebo, sans-serif' }}>
                 הרשמה חינמית
               </h1>
             </div>
-            <p className="text-slate-400 text-[15px] mt-1.5 font-medium">התחילו את המסע לחיים בריאים יותר</p>
+            <p className="text-gray-500 text-[15px] mt-1.5 font-medium">התחילו את המסע לחיים בריאים יותר</p>
             <div className="flex items-center justify-center gap-2 mt-4">
-              <div className="h-px flex-1 max-w-[50px]" style={{ background: 'linear-gradient(to left, rgba(16,185,129,0.5), transparent)' }} />
-              <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#10b981' }} />
-              <div className="h-px flex-1 max-w-[50px]" style={{ background: 'linear-gradient(to right, rgba(16,185,129,0.5), transparent)' }} />
+              <div className="h-px flex-1 max-w-[50px]" style={{ background: 'linear-gradient(to left, rgba(16,185,129,0.3), transparent)' }} />
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              <div className="h-px flex-1 max-w-[50px]" style={{ background: 'linear-gradient(to right, rgba(16,185,129,0.3), transparent)' }} />
             </div>
           </div>
 
           {/* ── Form Card ── */}
-          <div className="rounded-3xl p-8" style={{
-            background: 'linear-gradient(145deg, rgba(255,255,255,0.09) 0%, rgba(16,185,129,0.04) 100%)',
-            border: '1px solid rgba(255,255,255,0.15)',
-            backdropFilter: 'blur(40px)',
-            WebkitBackdropFilter: 'blur(40px)',
-            boxShadow: '0 24px 64px rgba(6,78,59,0.5), inset 0 1px 0 rgba(255,255,255,0.12)',
+          <div className="rounded-3xl p-8 bg-white" style={{
+            border: '1px solid rgba(0,0,0,0.06)',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
           }}>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-1.5 h-7 rounded-full" style={{ background: 'linear-gradient(to bottom, #6ee7b7, #047857)' }} />
-              <UserPlus className="w-5 h-5 text-primary-400" />
-              <h2 className="text-white font-black text-xl" style={{ fontFamily: 'Rubik, Heebo, sans-serif' }}>יצירת חשבון</h2>
+              <div className="w-1.5 h-7 rounded-full" style={{ background: 'linear-gradient(to bottom, #34d399, #047857)' }} />
+              <UserPlus className="w-5 h-5 text-emerald-600" />
+              <h2 className="text-gray-900 font-black text-xl" style={{ fontFamily: 'Rubik, Heebo, sans-serif' }}>יצירת חשבון</h2>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4" noValidate>
               <div>
-                <label className="flex items-center gap-1.5 text-sm font-bold text-slate-200 mb-2">
-                  <User className="w-4 h-4 text-primary-400" />
+                <label className="flex items-center gap-1.5 text-sm font-bold text-gray-700 mb-2">
+                  <User className="w-4 h-4 text-emerald-600" />
                   שם מלא
                 </label>
                 <input
@@ -126,15 +118,14 @@ export default function RegisterPage() {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   required
-                  className="w-full px-4 py-3.5 rounded-2xl text-white placeholder-slate-500 outline-none transition-all text-sm"
-                  style={{ background: 'rgba(255,255,255,0.06)', border: '1.5px solid rgba(255,255,255,0.10)' }}
+                  className="input-field text-sm"
                   placeholder="ישראל ישראלי"
                 />
               </div>
 
               <div>
-                <label className="flex items-center gap-1.5 text-sm font-bold text-slate-200 mb-2">
-                  <Mail className="w-4 h-4 text-primary-400" />
+                <label className="flex items-center gap-1.5 text-sm font-bold text-gray-700 mb-2">
+                  <Mail className="w-4 h-4 text-emerald-600" />
                   כתובת אימייל
                 </label>
                 <input
@@ -143,15 +134,14 @@ export default function RegisterPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   dir="ltr"
-                  className="w-full px-4 py-3.5 rounded-2xl text-white placeholder-slate-500 outline-none transition-all text-sm"
-                  style={{ background: 'rgba(255,255,255,0.06)', border: '1.5px solid rgba(255,255,255,0.10)' }}
+                  className="input-field text-sm"
                   placeholder="your@email.com"
                 />
               </div>
 
               <div>
-                <label className="flex items-center gap-1.5 text-sm font-bold text-slate-200 mb-2">
-                  <Lock className="w-4 h-4 text-primary-400" />
+                <label className="flex items-center gap-1.5 text-sm font-bold text-gray-700 mb-2">
+                  <Lock className="w-4 h-4 text-emerald-600" />
                   סיסמה
                 </label>
                 <div className="relative">
@@ -162,19 +152,18 @@ export default function RegisterPage() {
                     required
                     minLength={6}
                     dir="ltr"
-                    className="w-full px-4 py-3.5 pl-12 rounded-2xl text-white placeholder-slate-500 outline-none transition-all text-sm"
-                    style={{ background: 'rgba(255,255,255,0.06)', border: '1.5px solid rgba(255,255,255,0.10)' }}
+                    className="input-field text-sm pl-12"
                     placeholder="לפחות 6 תווים"
                   />
                   <button type="button" onClick={() => setShowPassword(!showPassword)}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors p-1">
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors p-1">
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
               </div>
 
               <div className="pt-1">
-                <div className="h-px w-full mb-4" style={{ background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent)' }} />
+                <div className="h-px w-full mb-4" style={{ background: 'linear-gradient(to right, transparent, rgba(0,0,0,0.06), transparent)' }} />
                 <button type="submit" disabled={isLoading}
                   className="w-full py-4 rounded-2xl font-bold text-lg text-white transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2"
                   style={{ background: 'linear-gradient(135deg, #047857, #10b981)', boxShadow: '0 8px 24px rgba(16,185,129,0.4)' }}>
@@ -191,9 +180,9 @@ export default function RegisterPage() {
             </form>
 
             <div className="mt-5 text-center">
-              <p className="text-slate-500 text-sm">
+              <p className="text-gray-500 text-sm">
                 כבר יש לכם חשבון?{' '}
-                <Link href="/login" className="text-primary-400 font-bold hover:text-primary-300 transition-colors">
+                <Link href="/login" className="text-emerald-600 font-bold hover:text-emerald-700 transition-colors">
                   כניסה לחשבון
                 </Link>
               </p>

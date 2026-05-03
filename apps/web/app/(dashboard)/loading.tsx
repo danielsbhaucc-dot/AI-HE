@@ -3,7 +3,7 @@ export default function DashboardLoading() {
     <div>
       {/* Purple hero skeleton */}
       <div className="-mt-16 pt-16 relative overflow-hidden"
-        style={{ background: 'linear-gradient(160deg, #064e3b 0%, #047857 50%, #10b981 80%, #34d399 100%)' }}>
+        style={{ background: 'linear-gradient(160deg, #047857 0%, #059669 50%, #10b981 80%, #34d399 100%)' }}>
         <div style={{ padding: '12px 20px 40px' }}>
           <div className="flex items-end gap-3.5">
             <div className="flex-shrink-0 w-[82px] h-[82px] rounded-full animate-pulse" style={{ background: 'rgba(255,255,255,0.15)' }} />
@@ -20,7 +20,7 @@ export default function DashboardLoading() {
         {/* Progress card skeleton */}
         <div className="flex gap-3.5 items-center mb-3.5 p-4 animate-pulse"
           style={{ background: 'rgba(255,255,255,0.92)', borderRadius: '22px', border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 4px 20px rgba(6,78,59,0.08)' }}>
-          <div className="w-[58px] h-[58px] rounded-[18px]" style={{ background: 'linear-gradient(145deg, #064e3b, #10b981)' }} />
+          <div className="w-[58px] h-[58px] rounded-[18px]" style={{ background: 'linear-gradient(145deg, #047857, #10b981)' }} />
           <div className="flex-1 space-y-2">
             <div className="h-4 w-32 rounded-lg" style={{ background: 'rgba(6,78,59,0.12)' }} />
             <div className="h-3 w-40 rounded-md" style={{ background: 'rgba(6,78,59,0.07)' }} />
@@ -47,7 +47,7 @@ export default function DashboardLoading() {
         {[0, 1, 2].map((i) => (
           <div key={i} className="mb-3.5 overflow-hidden animate-pulse"
             style={{ borderRadius: '22px', boxShadow: '0 4px 20px rgba(6,78,59,0.12)', animationDelay: `${i * 100}ms` }}>
-            <div style={{ background: 'linear-gradient(145deg, #064e3b, #047857, #10b981)', padding: '18px 16px', display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <div style={{ background: 'linear-gradient(145deg, #047857, #059669, #10b981)', padding: '18px 16px', display: 'flex', alignItems: 'center', gap: '14px' }}>
               <div className="w-12 h-12 rounded-[15px]" style={{ background: 'rgba(255,255,255,0.15)' }} />
               <div className="flex-1 space-y-1.5">
                 <div className="h-2.5 w-20 rounded-md" style={{ background: 'rgba(255,255,255,0.15)' }} />

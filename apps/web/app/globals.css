@@ -30,8 +30,8 @@ html {
   }
 
   ::selection {
-    background: rgba(16, 185, 129, 0.35);
-    color: #ffffff;
+    background: rgba(16, 185, 129, 0.25);
+    color: #064e3b;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -55,64 +55,57 @@ html {
 
   /* ---- GLASS CARDS ---- */
   .glass-card {
-    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,253,250,0.90) 100%);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.80);
-    box-shadow: 0 4px 24px rgba(6, 78, 59, 0.10), 0 1px 4px rgba(6,78,59,0.06), inset 0 1px 0 rgba(255,255,255,1);
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0,0,0,0.03);
     @apply rounded-3xl;
   }
 
   .glass-card-strong {
-    background: rgba(255, 255, 255, 0.97);
-    backdrop-filter: blur(32px);
-    -webkit-backdrop-filter: blur(32px);
-    border: 1px solid rgba(255, 255, 255, 0.80);
-    box-shadow: 0 8px 32px rgba(6, 78, 59, 0.14), 0 2px 8px rgba(6,78,59,0.08), inset 0 1px 0 rgba(255,255,255,1);
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0,0,0,0.04);
     @apply rounded-3xl;
   }
 
   .glass-card-dark {
-    background: rgba(15, 23, 42, 0.80);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #047857;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     @apply rounded-3xl shadow-glass;
+    color: white;
   }
 
   .card-premium {
-    background: rgba(255, 255, 255, 0.07);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.13);
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
     @apply rounded-3xl shadow-card p-5 transition-all duration-300;
-    @apply hover:border-primary-500/30 hover:shadow-glow-primary hover:scale-[1.02];
+    @apply hover:border-primary-500/20 hover:shadow-glow-primary hover:scale-[1.01];
   }
 
   .card-gradient {
-    @apply bg-gradient-to-br from-primary-500 via-primary-600 to-secondary-500 rounded-3xl shadow-card p-6 text-white;
-    @apply border border-white/20 hover:scale-[1.02] transition-all duration-300;
-    box-shadow: 0 20px 60px -10px rgba(16, 185, 129, 0.4);
+    @apply rounded-3xl shadow-card p-6 text-white;
+    background: linear-gradient(145deg, #047857, #059669, #10b981);
+    @apply border border-white/15 hover:scale-[1.01] transition-all duration-300;
+    box-shadow: 0 8px 30px -8px rgba(4, 120, 87, 0.35);
   }
 
   .card-lesson {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
     @apply rounded-2xl transition-all duration-200 cursor-pointer;
-    @apply hover:bg-white/10 hover:border-primary-500/30 active:scale-[0.98];
+    @apply hover:border-primary-500/20 active:scale-[0.98];
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   }
 
   .card-lesson.completed {
-    border-color: rgba(16, 185, 129, 0.4);
-    background: rgba(16, 185, 129, 0.08);
+    border-color: rgba(16, 185, 129, 0.3);
+    background: rgba(236, 253, 245, 0.5);
   }
 
   .card-lesson.active {
-    border-color: rgba(16, 185, 129, 0.5);
-    background: rgba(16, 185, 129, 0.10);
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.4);
+    background: rgba(236, 253, 245, 0.7);
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.1);
   }
 
   /* ---- BUTTONS ---- */
@@ -131,10 +124,10 @@ html {
 
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl font-bold text-base transition-all duration-200;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(12px);
-    @apply text-white border border-white/20;
-    @apply hover:bg-white/20 hover:border-white/30 active:scale-95;
+    background: #ffffff;
+    @apply text-text-primary border border-border;
+    @apply hover:bg-primary-50 hover:border-primary-200 active:scale-95;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   }
 
   .btn-success {
@@ -146,30 +139,29 @@ html {
 
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200;
-    @apply text-text-secondary hover:text-white hover:bg-white/10 active:scale-95;
+    @apply text-text-secondary hover:text-primary-700 hover:bg-primary-50 active:scale-95;
   }
 
   .btn-icon {
     @apply w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    @apply hover:bg-white/10 hover:border-white/20 active:scale-90;
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    @apply hover:bg-primary-50 hover:border-primary-200 active:scale-90;
   }
 
   /* ---- INPUTS ---- */
   .input-premium {
     @apply w-full px-5 py-4 rounded-2xl font-medium text-base transition-all duration-200;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1.5px solid rgba(255, 255, 255, 0.12);
-    @apply text-white placeholder-slate-500;
+    background: #ffffff;
+    border: 1.5px solid rgba(0, 0, 0, 0.08);
+    @apply text-text-primary placeholder-text-muted;
     @apply focus:outline-none;
-    backdrop-filter: blur(12px);
   }
 
   .input-premium:focus {
-    border-color: rgba(16, 185, 129, 0.6);
-    background: rgba(255, 255, 255, 0.09);
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.5);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
   }
 
   /* ---- BADGES ---- */
@@ -179,37 +171,37 @@ html {
 
   .badge-primary {
     @apply badge;
-    background: rgba(16, 185, 129, 0.2);
-    border: 1px solid rgba(16, 185, 129, 0.35);
-    @apply text-primary-300;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    @apply text-primary-700;
   }
 
   .badge-success {
     @apply badge;
-    background: rgba(34, 197, 94, 0.2);
-    border: 1px solid rgba(34, 197, 94, 0.35);
-    @apply text-green-300;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    @apply text-green-700;
   }
 
   .badge-warning {
     @apply badge;
-    background: rgba(234, 179, 8, 0.2);
-    border: 1px solid rgba(234, 179, 8, 0.35);
-    @apply text-yellow-300;
+    background: rgba(234, 179, 8, 0.1);
+    border: 1px solid rgba(234, 179, 8, 0.2);
+    @apply text-yellow-700;
   }
 
   .badge-energy {
     @apply badge;
-    background: rgba(249, 115, 22, 0.2);
-    border: 1px solid rgba(249, 115, 22, 0.35);
-    @apply text-orange-300;
+    background: rgba(249, 115, 22, 0.1);
+    border: 1px solid rgba(249, 115, 22, 0.2);
+    @apply text-orange-700;
   }
 
   .badge-accent {
     @apply badge;
-    background: rgba(245, 158, 11, 0.2);
-    border: 1px solid rgba(245, 158, 11, 0.35);
-    @apply text-amber-300;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    @apply text-amber-700;
   }
 
   /* ---- CONTAINERS ---- */
@@ -233,55 +225,54 @@ html {
   /* ---- DIVIDERS ---- */
   .divider {
     @apply w-full h-px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.06), transparent);
   }
 
   .divider-gradient {
     @apply w-full h-px;
-    background: linear-gradient(90deg, transparent, rgba(20,184,166,0.4), rgba(16,185,129,0.4), transparent);
+    background: linear-gradient(90deg, transparent, rgba(16,185,129,0.25), rgba(4,120,87,0.15), transparent);
   }
 
   /* ---- PROGRESS ---- */
   .progress-bar {
     @apply relative h-2 rounded-full overflow-hidden;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(16, 185, 129, 0.1);
   }
 
   .progress-bar-fill {
     @apply absolute inset-y-0 right-0 rounded-full transition-all duration-700 ease-out;
     background: linear-gradient(90deg, #047857, #10b981, #34d399);
-    box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
   }
 
   .progress-bar-lg {
     @apply relative h-3 rounded-full overflow-hidden;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(16, 185, 129, 0.1);
   }
 
   /* ---- LESSON CONTENT TYPOGRAPHY ---- */
   .lesson-content {
-    @apply text-[15px] md:text-base leading-relaxed text-slate-200;
+    @apply text-[15px] md:text-base leading-relaxed text-gray-600;
   }
 
-  .lesson-content h1 { @apply text-2xl font-black text-white mb-5 mt-8; }
-  .lesson-content h2 { @apply text-xl font-bold text-white mb-4 mt-6; }
-  .lesson-content h3 { @apply text-lg font-bold text-emerald-300 mb-3 mt-5; }
+  .lesson-content h1 { @apply text-2xl font-black text-gray-900 mb-5 mt-8; }
+  .lesson-content h2 { @apply text-xl font-bold text-gray-900 mb-4 mt-6; }
+  .lesson-content h3 { @apply text-lg font-bold text-emerald-700 mb-3 mt-5; }
   .lesson-content p  { @apply mb-4 leading-relaxed; }
   .lesson-content ul { @apply list-none mb-4 space-y-2; }
-  .lesson-content ul li::before { content: "✦ "; @apply text-emerald-400; }
+  .lesson-content ul li::before { content: "✦ "; @apply text-emerald-500; }
   .lesson-content ol { @apply list-decimal list-inside mb-4 space-y-2; }
-  .lesson-content strong { @apply text-white font-bold; }
-  .lesson-content em    { @apply text-emerald-300 italic; }
-  .lesson-content a { @apply text-emerald-400 hover:text-emerald-300 underline underline-offset-2; }
+  .lesson-content strong { @apply text-gray-900 font-bold; }
+  .lesson-content em    { @apply text-emerald-700 italic; }
+  .lesson-content a { @apply text-emerald-600 hover:text-emerald-500 underline underline-offset-2; }
   .lesson-content blockquote {
     @apply border-r-4 border-emerald-500 pr-4 py-2 my-4;
-    background: rgba(16, 185, 129, 0.08);
-    @apply rounded-l-xl text-slate-300 italic;
+    background: rgba(16, 185, 129, 0.06);
+    @apply rounded-l-xl text-gray-600 italic;
   }
   .lesson-content code {
     @apply px-2 py-0.5 rounded-md text-sm font-mono;
-    background: rgba(16, 185, 129, 0.15);
-    @apply text-emerald-300;
+    background: rgba(16, 185, 129, 0.08);
+    @apply text-emerald-700;
   }
 
   /* ---- VIDEO PLAYER ---- */
@@ -294,43 +285,42 @@ html {
   /* ---- AUDIO PLAYER ---- */
   .audio-player {
     @apply w-full rounded-2xl p-4;
-    background: rgba(16, 185, 129, 0.08);
-    border: 1px solid rgba(16, 185, 129, 0.2);
+    background: rgba(16, 185, 129, 0.04);
+    border: 1px solid rgba(16, 185, 129, 0.12);
   }
 
   /* ---- HABIT TRACKER ---- */
   .habit-ring {
     @apply relative w-12 h-12 rounded-full flex items-center justify-center text-lg transition-all duration-200;
-    background: rgba(255, 255, 255, 0.06);
-    border: 2px solid rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.02);
+    border: 2px solid rgba(0, 0, 0, 0.08);
     @apply cursor-pointer active:scale-90;
   }
 
   .habit-ring.done {
-    background: rgba(16, 185, 129, 0.25);
-    border-color: rgba(16, 185, 129, 0.6);
-    box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.4);
   }
 
   /* ---- TASK ITEM ---- */
   .task-item {
     @apply flex items-start gap-3 p-4 rounded-2xl transition-all duration-200 cursor-pointer;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    @apply hover:bg-white/5 active:scale-[0.99];
+    background: rgba(0, 0, 0, 0.01);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    @apply hover:bg-primary-50/50 active:scale-[0.99];
   }
 
   .task-item.completed {
-    background: rgba(16, 185, 129, 0.08);
-    border-color: rgba(16, 185, 129, 0.25);
+    background: rgba(236, 253, 245, 0.6);
+    border-color: rgba(16, 185, 129, 0.2);
   }
 
   /* ---- NAV HEADER ---- */
   .nav-header {
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    background: rgba(10, 31, 26, 0.88);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   }
 
   .nav-bottom {
@@ -349,7 +339,7 @@ html {
   /* Text Gradients */
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #6ee7b7, #10b981);
+    background-image: linear-gradient(135deg, #059669, #047857);
   }
 
   .text-gradient-accent {
@@ -364,7 +354,7 @@ html {
 
   .text-gradient-rainbow {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #14b8a6, #10b981, #34d399);
+    background-image: linear-gradient(135deg, #0d9488, #059669, #10b981);
   }
 
   /* Hide Scrollbar */
@@ -376,19 +366,18 @@ html {
 
   /* Background Meshes */
   .bg-mesh {
-    background-color: #0a1f1a;
+    background-color: #f8faf8;
     background-image:
-      radial-gradient(ellipse at 30% 50%, rgba(4, 120, 87, 0.55) 0%, transparent 60%),
-      radial-gradient(ellipse at 85% 15%, rgba(16, 185, 129, 0.20) 0%, transparent 50%),
-      radial-gradient(at 5% 85%, rgba(6, 78, 59, 0.18) 0px, transparent 50%),
-      radial-gradient(at 90% 75%, rgba(20, 184, 166, 0.05) 0px, transparent 45%);
+      radial-gradient(ellipse at 30% 50%, rgba(16, 185, 129, 0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 85% 15%, rgba(20, 184, 166, 0.04) 0%, transparent 50%),
+      radial-gradient(at 5% 85%, rgba(4, 120, 87, 0.03) 0px, transparent 50%);
   }
 
   .bg-mesh-subtle {
-    background-color: #0a1f1a;
+    background-color: #f8faf8;
     background-image:
-      radial-gradient(at 30% 20%, rgba(4, 120, 87, 0.25) 0%, transparent 50%),
-      radial-gradient(at 80% 80%, rgba(16, 185, 129, 0.12) 0%, transparent 50%);
+      radial-gradient(at 30% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+      radial-gradient(at 80% 80%, rgba(4, 120, 87, 0.03) 0%, transparent 50%);
   }
 
   .bg-dashboard {
@@ -400,18 +389,18 @@ html {
 
   /* Glass Utility */
   .glass {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   }
 
-  /* Glow Utilities */
-  .glow-primary { box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); }
-  .glow-secondary { box-shadow: 0 0 20px rgba(20, 184, 166, 0.4); }
-  .glow-accent { box-shadow: 0 0 20px rgba(245, 158, 11, 0.4); }
-  .glow-energy { box-shadow: 0 0 20px rgba(249, 115, 22, 0.4); }
+  /* Glow Utilities — subtle for light theme */
+  .glow-primary { box-shadow: 0 4px 16px rgba(16, 185, 129, 0.12); }
+  .glow-secondary { box-shadow: 0 4px 16px rgba(20, 184, 166, 0.10); }
+  .glow-accent { box-shadow: 0 4px 16px rgba(245, 158, 11, 0.10); }
+  .glow-energy { box-shadow: 0 4px 16px rgba(249, 115, 22, 0.10); }
 
   /* Touch */
   .touch-manipulation { touch-action: manipulation; }

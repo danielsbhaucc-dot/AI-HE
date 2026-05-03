@@ -100,20 +100,25 @@ export function QuizSection({ questions, existingAnswers, onComplete }: QuizSect
         ))}
       </div>
 
-      {/* Question card */}
+      {/* Question card — green header + white body */}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentQ}
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -30 }}
-          className="rounded-2xl p-5"
-          style={{ background: 'rgba(255,255,255,0.95)', border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 4px 20px rgba(6,78,59,0.08)' }}
+          className="rounded-2xl overflow-hidden"
+          style={{ border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}
         >
-          <h3 className="text-lg font-black mb-5 leading-snug" style={{ color: '#1A1730' }}>
-            {question.question}
-          </h3>
+          {/* Green gradient header */}
+          <div className="px-5 py-4" style={{ background: 'linear-gradient(145deg, #047857, #059669, #10b981)' }}>
+            <h3 className="text-lg font-black leading-snug text-white">
+              {question.question}
+            </h3>
+          </div>
 
+          {/* White body */}
+          <div className="p-5 bg-white">
           <div className="space-y-2.5">
             {question.options.map((option, i) => {
               const isSelected = currentAnswer === i;
@@ -177,6 +182,7 @@ export function QuizSection({ questions, existingAnswers, onComplete }: QuizSect
               </motion.div>
             )}
           </AnimatePresence>
+          </div>{/* end white body */}
         </motion.div>
       </AnimatePresence>
 

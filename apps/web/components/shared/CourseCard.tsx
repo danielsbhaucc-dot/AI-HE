@@ -33,15 +33,15 @@ export function CourseCard({ course, progress, isEnrolled }: CourseCardProps) {
         className="block overflow-hidden no-tap-highlight relative"
         style={{
           borderRadius: '22px',
-          boxShadow: '0 8px 32px rgba(6,78,59,0.18), 0 2px 8px rgba(6,78,59,0.1)',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04)',
           transition: 'all 0.25s ease',
         }}
       >
         {/* ── Purple Gradient Header ── */}
         <div className="relative overflow-hidden" style={{
           background: isCompleted
-            ? 'linear-gradient(145deg, #065f46 0%, #059669 50%, #10b981 100%)'
-            : 'linear-gradient(145deg, #064e3b 0%, #047857 50%, #10b981 100%)',
+            ? 'linear-gradient(145deg, #059669 0%, #10b981 50%, #34d399 100%)'
+            : 'linear-gradient(145deg, #047857 0%, #059669 50%, #10b981 100%)',
           padding: '18px 16px',
           display: 'flex', alignItems: 'center', gap: '14px',
         }}>
@@ -184,7 +184,7 @@ export function CourseCard({ course, progress, isEnrolled }: CourseCardProps) {
                     background: isCompleted
                       ? 'linear-gradient(90deg, #059669, #10b981, #34d399)'
                       : 'linear-gradient(90deg, #047857, #10b981, #34d399)',
-                    boxShadow: isCompleted ? '0 0 6px rgba(16,185,129,0.4)' : '0 0 6px rgba(16,185,129,0.4)',
+                    boxShadow: 'none',
                   }}
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
