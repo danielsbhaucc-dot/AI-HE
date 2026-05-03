@@ -12,9 +12,9 @@ interface MobileHeaderProps {
 }
 
 const menuItems = [
-  { href: '/courses',  label: 'הקורסים שלי',  icon: BookOpen,    color: '#7b6ef6' },
-  { href: '/progress', label: 'התקדמות שלי', icon: TrendingUp,  color: '#0dbdb8' },
-  { href: '/profile',  label: 'הפרופיל שלי',  icon: UserCircle, color: '#d946ef' },
+  { href: '/courses',  label: 'הקורסים שלי',  icon: BookOpen,    color: '#10b981' },
+  { href: '/progress', label: 'התקדמות שלי', icon: TrendingUp,  color: '#14b8a6' },
+  { href: '/profile',  label: 'הפרופיל שלי',  icon: UserCircle, color: '#f59e0b' },
 ];
 
 export function MobileHeader({ user, title }: MobileHeaderProps) {
@@ -27,17 +27,17 @@ export function MobileHeader({ user, title }: MobileHeaderProps) {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 safe-area-top overflow-hidden"
-        style={{ background: 'linear-gradient(160deg, #1e1260 0%, #3730A3 50%, #6B5FD4 100%)' }}>
+        style={{ background: 'linear-gradient(160deg, #064e3b 0%, #047857 50%, #10b981 100%)' }}>
         {/* Orb 1 */}
         <div className="absolute pointer-events-none" style={{
           width: '200px', height: '200px', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(123,110,246,0.45) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(16,185,129,0.45) 0%, transparent 70%)',
           top: '-80px', left: '-60px', filter: 'blur(20px)'
         }} />
         {/* Orb 2 */}
         <div className="absolute pointer-events-none" style={{
           width: '130px', height: '130px', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(13,189,184,0.35) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(52,211,153,0.35) 0%, transparent 70%)',
           top: '8px', right: '-30px', filter: 'blur(16px)'
         }} />
         {/* Grid pattern */}
@@ -92,7 +92,7 @@ export function MobileHeader({ user, title }: MobileHeaderProps) {
               transition={{ duration: 0.2, ease: 'easeOut' }}
               className="container-mobile pb-4 pt-2"
             >
-              <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(26,16,64,0.97)', backdropFilter: 'blur(24px)', border: '1px solid rgba(123,110,246,0.25)', boxShadow: '0 8px 32px rgba(45,27,142,0.4)' }}>
+              <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(10,31,26,0.97)', backdropFilter: 'blur(24px)', border: '1px solid rgba(16,185,129,0.25)', boxShadow: '0 8px 32px rgba(6,78,59,0.4)' }}>
                 {menuItems.map((item, idx) => (
                   <Link
                     key={item.href}

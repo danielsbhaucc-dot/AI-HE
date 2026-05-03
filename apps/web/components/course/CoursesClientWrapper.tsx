@@ -25,19 +25,19 @@ const statCards = (stats: UserStats) => [
     label: 'קורסים פעילים',
     value: stats.activeCoursesCount,
     icon: GraduationCap,
-    color: '#7b6ef6',
-    glow: 'rgba(123,110,246,0.3)',
-    bg: 'linear-gradient(135deg, rgba(123,110,246,0.18), rgba(74,59,196,0.08))',
-    border: 'rgba(123,110,246,0.35)',
+    color: '#10b981',
+    glow: 'rgba(16,185,129,0.3)',
+    bg: 'linear-gradient(135deg, rgba(16,185,129,0.18), rgba(4,120,87,0.08))',
+    border: 'rgba(16,185,129,0.35)',
   },
   {
     label: 'שיעורים הושלמו',
     value: stats.totalLessonsCompleted,
     icon: Award,
-    color: '#0dbdb8',
-    glow: 'rgba(13,189,184,0.25)',
-    bg: 'linear-gradient(135deg, rgba(13,189,184,0.18), rgba(13,189,184,0.06))',
-    border: 'rgba(13,189,184,0.35)',
+    color: '#14b8a6',
+    glow: 'rgba(20,184,166,0.25)',
+    bg: 'linear-gradient(135deg, rgba(20,184,166,0.18), rgba(20,184,166,0.06))',
+    border: 'rgba(20,184,166,0.35)',
   },
   {
     label: 'ממוצע התקדמות',
@@ -58,7 +58,7 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
     <div>
       {/* ═══ PURPLE HERO — extends behind fixed header ═══ */}
       <div className="-mt-16 pt-16 relative overflow-hidden"
-        style={{ background: 'linear-gradient(160deg, #1e1260 0%, #3730A3 50%, #6B5FD4 80%, #9B8FF0 100%)' }}>
+        style={{ background: 'linear-gradient(160deg, #064e3b 0%, #047857 50%, #10b981 80%, #34d399 100%)' }}>
         {/* Orbs */}
         <div className="absolute pointer-events-none" style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(245,166,35,0.3) 0%, transparent 70%)', bottom: '20px', left: '50%', filter: 'blur(12px)' }} />
 
@@ -72,21 +72,21 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
           >
             {/* Avatar with spinning ring */}
             <div className="relative flex-shrink-0">
-              <div className="absolute rounded-full" style={{ inset: '-8px', background: 'conic-gradient(from 0deg, #0DBDB8, #7B6EF6, #F5A623, #7B6EF6, #0DBDB8)', filter: 'blur(14px)', opacity: 0.55, zIndex: -1, animation: 'spinRing 6s linear infinite' }} />
+              <div className="absolute rounded-full" style={{ inset: '-8px', background: 'conic-gradient(from 0deg, #14b8a6, #10b981, #f59e0b, #10b981, #14b8a6)', filter: 'blur(14px)', opacity: 0.55, zIndex: -1, animation: 'spinRing 6s linear infinite' }} />
               <div className="spin-ring" style={{
                 width: '82px', height: '82px', borderRadius: '50%',
-                background: 'conic-gradient(from 0deg, #0DBDB8 0%, #7B6EF6 30%, #F5A623 55%, #7B6EF6 75%, #0DBDB8 100%)',
+                background: 'conic-gradient(from 0deg, #14b8a6 0%, #10b981 30%, #f59e0b 55%, #10b981 75%, #14b8a6 100%)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                boxShadow: '0 0 20px rgba(123,110,246,0.5), 0 0 40px rgba(13,189,184,0.2)',
+                boxShadow: '0 0 20px rgba(16,185,129,0.5), 0 0 40px rgba(20,184,166,0.2)',
               }}>
                 <div style={{ width: '74px', height: '74px', borderRadius: '50%', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '3px' }}>
-                  <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: 'linear-gradient(145deg, #4A3BC4, #2D1B8E)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '34px', overflow: 'hidden' }}>
+                  <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: 'linear-gradient(145deg, #047857, #064e3b)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '34px', overflow: 'hidden' }}>
                     🧑‍⚕️
                   </div>
                 </div>
               </div>
               {/* Speaking pill */}
-              <div style={{ position: 'absolute', bottom: '0px', left: '-2px', background: '#0DBDB8', border: '2px solid white', borderRadius: '20px', padding: '3px 7px', display: 'flex', gap: '2px', alignItems: 'center', boxShadow: '0 2px 8px rgba(13,189,184,0.4)' }}>
+              <div style={{ position: 'absolute', bottom: '0px', left: '-2px', background: '#14b8a6', border: '2px solid white', borderRadius: '20px', padding: '3px 7px', display: 'flex', gap: '2px', alignItems: 'center', boxShadow: '0 2px 8px rgba(20,184,166,0.4)' }}>
                 <span style={{ width: '3px', height: '3px', background: 'white', borderRadius: '50%', display: 'inline-block' }} />
                 <span style={{ width: '3px', height: '3px', background: 'white', borderRadius: '50%', display: 'inline-block' }} />
                 <span style={{ width: '3px', height: '3px', background: 'white', borderRadius: '50%', display: 'inline-block' }} />
@@ -104,7 +104,7 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
                 boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.25), 0 4px 20px rgba(0,0,0,0.15)',
               }}
             >
-              <div style={{ fontSize: '10px', color: '#A5F3F0', fontWeight: 700, letterSpacing: '0.5px', marginBottom: '4px' }}>✦ ד״ר לב — המנטור שלך</div>
+              <div style={{ fontSize: '10px', color: '#A7F3D0', fontWeight: 700, letterSpacing: '0.5px', marginBottom: '4px' }}>✦ ד״ר לב — המנטור שלך</div>
               <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.92)', lineHeight: 1.55, fontWeight: 400, fontFamily: "'Heebo',sans-serif" }}>
                 {enrolledCourses.length > 0
                   ? <>שלום! יש לנו שיעור חדש היום 🌿<br /><strong style={{ color: '#FFD97D', fontWeight: 700 }}>בואו נמשיך!</strong></>
@@ -118,7 +118,7 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
 
       {/* ═══ WHITE ROUNDED SCROLL BODY ═══ */}
       <div style={{
-        background: '#ECEEF5', borderRadius: '26px 26px 0 0', marginTop: '-18px',
+        background: '#EDF5F0', borderRadius: '26px 26px 0 0', marginTop: '-18px',
         padding: '22px 16px 20px', position: 'relative', zIndex: 3, minHeight: '55vh',
       }}>
 
@@ -130,14 +130,14 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
             transition={{ duration: 0.4, delay: 0.05 }}
             className="flex gap-3.5 items-center mb-3.5 p-4"
             style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(245,245,255,0.9) 100%)',
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,253,250,0.9) 100%)',
               backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.8)', borderRadius: '22px',
-              boxShadow: '0 4px 24px rgba(45,27,142,0.10), 0 1px 4px rgba(45,27,142,0.06), inset 0 1px 0 rgba(255,255,255,1)',
+              boxShadow: '0 4px 24px rgba(6,78,59,0.10), 0 1px 4px rgba(6,78,59,0.06), inset 0 1px 0 rgba(255,255,255,1)',
             }}
           >
             {/* Day pill */}
             <div className="flex-shrink-0 flex flex-col items-center justify-center"
-              style={{ width: '58px', height: '58px', background: 'linear-gradient(145deg, #2D1B8E, #6B5FD4)', borderRadius: '18px', boxShadow: '0 4px 16px rgba(45,27,142,0.35)' }}>
+              style={{ width: '58px', height: '58px', background: 'linear-gradient(145deg, #064e3b, #10b981)', borderRadius: '18px', boxShadow: '0 4px 16px rgba(6,78,59,0.35)' }}>
               <span style={{ fontSize: '24px', fontWeight: 900, color: '#fff', lineHeight: 1 }}>{stats.avgProgress}</span>
               <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>%</span>
             </div>
@@ -159,9 +159,9 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
                     <div key={i} style={{
                       height: '6px', flex: 1, borderRadius: '10px',
                       background: isDone
-                        ? 'linear-gradient(90deg, #0DBDB8, #6EF0ED)'
+                        ? 'linear-gradient(90deg, #14b8a6, #5eead4)'
                         : isActive
-                          ? 'linear-gradient(90deg, #4A3BC4, #9B8FF0)'
+                          ? 'linear-gradient(90deg, #047857, #34d399)'
                           : 'rgba(0,0,0,0.08)',
                     }} />
                   );
@@ -238,7 +238,7 @@ export function CoursesClientWrapper({ enrolledCourses, availableCourses, stats 
           >
             <div className="relative w-24 h-24 mx-auto mb-6">
               <div className="absolute inset-0 rounded-3xl"
-                style={{ background: 'linear-gradient(145deg, #4a3bc4, #7b6ef6)', boxShadow: '0 8px 32px rgba(74,59,196,0.25)' }} />
+                style={{ background: 'linear-gradient(145deg, #047857, #10b981)', boxShadow: '0 8px 32px rgba(4,120,87,0.25)' }} />
               <div className="absolute inset-0 flex items-center justify-center">
                 <GraduationCap className="w-10 h-10 text-white" />
               </div>

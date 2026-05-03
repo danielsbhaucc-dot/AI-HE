@@ -33,7 +33,7 @@ export function CourseCard({ course, progress, isEnrolled }: CourseCardProps) {
         className="block overflow-hidden no-tap-highlight relative"
         style={{
           borderRadius: '22px',
-          boxShadow: '0 8px 32px rgba(45,27,142,0.18), 0 2px 8px rgba(45,27,142,0.1)',
+          boxShadow: '0 8px 32px rgba(6,78,59,0.18), 0 2px 8px rgba(6,78,59,0.1)',
           transition: 'all 0.25s ease',
         }}
       >
@@ -41,7 +41,7 @@ export function CourseCard({ course, progress, isEnrolled }: CourseCardProps) {
         <div className="relative overflow-hidden" style={{
           background: isCompleted
             ? 'linear-gradient(145deg, #065f46 0%, #059669 50%, #10b981 100%)'
-            : 'linear-gradient(145deg, #1e1260 0%, #3730A3 50%, #6B5FD4 100%)',
+            : 'linear-gradient(145deg, #064e3b 0%, #047857 50%, #10b981 100%)',
           padding: '18px 16px',
           display: 'flex', alignItems: 'center', gap: '14px',
         }}>
@@ -123,7 +123,7 @@ export function CourseCard({ course, progress, isEnrolled }: CourseCardProps) {
         <div style={{
           background: 'rgba(255,255,255,0.97)',
           padding: isEnrolled ? '10px 16px 14px' : '12px 16px',
-          borderTop: '1px solid rgba(45,27,142,0.06)',
+          borderTop: '1px solid rgba(6,78,59,0.06)',
         }}>
           {/* Description line */}
           {course.description && (
@@ -136,7 +136,7 @@ export function CourseCard({ course, progress, isEnrolled }: CourseCardProps) {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1" style={{ fontSize: '12px', color: '#9896B8' }}>
               <Clock className="w-3.5 h-3.5" style={{ color: '#9896B8' }} />
-              <span><strong style={{ color: '#4A3BC4' }}>{lessonCount}</strong> שיעורים</span>
+              <span><strong style={{ color: '#047857' }}>{lessonCount}</strong> שיעורים</span>
             </div>
             {isEnrolled && !isCompleted && (
               <div style={{
@@ -175,16 +175,16 @@ export function CourseCard({ course, progress, isEnrolled }: CourseCardProps) {
             <div style={{ marginTop: '10px' }}>
               <div className="flex justify-between items-center" style={{ marginBottom: '5px' }}>
                 <span style={{ fontSize: '11px', fontWeight: 500, color: '#9896B8' }}>התקדמות</span>
-                <span style={{ fontSize: '11px', fontWeight: 900, color: isCompleted ? '#059669' : '#6b5fd4' }}>{progress}%</span>
+                <span style={{ fontSize: '11px', fontWeight: 900, color: isCompleted ? '#059669' : '#047857' }}>{progress}%</span>
               </div>
-              <div style={{ height: '6px', borderRadius: '10px', background: 'rgba(45,27,142,0.08)', overflow: 'hidden' }}>
+              <div style={{ height: '6px', borderRadius: '10px', background: 'rgba(6,78,59,0.08)', overflow: 'hidden' }}>
                 <motion.div
                   style={{
                     height: '100%', borderRadius: '10px',
                     background: isCompleted
                       ? 'linear-gradient(90deg, #059669, #10b981, #34d399)'
-                      : 'linear-gradient(90deg, #4a3bc4, #7b6ef6, #a99df8)',
-                    boxShadow: isCompleted ? '0 0 6px rgba(16,185,129,0.4)' : '0 0 6px rgba(123,110,246,0.4)',
+                      : 'linear-gradient(90deg, #047857, #10b981, #34d399)',
+                    boxShadow: isCompleted ? '0 0 6px rgba(16,185,129,0.4)' : '0 0 6px rgba(16,185,129,0.4)',
                   }}
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
