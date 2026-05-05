@@ -77,14 +77,14 @@ export default function manifest(): MetadataRoute.Manifest {
         short_name: 'קורסים',
         description: 'גשו לקורסים שלכם',
         url: '/courses',
-        icons: [{ src: '/icons/icon-96x96.png', sizes: '96x96' }],
+        icons: [{ src: '/icons/icon-96x96.png', sizes: '96x96', type: 'image/png' }],
       },
       {
         name: 'ההתקדמות שלי',
         short_name: 'התקדמות',
         description: 'ראו את ההתקדמות שלכם',
         url: '/progress',
-        icons: [{ src: '/icons/icon-96x96.png', sizes: '96x96' }],
+        icons: [{ src: '/icons/icon-96x96.png', sizes: '96x96', type: 'image/png' }],
       },
     ],
   };

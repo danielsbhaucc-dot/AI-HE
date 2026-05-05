@@ -1,11 +1,26 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, CheckCircle2, ArrowLeft, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { HlsVideo } from './HlsVideo';
 import { getBunnyHlsSourceFromFields } from '../../lib/journey/bunny-pull';
+
+const HlsVideo = dynamic(
+  () => import('./HlsVideo').then(m => m.HlsVideo),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="absolute inset-0 flex items-center justify-center bg-black">
+        <div
+          className="h-16 w-16 animate-pulse rounded-full"
+          style={{ background: 'rgba(16,185,129,0.3)', border: '2px solid rgba(16,185,129,0.5)' }}
+        />
+      </div>
+    ),
+  }
+);
 
 interface VideoSectionProps {
   provider: string | null;
