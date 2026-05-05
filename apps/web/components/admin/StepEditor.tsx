@@ -177,6 +177,9 @@ export function StepEditor({ step }: StepEditorProps) {
                 זה הדומיין המחובר ל־Bunny Stream אצלכם. אפשר להדביק את ה־URL המלא, או רק את הנתיב (למשל{' '}
                 <span dir="ltr" className="font-mono text-[11px]">/uuid/playlist.m3u8</span>
                 ). אפשר גם להזין <strong>רק UUID</strong> של הסרטון בשדה &quot;מזהה&quot; למעלה — יבנה אוטומטית ל־playlist ב־video.nurawell.ai.
+                אם ב־Bunny מופעל <strong>Block direct URL file access</strong>, הוסיפו בפריסה (למשל Vercel) את{' '}
+                <span dir="ltr" className="font-mono text-[11px]">NEXT_PUBLIC_BUNNY_STREAM_LIBRARY_ID</span>
+                {' '}— מספר הספרייה מ־Stream (כמו ב־embed URL) — והאתר יעבור אוטומטית לנגן ה־embed במקום טעינת m3u8 ישירה.
               </p>
             </Field>
           )}

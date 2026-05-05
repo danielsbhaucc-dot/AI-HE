@@ -15,6 +15,43 @@ function pullOrigin(): string {
 const UUID_ONLY =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
+function bunnyStreamLibraryId(): string {
+  if (typeof process !== 'undefined' && process.env.NEXT_PUBLIC_BUNNY_STREAM_LIBRARY_ID?.trim()) {
+    return process.env.NEXT_PUBLIC_BUNNY_STREAM_LIBRARY_ID.trim();
+  }
+  return '';
+}
+
+/**
+ * מכתובת Pull Zone (.../{videoUuid}/playlist.m3u8) — מחזיר את מזהה הווידאו.
+ */
+export function extractBunnyVideoUuidFromPlaylistUrl(hlsUrl: string): string | null {
+  try {
+    const u = new URL(hlsUrl);
+    const parts = u.pathname.split('/').filter(Boolean);
+    if (parts.length < 2) return null;
+    const last = parts[parts.length - 1]?.toLowerCase() ?? '';
+    if (!last.endsWith('.m3u8')) return null;
+    const vid = parts[parts.length - 2];
+    return UUID_ONLY.test(vid) ? vid : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * כש־Bunny מפעילים "Block direct URL file access", fetch ל־m3u8 מהדפדפן מחזיר 403.
+ * אם מוגדר מזהה ספריית Stream (מספר מהדשבורד), עוברים ל־embed iframe — עובד עם החסימה.
+ */
+export function getBunnyIframeEmbedFromPullZoneHls(hlsUrl: string | null): string | null {
+  if (!hlsUrl) return null;
+  const lib = bunnyStreamLibraryId();
+  if (!lib) return null;
+  const videoId = extractBunnyVideoUuidFromPlaylistUrl(hlsUrl);
+  if (!videoId) return null;
+  return `${lib}/${videoId}`;
+}
+
 /**
  * Accepts:
  * - Full URL: https://video.nurawell.ai/{id}/playlist.m3u8

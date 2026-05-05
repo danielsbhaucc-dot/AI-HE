@@ -11,6 +11,7 @@ const nextConfig = {
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
     NEXT_PUBLIC_BUNNY_PULL_ORIGIN:
       process.env.NEXT_PUBLIC_BUNNY_PULL_ORIGIN || 'https://video.nurawell.ai',
+    NEXT_PUBLIC_BUNNY_STREAM_LIBRARY_ID: process.env.NEXT_PUBLIC_BUNNY_STREAM_LIBRARY_ID || '',
   },
   experimental: {
     serverActions: {

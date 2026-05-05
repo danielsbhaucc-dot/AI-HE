@@ -1,26 +1,14 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, CheckCircle2, ArrowLeft, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { getBunnyHlsSourceFromFields } from '../../lib/journey/bunny-pull';
-
-const HlsVideo = dynamic(
-  () => import('./HlsVideo').then(m => m.HlsVideo),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="absolute inset-0 flex items-center justify-center bg-black">
-        <div
-          className="h-16 w-16 animate-pulse rounded-full"
-          style={{ background: 'rgba(16,185,129,0.3)', border: '2px solid rgba(16,185,129,0.5)' }}
-        />
-      </div>
-    ),
-  }
-);
+import {
+  getBunnyHlsSourceFromFields,
+  getBunnyIframeEmbedFromPullZoneHls,
+} from '../../lib/journey/bunny-pull';
+import { HlsVideoGate } from './HlsVideoGate';
 
 interface VideoSectionProps {
   provider: string | null;
@@ -31,8 +19,8 @@ interface VideoSectionProps {
   isWatched: boolean;
 }
 
-/** Library/video id for iframe.mediadelivery.net/embed/{id} */
-function getBunnyEmbedId(externalId: string | null, externalUrl: string | null): string | null {
+/** libraryId/videoId מ־external_id כשאין URL של m3u8 בשדות */
+function getBunnyExplicitEmbedId(externalId: string | null, externalUrl: string | null): string | null {
   if (getBunnyHlsSourceFromFields(externalId, externalUrl)) return null;
   const id = externalId?.trim();
   if (!id || id === 'PLACEHOLDER_HEYGEN_VIDEO_ID') return null;
@@ -90,13 +78,21 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
   const [immersiveOpen, setImmersiveOpen] = useState(false);
   const [exitConfirmOpen, setExitConfirmOpen] = useState(false);
 
-  const bunnyHlsSrc = provider === 'bunny' ? getBunnyHlsSourceFromFields(externalId, externalUrl) : null;
-  const bunnyEmbedId = provider === 'bunny' ? getBunnyEmbedId(externalId, externalUrl) : null;
+  const bunnyHlsCandidate = provider === 'bunny' ? getBunnyHlsSourceFromFields(externalId, externalUrl) : null;
+  /** כש־Block direct URL ב-Bunny + NEXT_PUBLIC_BUNNY_STREAM_LIBRARY_ID — embed במקום fetch ל־m3u8 */
+  const iframeFromPullZone =
+    provider === 'bunny' ? getBunnyIframeEmbedFromPullZoneHls(bunnyHlsCandidate) : null;
+  const isBunnyPullZoneEmbed = !!iframeFromPullZone;
+  const bunnyEmbedId =
+    provider === 'bunny' ? iframeFromPullZone || getBunnyExplicitEmbedId(externalId, externalUrl) : null;
+  const bunnyHlsSrc = iframeFromPullZone ? null : bunnyHlsCandidate;
   const isBunnyIframe = provider === 'bunny' && !!bunnyEmbedId;
   const isBunnyHls = provider === 'bunny' && !!bunnyHlsSrc;
 
-  /** HLS: תמיד מציגים נגן בכרטיס; iframe Bunny בלבד — מסך מלא */
-  const [inlinePlaying, setInlinePlaying] = useState(isBunnyHls);
+  /** HLS או embed מ־Pull Zone: נגן בכרטיס מיד; iframe קלאסי — מסך מלא */
+  const [inlinePlaying, setInlinePlaying] = useState(
+    () => provider === 'bunny' && (!!bunnyHlsSrc || isBunnyPullZoneEmbed)
+  );
 
   const baseEmbed = getEmbedUrl(provider, externalId, externalUrl, { autoplay: false, bunnyCompact: false });
   const immersiveIframeSrc = bunnyEmbedId ? bunnyIframeUrl(bunnyEmbedId, { autoplay: true, bunnyCompact: true }) : null;
@@ -109,7 +105,7 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
   const immersiveKey = bunnyEmbedId ? `iframe:${bunnyEmbedId}` : '';
 
   useEffect(() => {
-    if (isPlaceholder || provider !== 'bunny' || !bunnyEmbedId || isBunnyHls) {
+    if (isPlaceholder || provider !== 'bunny' || !bunnyEmbedId || isBunnyHls || isBunnyPullZoneEmbed) {
       setImmersiveOpen(false);
       return;
     }
@@ -117,7 +113,7 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
     immersiveOpenedForKey.current = immersiveKey;
     setImmersiveOpen(true);
     setImmersiveLoaded(false);
-  }, [isPlaceholder, provider, immersiveKey, bunnyEmbedId, isBunnyHls]);
+  }, [isPlaceholder, provider, immersiveKey, bunnyEmbedId, isBunnyHls, isBunnyPullZoneEmbed]);
 
   const closeImmersive = useCallback(() => {
     setImmersiveOpen(false);
@@ -257,7 +253,7 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
                 </div>
               </div>
             )}
-            <HlsVideo
+            <HlsVideoGate
               key={`inline-hls-${bunnyHlsSrc}`}
               src={bunnyHlsSrc!}
               className="absolute inset-0 w-full h-full object-contain bg-black"
