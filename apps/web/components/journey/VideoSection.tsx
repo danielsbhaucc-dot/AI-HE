@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, CheckCircle2, ArrowLeft, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { HlsVideo } from './HlsVideo';
+import { getBunnyHlsSourceFromFields } from '../../lib/journey/bunny-pull';
 
 interface VideoSectionProps {
   provider: string | null;
@@ -12,6 +14,14 @@ interface VideoSectionProps {
   title: string;
   onComplete: () => void;
   isWatched: boolean;
+}
+
+/** Library/video id for iframe.mediadelivery.net/embed/{id} */
+function getBunnyEmbedId(externalId: string | null, externalUrl: string | null): string | null {
+  if (getBunnyHlsSourceFromFields(externalId, externalUrl)) return null;
+  const id = externalId?.trim();
+  if (!id || id === 'PLACEHOLDER_HEYGEN_VIDEO_ID') return null;
+  return id;
 }
 
 function getEmbedUrl(
@@ -25,11 +35,8 @@ function getEmbedUrl(
   switch (provider) {
     case 'heygen':
       return externalId ? `https://app.heygen.com/share/${externalId}` : null;
-    case 'bunny': {
-      if (!externalId) return null;
-      const compact = opts?.bunnyCompact ? 'true' : 'false';
-      return `https://iframe.mediadelivery.net/embed/${externalId}?autoplay=${ap}&preload=true&responsive=true&playsinline=true&compactControls=${compact}&rememberPosition=false`;
-    }
+    case 'bunny':
+      return null;
     case 'youtube':
       return externalId
         ? `https://www.youtube.com/embed/${externalId}?rel=0${ap ? '&autoplay=1' : ''}`
@@ -45,6 +52,12 @@ function getEmbedUrl(
   }
 }
 
+function bunnyIframeUrl(embedId: string, opts?: { autoplay?: boolean; bunnyCompact?: boolean }): string {
+  const ap = opts?.autoplay !== false;
+  const compact = opts?.bunnyCompact ? 'true' : 'false';
+  return `https://iframe.mediadelivery.net/embed/${embedId}?autoplay=${ap}&preload=true&responsive=true&playsinline=true&compactControls=${compact}&rememberPosition=false`;
+}
+
 function mightBeVideoEndedMessage(data: unknown): boolean {
   if (data == null || typeof data !== 'object') return false;
   const o = data as Record<string, unknown>;
@@ -56,34 +69,38 @@ function mightBeVideoEndedMessage(data: unknown): boolean {
 
 export function VideoSection({ provider, externalId, externalUrl, title, onComplete, isWatched }: VideoSectionProps) {
   const router = useRouter();
-  const immersiveOpenedForId = useRef<string | null>(null);
+  const immersiveOpenedForKey = useRef<string | null>(null);
   const [inlineLoaded, setInlineLoaded] = useState(false);
   const [immersiveLoaded, setImmersiveLoaded] = useState(false);
   const [inlinePlaying, setInlinePlaying] = useState(false);
   const [immersiveOpen, setImmersiveOpen] = useState(false);
   const [exitConfirmOpen, setExitConfirmOpen] = useState(false);
 
-  const isBunny = provider === 'bunny';
-  const baseEmbed = getEmbedUrl(provider, externalId, externalUrl, { autoplay: false, bunnyCompact: false });
-  const immersiveEmbed = isBunny
-    ? getEmbedUrl(provider, externalId, externalUrl, { autoplay: true, bunnyCompact: true })
-    : baseEmbed;
-  const inlineEmbed = isBunny
-    ? getEmbedUrl(provider, externalId, externalUrl, { autoplay: inlinePlaying, bunnyCompact: false })
-    : baseEmbed;
+  const bunnyHlsSrc = provider === 'bunny' ? getBunnyHlsSourceFromFields(externalId, externalUrl) : null;
+  const bunnyEmbedId = provider === 'bunny' ? getBunnyEmbedId(externalId, externalUrl) : null;
+  const isBunnyIframe = provider === 'bunny' && !!bunnyEmbedId;
+  const isBunnyHls = provider === 'bunny' && !!bunnyHlsSrc;
 
-  const isPlaceholder = externalId === 'PLACEHOLDER_HEYGEN_VIDEO_ID' || !baseEmbed;
+  const baseEmbed = getEmbedUrl(provider, externalId, externalUrl, { autoplay: false, bunnyCompact: false });
+  const immersiveIframeSrc = bunnyEmbedId ? bunnyIframeUrl(bunnyEmbedId, { autoplay: true, bunnyCompact: true }) : null;
+  const inlineIframeSrc = bunnyEmbedId ? bunnyIframeUrl(bunnyEmbedId, { autoplay: inlinePlaying, bunnyCompact: false }) : null;
+
+  const isPlaceholder =
+    externalId === 'PLACEHOLDER_HEYGEN_VIDEO_ID' ||
+    (provider === 'bunny' ? !bunnyHlsSrc && !bunnyEmbedId : !baseEmbed);
+
+  const immersiveKey = isBunnyHls ? `hls:${bunnyHlsSrc}` : bunnyEmbedId ? `iframe:${bunnyEmbedId}` : '';
 
   useEffect(() => {
-    if (isPlaceholder || !isBunny || !immersiveEmbed || !externalId) {
+    if (isPlaceholder || provider !== 'bunny' || !immersiveKey) {
       setImmersiveOpen(false);
       return;
     }
-    if (immersiveOpenedForId.current === externalId) return;
-    immersiveOpenedForId.current = externalId;
+    if (immersiveOpenedForKey.current === immersiveKey) return;
+    immersiveOpenedForKey.current = immersiveKey;
     setImmersiveOpen(true);
     setImmersiveLoaded(false);
-  }, [isPlaceholder, isBunny, immersiveEmbed, externalId]);
+  }, [isPlaceholder, provider, immersiveKey]);
 
   const closeImmersive = useCallback(() => {
     setImmersiveOpen(false);
@@ -93,7 +110,7 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
   }, []);
 
   useEffect(() => {
-    if (!immersiveOpen) return;
+    if (!immersiveOpen || !isBunnyIframe) return;
     const onMsg = (e: MessageEvent) => {
       if (typeof e.origin === 'string' && e.origin.includes('mediadelivery.net') && mightBeVideoEndedMessage(e.data)) {
         closeImmersive();
@@ -101,7 +118,7 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
     };
     window.addEventListener('message', onMsg);
     return () => window.removeEventListener('message', onMsg);
-  }, [immersiveOpen, closeImmersive]);
+  }, [immersiveOpen, isBunnyIframe, closeImmersive]);
 
   useEffect(() => {
     if (!immersiveOpen) return;
@@ -117,6 +134,11 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
     router.push('/journey');
   };
 
+  const showBunnyReplayGate = (isBunnyIframe || isBunnyHls) && !inlinePlaying;
+  const showNonBunnyIframe = !isPlaceholder && !isBunnyHls && !isBunnyIframe && !!baseEmbed;
+  const showInlineIframe = !isPlaceholder && isBunnyIframe && inlinePlaying && !!inlineIframeSrc;
+  const showInlineHls = !isPlaceholder && isBunnyHls && inlinePlaying && !!bunnyHlsSrc;
+
   return (
     <div className="space-y-5">
       <div className="text-center">
@@ -130,7 +152,6 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
         </h2>
       </div>
 
-      {/* Inline player (after immersive Bunny session, or default for non-Bunny) */}
       <div
         className="relative rounded-2xl overflow-hidden"
         style={{ aspectRatio: '16/9', background: '#0a1f1a' }}
@@ -145,7 +166,7 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
             <p className="text-white/90 text-lg font-bold mb-1">{title}</p>
             <p className="text-white/60 text-sm">הסרטון יהיה זמין בקרוב 🎬</p>
           </div>
-        ) : isBunny && !inlinePlaying ? (
+        ) : showBunnyReplayGate ? (
           <button
             type="button"
             onClick={() => { setInlinePlaying(true); setInlineLoaded(false); }}
@@ -160,7 +181,7 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
           </button>
         ) : null}
 
-        {!isPlaceholder && (inlinePlaying || !isBunny) && (
+        {showNonBunnyIframe && (
           <>
             {!inlineLoaded && (
               <div className="absolute inset-0 flex items-center justify-center z-10"
@@ -172,8 +193,8 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
               </div>
             )}
             <iframe
-              key={`inline-${inlineEmbed}-${inlinePlaying}`}
-              src={inlineEmbed!}
+              key={baseEmbed!}
+              src={baseEmbed!}
               title={title}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
               allowFullScreen
@@ -183,11 +204,57 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
             />
           </>
         )}
+
+        {showInlineIframe && (
+          <>
+            {!inlineLoaded && (
+              <div className="absolute inset-0 flex items-center justify-center z-10"
+                style={{ background: 'rgba(0,0,0,0.7)' }}>
+                <div className="w-16 h-16 rounded-full flex items-center justify-center animate-pulse"
+                  style={{ background: 'rgba(16,185,129,0.3)', border: '2px solid rgba(16,185,129,0.5)' }}>
+                  <Play className="w-7 h-7 text-emerald-400 ml-0.5" fill="currentColor" />
+                </div>
+              </div>
+            )}
+            <iframe
+              key={`inline-${inlineIframeSrc}-${inlinePlaying}`}
+              src={inlineIframeSrc!}
+              title={title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full border-0"
+              onLoad={() => setInlineLoaded(true)}
+              loading="lazy"
+            />
+          </>
+        )}
+
+        {showInlineHls && (
+          <>
+            {!inlineLoaded && (
+              <div className="absolute inset-0 flex items-center justify-center z-10"
+                style={{ background: 'rgba(0,0,0,0.7)' }}>
+                <div className="w-16 h-16 rounded-full flex items-center justify-center animate-pulse"
+                  style={{ background: 'rgba(16,185,129,0.3)', border: '2px solid rgba(16,185,129,0.5)' }}>
+                  <Play className="w-7 h-7 text-emerald-400 ml-0.5" fill="currentColor" />
+                </div>
+              </div>
+            )}
+            <HlsVideo
+              key={`inline-hls-${bunnyHlsSrc}-${inlinePlaying}`}
+              src={bunnyHlsSrc!}
+              className="absolute inset-0 w-full h-full object-contain bg-black"
+              controls
+              playsInline
+              autoPlay
+              onLoaded={() => setInlineLoaded(true)}
+            />
+          </>
+        )}
       </div>
 
-      {/* Bunny: TikTok-style immersive layer */}
       <AnimatePresence>
-        {immersiveOpen && !isPlaceholder && immersiveEmbed && (
+        {immersiveOpen && !isPlaceholder && (isBunnyHls || isBunnyIframe) && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -203,7 +270,7 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
             >
               <X className="w-6 h-6" />
             </button>
-            <div className="relative w-full h-[100dvh] max-w-[480px] mx-auto">
+            <div className="relative w-full h-[100dvh] max-w-[480px] mx-auto bg-black">
               {!immersiveLoaded && (
                 <div className="absolute inset-0 flex items-center justify-center z-10 bg-black">
                   <div className="w-16 h-16 rounded-full flex items-center justify-center animate-pulse"
@@ -212,15 +279,27 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
                   </div>
                 </div>
               )}
-              <iframe
-                src={immersiveEmbed}
-                title={title}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full border-0"
-                style={{ objectFit: 'cover' }}
-                onLoad={() => setImmersiveLoaded(true)}
-              />
+              {isBunnyHls && bunnyHlsSrc ? (
+                <HlsVideo
+                  src={bunnyHlsSrc}
+                  className="absolute inset-0 w-full h-full object-contain"
+                  autoPlay
+                  playsInline
+                  controls={false}
+                  onLoaded={() => setImmersiveLoaded(true)}
+                  onEnded={closeImmersive}
+                />
+              ) : immersiveIframeSrc ? (
+                <iframe
+                  src={immersiveIframeSrc}
+                  title={title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full border-0"
+                  style={{ objectFit: 'cover' }}
+                  onLoad={() => setImmersiveLoaded(true)}
+                />
+              ) : null}
             </div>
           </motion.div>
         )}

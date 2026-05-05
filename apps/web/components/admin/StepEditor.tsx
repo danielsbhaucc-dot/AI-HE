@@ -39,6 +39,7 @@ export function StepEditor({ step }: StepEditorProps) {
   // Video
   const [videoProvider, setVideoProvider] = useState<string>(step?.video_provider || 'heygen');
   const [videoExternalId, setVideoExternalId] = useState(step?.video_external_id || '');
+  const [videoExternalUrl, setVideoExternalUrl] = useState(step?.video_external_url || '');
   const [videoTitle, setVideoTitle] = useState(step?.video_title || '');
 
   // Structured data
@@ -62,8 +63,11 @@ export function StepEditor({ step }: StepEditorProps) {
       is_published: isPublished, duration_minutes: durationMinutes,
       summary_text: summaryText || null,
       video_provider: videoProvider || null,
-      video_external_id: videoExternalId || null,
-      video_external_url: null,
+      video_external_id: videoProvider === 'custom' ? null : (videoExternalId.trim() || null),
+      video_external_url:
+        videoProvider === 'custom' || videoProvider === 'bunny'
+          ? (videoExternalUrl.trim() || null)
+          : null,
       video_title: videoTitle || null,
       quiz_questions: quizQuestions, game_items: gameItems,
       commitment, researches, tasks, habits,
@@ -153,11 +157,29 @@ export function StepEditor({ step }: StepEditorProps) {
                 <option value="custom">Custom URL</option>
               </select>
             </Field>
-            <Field label="מזהה / ID">
-              <input value={videoExternalId} onChange={e => setVideoExternalId(e.target.value)}
-                className="input-field" placeholder="video ID" dir="ltr" />
-            </Field>
+            {videoProvider === 'custom' ? (
+              <Field label="כתובת URL">
+                <input value={videoExternalUrl} onChange={e => setVideoExternalUrl(e.target.value)}
+                  className="input-field" placeholder="https://..." dir="ltr" />
+              </Field>
+            ) : (
+              <Field label="מזהה / ID">
+                <input value={videoExternalId} onChange={e => setVideoExternalId(e.target.value)}
+                  className="input-field" placeholder="video ID" dir="ltr" />
+              </Field>
+            )}
           </div>
+          {videoProvider === 'bunny' && (
+            <Field label="כתובת HLS (Pull Zone — video.nurawell.ai)">
+              <input value={videoExternalUrl} onChange={e => setVideoExternalUrl(e.target.value)}
+                className="input-field" placeholder="https://video.nurawell.ai/{מזהה-וידאו}/playlist.m3u8" dir="ltr" />
+              <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">
+                זה הדומיין המחובר ל־Bunny Stream אצלכם. אפשר להדביק את ה־URL המלא, או רק את הנתיב (למשל{' '}
+                <span dir="ltr" className="font-mono text-[11px]">/uuid/playlist.m3u8</span>
+                ). אפשר גם להזין <strong>רק UUID</strong> של הסרטון בשדה &quot;מזהה&quot; למעלה — יבנה אוטומטית ל־playlist ב־video.nurawell.ai.
+              </p>
+            </Field>
+          )}
           <Field label="כותרת הסרטון">
             <input value={videoTitle} onChange={e => setVideoTitle(e.target.value)}
               className="input-field" placeholder="כותרת שתופיע מעל הסרטון" />

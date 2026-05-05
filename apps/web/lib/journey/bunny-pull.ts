@@ -1,0 +1,64 @@
+/**
+ * Bunny Stream Pull Zone for NuraWell — HLS manifests on video.nurawell.ai
+ * (see https://docs.bunny.net/docs/stream-video-storage-structure )
+ */
+
+export const NURAWELL_BUNNY_VIDEO_ORIGIN = 'https://video.nurawell.ai';
+
+function pullOrigin(): string {
+  if (typeof process !== 'undefined' && process.env.NEXT_PUBLIC_BUNNY_PULL_ORIGIN?.trim()) {
+    return process.env.NEXT_PUBLIC_BUNNY_PULL_ORIGIN.replace(/\/$/, '');
+  }
+  return NURAWELL_BUNNY_VIDEO_ORIGIN;
+}
+
+const UUID_ONLY =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/**
+ * Accepts:
+ * - Full URL: https://video.nurawell.ai/{id}/playlist.m3u8
+ * - Protocol-relative: //video.nurawell.ai/...
+ * - Path only: /{id}/playlist.m3u8 or {id}/playlist.m3u8
+ */
+export function resolveBunnyPullHlsUrl(raw: string): string | null {
+  const s = raw.trim();
+  if (!s) return null;
+  if (/^https?:\/\//i.test(s)) return s;
+  if (s.startsWith('//')) return `https:${s}`;
+  if (!s.toLowerCase().includes('.m3u8')) return null;
+  // host/path without scheme, e.g. video.nurawell.ai/{id}/playlist.m3u8
+  if (/^[a-z0-9][a-z0-9.-]*\//i.test(s)) {
+    return `https://${s}`;
+  }
+  const origin = pullOrigin();
+  if (s.startsWith('/')) return `${origin}${s}`;
+  return `${origin}/${s}`;
+}
+
+/** Pure video GUID in pull zone → default manifest path on video.nurawell.ai */
+export function nurawellPlaylistFromVideoId(videoId: string): string | null {
+  const id = videoId.trim();
+  if (!UUID_ONLY.test(id)) return null;
+  return `${pullOrigin()}/${id}/playlist.m3u8`;
+}
+
+/**
+ * Resolve HLS URL for journey/course fields: explicit m3u8 / URL, or UUID-only in externalId.
+ */
+export function getBunnyHlsSourceFromFields(
+  externalId: string | null,
+  externalUrl: string | null
+): string | null {
+  const candidates = [externalUrl?.trim(), externalId?.trim()].filter(Boolean) as string[];
+  for (const c of candidates) {
+    const resolved = resolveBunnyPullHlsUrl(c);
+    if (resolved) return resolved;
+  }
+  const idOnly = externalId?.trim();
+  if (idOnly && !externalUrl?.trim()) {
+    const fromUuid = nurawellPlaylistFromVideoId(idOnly);
+    if (fromUuid) return fromUuid;
+  }
+  return null;
+}

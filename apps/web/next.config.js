@@ -9,6 +9,8 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
+    NEXT_PUBLIC_BUNNY_PULL_ORIGIN:
+      process.env.NEXT_PUBLIC_BUNNY_PULL_ORIGIN || 'https://video.nurawell.ai',
   },
   experimental: {
     serverActions: {
@@ -23,6 +25,7 @@ const nextConfig = {
       { protocol: 'https', hostname: '*.utfs.io' },
       { protocol: 'https', hostname: '*.bunnycdn.com' },
       { protocol: 'https', hostname: '*.b-cdn.net' },
+      { protocol: 'https', hostname: 'video.nurawell.ai' },
       { protocol: 'https', hostname: 'img.youtube.com' },
       { protocol: 'https', hostname: 'i.vimeocdn.com' },
     ],
