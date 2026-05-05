@@ -1,5 +1,11 @@
 # 🤖 AI Context - NuraWell 🌿
-> **עדכון אחרון:** מערכת הקורסים הושלמה (Section 4) - ראה פרטים למטה
+> **עדכון אחרון:** מסע משתמש (Journey) + וידאו Bunny Pull Zone (HLS על `video.nurawell.ai`) — ראה סעיפים למטה.
+
+## תחזוקת קבצי הקשר (AI_CONTEXT + RULES)
+
+עדכן את **`AI_CONTEXT.md`** ואת **`RULES.md`** **רק כשיש שינוי מהותי** שמשפיע על איך מבינים או מפתחים בפרויקט — למשל: מבנה תיקיות חדש, זרימות משתמש, טבלאות DB, קונבנציות, ספקי מדיה, או API חשוב.
+
+**לא לעדכן** בשביל תיקוני באג קטנים, שינויי ניסוח בלי השפעה ארכיטקטונית, או רפקטור פנימי שאינו משנה חוזים ציבוריים. המטרה: למנוע רעש ולשמור על מסמכים אמינים וקצרים.
 
 ## System Overview
 Mobile-first, AI-ready course system for weight loss with RTL support, built with Next.js 15 + Supabase + Tailwind CSS.
@@ -7,12 +13,13 @@ Mobile-first, AI-ready course system for weight loss with RTL support, built wit
 ## 📁 Project Structure
 
 ```
-AI HE/
+NuraWell/
 ├── apps/
 │   ├── web/                    # Main Next.js application
 │   │   ├── app/
 │   │   │   ├── (auth)/        # Auth routes (login, register)
-│   │   │   ├── (dashboard)/   # Protected user routes
+│   │   │   ├── (dashboard)/   # Protected user routes (כולל /journey)
+│   │   │   ├── admin/         # פאנל אדמין (צעדי מסע וכו') בתוך apps/web
 │   │   │   ├── api/           # API routes for future mobile app
 │   │   │   ├── layout.tsx     # Root layout with RTL
 │   │   │   ├── page.tsx       # Landing page
@@ -22,9 +29,11 @@ AI HE/
 │   │   │   │   ├── MobileHeader.tsx
 │   │   │   │   ├── BottomNav.tsx
 │   │   │   │   └── CourseCard.tsx
-│   │   │   └── course/        # Course-specific components
+│   │   │   ├── course/        # Course-specific components
+│   │   │   └── journey/       # המסע שלי: צעדים, שיעור, חידון, וידאו
 │   │   ├── lib/
 │   │   │   ├── cn.ts          # Tailwind class merger
+│   │   │   ├── journey/       # מסע: resolve-step, bunny-pull (HLS Pull Zone)
 │   │   │   ├── types/         # TypeScript types
 │   │   │   │   └── database.ts
 │   │   │   └── supabase/      # Supabase clients
@@ -41,12 +50,12 @@ AI HE/
 │   ├── shared/               # Shared utilities
 │   └── ui/                   # Shared UI components
 ├── supabase/
-│   └── migrations/
-│       └── 000001_initial_schema.sql
+│   └── migrations/          # 000001…, 000002_ai_ready, 000003_journey, …
 ├── package.json              # Root workspace config
 ├── turbo.json               # Turborepo config
 ├── .env.local               # Environment variables
-└── AI_CONTEXT.md           # This file
+├── AI_CONTEXT.md            # הקשר ארכיטקטורה ל-AI (עדכון רק כשיש תוכן רלוונטי)
+└── RULES.md                 # חוקי פיתוח ועיצוב (אותה מדיניות תחזוקה)
 ```
 
 ## 🗄️ Database Schema
@@ -70,6 +79,11 @@ AI HE/
 6. **lesson_progress** - User progress tracking
    - id, user_id, lesson_id, is_completed, task_progress, habit_progress
 
+7. **journey_steps** - צעדי «המסע שלי» (וידאו, חידון, משחק, התחייבות, סיכום)
+   - כולל `video_provider`, `video_external_id`, `video_external_url`, JSONB לתוכן מובנה
+
+8. **journey_progress** - התקדמות משתמש בצעד (`quiz_*`, `game_*`, `last_section`, `is_completed`)
+
 ### Key Features
 - RLS policies for security
 - Indexes for performance
@@ -85,6 +99,7 @@ AI HE/
 - **Media**: Enrolled users + admin only
 - **Enrollments**: Users see own, admin sees all
 - **Progress**: Users manage own progress only
+- **Journey**: `journey_steps` פורסמו לצפייה; `journey_progress` — כל משתמש לנתונים שלו
 
 ### Middleware Protection
 - Route-level auth checks
@@ -125,12 +140,16 @@ text: dark gray with secondary/muted variants
 - `/courses/[id]` - Course detail
 - `/lessons/[id]` - Lesson detail
 - `/progress` - Progress tracking
+- `/journey` - רשימת צעדי המסע (קישורים קצרים: `/journey/{מספר_צעד}`)
+- `/journey/[stepId]` - שיעור צעד — **מספר צעד מפורסם** או **UUID**
 
 ### API Routes (For Future Mobile App)
 - `/api/v1/auth/*` - Authentication
 - `/api/v1/courses/*` - Course data
 - `/api/v1/lessons/*` - Lesson data
 - `/api/v1/progress/*` - Progress updates
+- `/api/v1/journey-progress` - שמירת התקדמות מסע (POST)
+- `/api/v1/admin/journey-steps` - CRUD צעדים (אדמין)
 
 ## 📤 Media Strategy
 
@@ -140,7 +159,7 @@ text: dark gray with secondary/muted variants
 | Audio | Uploadthing | CDN delivery |
 | PDF | Uploadthing | Viewer support |
 | Presentations | Uploadthing | PDF conversion |
-| Video | URL in DB | Modular providers (Bunny/HeyGen/YouTube) |
+| Video | URL in DB | קורסים: iframe מודולרי; **מסע (Journey):** Bunny גם כ־**HLS** (`playlist.m3u8`) דרך `hls.js` ודומיין Pull Zone (ברירת מחדל `video.nurawell.ai`, ראה `NEXT_PUBLIC_BUNNY_PULL_ORIGIN`) |
 
 ## 🚀 Next Steps
 
@@ -190,6 +209,7 @@ When extending this codebase:
 7. Add animations with Framer Motion
 8. Use Lucide icons
 9. Follow the established color scheme
+10. Update **`AI_CONTEXT.md`** / **`RULES.md`** only when a change is **architecturally relevant** (see section «תחזוקת קבצי הקשר» at the top)
 
 ## 🔗 Key Files Reference
 
@@ -204,6 +224,24 @@ When extending this codebase:
 | Auth Middleware | `apps/web/middleware.ts` |
 | DB Schema v1 | `supabase/migrations/000001_initial_schema.sql` |
 | DB Schema v2 AI | `supabase/migrations/000002_ai_ready_tables.sql` |
+| מסע — טבלאות | `supabase/migrations/000003_journey_tables.sql` |
+| מסע — טיפוסים | `apps/web/lib/types/journey.ts` |
+| מסע — פתרון URL צעד | `apps/web/lib/journey/resolve-step.ts` |
+| Bunny Pull Zone / HLS | `apps/web/lib/journey/bunny-pull.ts` |
+| שיעור צעד (לקוח) | `apps/web/components/journey/StepLesson.tsx` |
+| וידאו במסע | `apps/web/components/journey/VideoSection.tsx`, `HlsVideo.tsx` |
+| עריכת צעד (אדמין) | `apps/web/components/admin/StepEditor.tsx` |
+
+---
+
+## 🧭 מסע משתמש (Journey / «המסע שלי»)
+
+- **רשימה:** `app/(dashboard)/journey/page.tsx` + `JourneyPage.tsx`
+- **שיעור:** `app/(dashboard)/journey/[stepId]/page.tsx` — `stepId` יכול להיות **מספר צעד מפורסם** (קישור קצר) או **UUID**
+- **וידאו Bunny במסע:**
+  - **Embed קלאסי:** `video_external_id` = `libraryId/videoId` → iframe `iframe.mediadelivery.net`
+  - **זרם Pull Zone:** `video_external_url` או מזהה/נתיב עם `.m3u8` — ניגון ב־`<video>` + **hls.js**; דומיין ברירת מחדל `https://video.nurawell.ai` (מנורמל ב־`bunny-pull.ts`)
+- **קונפיג:** `apps/web/next.config.js` — `NEXT_PUBLIC_BUNNY_PULL_ORIGIN`, `images.remotePatterns` ל־`video.nurawell.ai`
 
 ---
 

@@ -72,7 +72,6 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
   const immersiveOpenedForKey = useRef<string | null>(null);
   const [inlineLoaded, setInlineLoaded] = useState(false);
   const [immersiveLoaded, setImmersiveLoaded] = useState(false);
-  const [inlinePlaying, setInlinePlaying] = useState(false);
   const [immersiveOpen, setImmersiveOpen] = useState(false);
   const [exitConfirmOpen, setExitConfirmOpen] = useState(false);
 
@@ -80,6 +79,9 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
   const bunnyEmbedId = provider === 'bunny' ? getBunnyEmbedId(externalId, externalUrl) : null;
   const isBunnyIframe = provider === 'bunny' && !!bunnyEmbedId;
   const isBunnyHls = provider === 'bunny' && !!bunnyHlsSrc;
+
+  /** HLS: תמיד מציגים נגן בכרטיס; iframe Bunny בלבד — מסך מלא */
+  const [inlinePlaying, setInlinePlaying] = useState(isBunnyHls);
 
   const baseEmbed = getEmbedUrl(provider, externalId, externalUrl, { autoplay: false, bunnyCompact: false });
   const immersiveIframeSrc = bunnyEmbedId ? bunnyIframeUrl(bunnyEmbedId, { autoplay: true, bunnyCompact: true }) : null;
@@ -89,10 +91,10 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
     externalId === 'PLACEHOLDER_HEYGEN_VIDEO_ID' ||
     (provider === 'bunny' ? !bunnyHlsSrc && !bunnyEmbedId : !baseEmbed);
 
-  const immersiveKey = isBunnyHls ? `hls:${bunnyHlsSrc}` : bunnyEmbedId ? `iframe:${bunnyEmbedId}` : '';
+  const immersiveKey = bunnyEmbedId ? `iframe:${bunnyEmbedId}` : '';
 
   useEffect(() => {
-    if (isPlaceholder || provider !== 'bunny' || !immersiveKey) {
+    if (isPlaceholder || provider !== 'bunny' || !bunnyEmbedId || isBunnyHls) {
       setImmersiveOpen(false);
       return;
     }
@@ -100,7 +102,7 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
     immersiveOpenedForKey.current = immersiveKey;
     setImmersiveOpen(true);
     setImmersiveLoaded(false);
-  }, [isPlaceholder, provider, immersiveKey]);
+  }, [isPlaceholder, provider, immersiveKey, bunnyEmbedId, isBunnyHls]);
 
   const closeImmersive = useCallback(() => {
     setImmersiveOpen(false);
@@ -241,7 +243,7 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
               </div>
             )}
             <HlsVideo
-              key={`inline-hls-${bunnyHlsSrc}-${inlinePlaying}`}
+              key={`inline-hls-${bunnyHlsSrc}`}
               src={bunnyHlsSrc!}
               className="absolute inset-0 w-full h-full object-contain bg-black"
               controls
@@ -254,7 +256,7 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
       </div>
 
       <AnimatePresence>
-        {immersiveOpen && !isPlaceholder && (isBunnyHls || isBunnyIframe) && (
+        {immersiveOpen && !isPlaceholder && isBunnyIframe && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -279,17 +281,7 @@ export function VideoSection({ provider, externalId, externalUrl, title, onCompl
                   </div>
                 </div>
               )}
-              {isBunnyHls && bunnyHlsSrc ? (
-                <HlsVideo
-                  src={bunnyHlsSrc}
-                  className="absolute inset-0 w-full h-full object-contain"
-                  autoPlay
-                  playsInline
-                  controls={false}
-                  onLoaded={() => setImmersiveLoaded(true)}
-                  onEnded={closeImmersive}
-                />
-              ) : immersiveIframeSrc ? (
+              {immersiveIframeSrc ? (
                 <iframe
                   src={immersiveIframeSrc}
                   title={title}

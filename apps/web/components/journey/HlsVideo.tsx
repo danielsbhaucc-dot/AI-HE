@@ -44,12 +44,23 @@ export function HlsVideo({
 
     const onCanPlay = () => fireLoaded();
 
+    const onVideoError = () => {
+      console.warn('HlsVideo: native video error', video.error?.message);
+      fireLoaded();
+    };
+
+    /** Bunny Pull Zone + many CDNs: Web Workers often break CORS on segment XHR — keep on main thread. */
     const run = async () => {
-      if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      const tryNative = () => {
         video.src = src;
         video.addEventListener('canplay', onCanPlay, { once: true });
         video.addEventListener('loadeddata', onCanPlay, { once: true });
+        video.addEventListener('error', onVideoError, { once: true });
         if (autoPlay) void video.play().catch(() => {});
+      };
+
+      if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        tryNative();
         return;
       }
 
@@ -57,29 +68,61 @@ export function HlsVideo({
       if (cancelled) return;
 
       if (Hls.isSupported()) {
-        const hls = new Hls({ enableWorker: true, lowLatencyMode: false });
+        const hls = new Hls({
+          enableWorker: false,
+          lowLatencyMode: false,
+        });
         hlsRef.current = hls;
         hls.loadSource(src);
         hls.attachMedia(video);
+
+        const tryPlay = () => {
+          if (autoPlay) void video.play().catch(() => {});
+        };
+
         hls.on(Hls.Events.MANIFEST_PARSED, () => {
           fireLoaded();
-          if (autoPlay) void video.play().catch(() => {});
+          tryPlay();
         });
+
+        hls.on(Hls.Events.MANIFEST_LOADED, () => {
+          fireLoaded();
+        });
+
+        let recoverAttempts = 0;
         hls.on(Hls.Events.ERROR, (_, data) => {
-          if (data.fatal) console.error('HLS fatal error', data.type, data.details);
+          if (!data.fatal) return;
+          console.warn('HLS fatal', data.type, data.details, data.error);
+          if (recoverAttempts < 1) {
+            recoverAttempts += 1;
+            if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
+              hls.startLoad();
+              return;
+            }
+            if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
+              hls.recoverMediaError();
+              return;
+            }
+          }
+          fireLoaded();
+          hls.destroy();
+          hlsRef.current = null;
+          tryNative();
         });
       } else {
-        video.src = src;
-        video.addEventListener('canplay', onCanPlay, { once: true });
-        if (autoPlay) void video.play().catch(() => {});
+        tryNative();
       }
     };
+
+    const failSafe = window.setTimeout(() => fireLoaded(), 15000);
 
     void run();
 
     return () => {
       cancelled = true;
+      window.clearTimeout(failSafe);
       video.removeEventListener('canplay', onCanPlay);
+      video.removeEventListener('error', onVideoError);
       video.pause();
       hlsRef.current?.destroy();
       hlsRef.current = null;

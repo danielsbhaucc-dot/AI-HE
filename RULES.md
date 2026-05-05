@@ -1,7 +1,15 @@
 # 📋 AI Development Rules - Weight Loss Course System
 
 ## 🎯 מטרת המערכת
-מערכת קורסים לירידה במשקל מבוססת 100% AI - Mobile First, RTL, עם תמיכה בכל סוגי התוכן (וידאו, אודיו, PDF, טקסט).
+מערכת קורסים לירידה במשקל מבוססת 100% AI - Mobile First, RTL, עם תמיכה בכל סוגי התוכן (וידאו, אודיו, PDF, טקסט), ובנוסף **מסע משתמש (Journey / המסע שלי)** — שיעורים אינטראקטיביים עם וידאו, חידון, משחק וסיכום.
+
+---
+
+## 📌 תחזוקת `AI_CONTEXT.md` ו־`RULES.md`
+
+- **לעדכן רק כשיש תוכן רלוונטי** — שינוי שמשפיע על הבנת המערכת: מבנה, זרימות, DB, API, ספקי מדיה, קונבנציות, או נתיבים חשובים.
+- **לא לעדכן** לצורך תיקוני באג קטנים, ניסוח קוסמטי, או רפקטור פנימי בלי שינוי חוזה/ארכיטקטורה.
+- המטרה: מסמכים **קצרים, מדויקים ולא מיושנים**. כשמוסיפים סעיף חדש — מומלץ לקצר או לאחד סעיפים ישנים שכבר לא רלוונטיים.
 
 ---
 
@@ -12,7 +20,7 @@
 - **Styling**: Tailwind CSS + shadcn/ui + Framer Motion
 - **Database**: Supabase (PostgreSQL)
 - **Storage**: Uploadthing (אודיו, PDF, מצגות)
-- **Video**: URL מודולרי (Bunny/HeyGen/YouTube) - שדות מוכנים ב-DB
+- **Video**: URL מודולרי ב-DB (Bunny/HeyGen/YouTube/Vimeo/custom); במסע — גם **HLS** (`playlist.m3u8`) מדומיין Pull Zone (NuraWell: `video.nurawell.ai`, ראה `bunny-pull.ts` + `hls.js`)
 - **Auth**: Supabase Auth (JWT)
 
 ### עקרונות AI-Ready
@@ -151,27 +159,19 @@ font-family: 'Varela Round', 'Rubik', sans-serif;
 
 ## 🔌 Video Modular System
 
-### שדות בטבלה media_files
+### שדות (קורסים: `media_files` | מסע: `journey_steps`)
 ```sql
 video_provider: 'bunny' | 'heygen' | 'youtube' | 'vimeo' | 'custom'
-video_external_id: string  -- ID הסרטון בספק
-video_external_url: string -- URL ישיר (ל-custom)
+video_external_id: string   -- מזהה אצל הספק (למשל Bunny embed: libraryId/videoId)
+video_external_url: string -- URL ישיר: custom iframe, או **מסלול HLS** (`.m3u8`) במסע
 ```
 
-### פונקציית getVideoPlayerUrl
-```typescript
-function getVideoPlayerUrl(config: VideoConfig): string {
-  switch (config.provider) {
-    case 'bunny':
-      return `https://iframe.mediadelivery.net/embed/${config.externalId}`;
-    case 'heygen':
-      return `https://app.heygen.com/share/${config.externalId}`;
-    case 'youtube':
-      return `https://www.youtube.com/embed/${config.externalId}`;
-    // ...
-  }
-}
-```
+### Bunny — שני מסלולים במסע (`VideoSection` + `HlsVideo`)
+1. **Embed:** `video_external_id` בלבד → `https://iframe.mediadelivery.net/embed/{id}?...`
+2. **Pull Zone / HLS:** `video_external_url` (או מזהה/נתיב עם `.m3u8`, או UUID בלבד) → נורמל ב־`lib/journey/bunny-pull.ts`, ניגון עם **hls.js**; ברירת מחדל דומיין `https://video.nurawell.ai` (`NEXT_PUBLIC_BUNNY_PULL_ORIGIN`).
+
+### קורסים — `VideoPlayer`
+עדיין מבוסס iframe לפי ספק (Bunny embed וכו'); אינטגרציית HLS מלאה במסע.
 
 ---
 
@@ -202,19 +202,15 @@ function getVideoPlayerUrl(config: VideoConfig): string {
 
 ---
 
-## 🛡️ Admin Panel - נפרד!
+## 🛡️ Admin
 
-### מבנה
-- תיקייה נפרדת: `apps/admin`
-- מוכן להיות שרת נפרד בעתיד
-- API endpoints משלו
+### מבנה (נוכחי)
+- פאנל אדמין בתוך **`apps/web/app/admin`** (לא אפליקציה נפרדת ב-repo זה).
+- API: למשל `/api/v1/admin/journey-steps` לצעדי מסע.
 
-### יכולות
-- ניהול קורסים (CRUD)
-- ניהול שיעורים (CRUD)
-- העלאת קבצים ל-Uploadthing
-- צפייה בהתקדמות משתמשים
-- ניהול הרשאות
+### יכולות (לפי מה שקיים)
+- ניהול צעדי מסע (`StepEditor`, ראה `AI_CONTEXT.md`)
+- הרחבות עתידיות: קורסים/שיעורים לפי אותו דפוס
 
 ---
 
@@ -309,13 +305,14 @@ export const metadata: Metadata = {
 4. עקוב אחרי ה-conventions
 5. בדוק RTL
 6. בדוק Mobile
+7. אם השינוי **מהותי** לארכיטקטורה או לזרימות — עדכן `AI_CONTEXT.md` / `RULES.md` לפי סעיף **תחזוקת קבצי הקשר** למעלה (אחרת לא)
 
 ### כשעורכים קוד קיים
 - שמור על סגנון קיים
 - אל תשנה naming conventions
 - אל תוריד אנימציות
 - אל תוריד RTL
-- עדכן את `AI_CONTEXT.md` אם צריך
+- עדכן מסמכי הקשר **רק** כשיש תוכן רלוונטי (ראה סעיף תחזוקה בראש הקובץ)
 
 ---
 
@@ -377,6 +374,6 @@ success: {
 
 ---
 
-**נכתב עבור**: מערכת קורסים לירידה במשקל - AI Powered
+**נכתב עבור**: מערכת קורסים לירידה במשקל - AI Powered (כולל Journey + Bunny HLS)
 **תאריך**: מאי 2026
-**גרסה**: 1.0
+**גרסה**: 1.1
