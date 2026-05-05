@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import type { JourneyStep, JourneyStepProgress, StepSection } from '../../lib/types/journey';
@@ -35,15 +35,23 @@ export function StepLesson({ step, initialProgress, userId }: StepLessonProps) {
   const [progress, setProgress] = useState<JourneyStepProgress>(initialProgress);
   const [currentSection, setCurrentSection] = useState<StepSection>(initialProgress.last_section || 'video');
   const [direction, setDirection] = useState(1);
+  const [quizRemount, setQuizRemount] = useState(0);
+  const [gameRemount, setGameRemount] = useState(0);
+  const [videoRemount, setVideoRemount] = useState(0);
+  const progressRef = useRef(progress);
+  useEffect(() => {
+    progressRef.current = progress;
+  }, [progress]);
 
   const currentIndex = SECTIONS.indexOf(currentSection);
   const isLastSection = currentIndex === SECTIONS.length - 1;
 
   const updateProgress = useCallback(async (update: Partial<JourneyStepProgress>) => {
-    const newProgress = { ...progress, ...update };
+    const newProgress = { ...progressRef.current, ...update };
+    progressRef.current = newProgress;
     setProgress(newProgress);
     await saveJourneyProgress(userId, step.id, update);
-  }, [progress, userId, step.id]);
+  }, [userId, step.id]);
 
   const goToSection = useCallback((section: StepSection) => {
     const newIndex = SECTIONS.indexOf(section);
@@ -90,9 +98,34 @@ export function StepLesson({ step, initialProgress, userId }: StepLessonProps) {
     updateProgress({ is_completed: true, completed_at: new Date().toISOString() });
   }, [updateProgress]);
 
-  const handleReplay = useCallback(() => {
+  const resetQuizProgress = useCallback(async () => {
+    const u: Partial<JourneyStepProgress> = { quiz_answers: {}, quiz_score: null };
+    await updateProgress(u);
+    setQuizRemount(k => k + 1);
+  }, [updateProgress]);
+
+  const resetGameProgress = useCallback(async () => {
+    const u: Partial<JourneyStepProgress> = { game_answers: {}, game_score: null };
+    await updateProgress(u);
+    setGameRemount(k => k + 1);
+  }, [updateProgress]);
+
+  const handleReplay = useCallback(async () => {
+    const reset: Partial<JourneyStepProgress> = {
+      video_watched: false,
+      quiz_answers: {},
+      quiz_score: null,
+      game_answers: {},
+      game_score: null,
+      commitment_accepted: false,
+      last_section: 'video',
+    };
+    await updateProgress(reset);
+    setQuizRemount(k => k + 1);
+    setGameRemount(k => k + 1);
+    setVideoRemount(k => k + 1);
     goToSection('video');
-  }, [goToSection]);
+  }, [updateProgress, goToSection]);
 
   const slideVariants = {
     enter: (dir: number) => ({ x: dir > 0 ? 300 : -300, opacity: 0 }),
@@ -144,6 +177,7 @@ export function StepLesson({ step, initialProgress, userId }: StepLessonProps) {
           >
             {currentSection === 'video' && (
               <VideoSection
+                key={videoRemount}
                 provider={step.video_provider}
                 externalId={step.video_external_id}
                 externalUrl={step.video_external_url}
@@ -154,16 +188,20 @@ export function StepLesson({ step, initialProgress, userId }: StepLessonProps) {
             )}
             {currentSection === 'quiz' && (
               <QuizSection
+                key={quizRemount}
                 questions={step.quiz_questions}
                 existingAnswers={progress.quiz_answers}
                 onComplete={handleQuizComplete}
+                onResetQuiz={resetQuizProgress}
               />
             )}
             {currentSection === 'game' && (
               <MiniGame
+                key={gameRemount}
                 items={step.game_items}
                 existingAnswers={progress.game_answers}
                 onComplete={handleGameComplete}
+                onResetGame={resetGameProgress}
               />
             )}
             {currentSection === 'commitment' && step.commitment && (

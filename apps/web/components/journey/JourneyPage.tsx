@@ -81,7 +81,7 @@ export function JourneyPage({ steps }: JourneyPageProps) {
                   transition={{ duration: 0.4, delay: index * 0.08 }}
                 >
                   <Link
-                    href={isLocked ? '#' : `/journey/${step.id}`}
+                    href={isLocked ? '#' : `/journey/${step.step_number}`}
                     className={`block relative pr-14 ${isLocked ? 'pointer-events-none opacity-60' : ''}`}
                   >
                     {/* Timeline dot */}
